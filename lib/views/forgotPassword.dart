@@ -18,22 +18,22 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
           body: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(forgotPasswordBackground),
                     fit: BoxFit.cover),
               ),
               child: Container(
-                margin: EdgeInsets.only(left: 24, right: 24),
+                margin: const EdgeInsets.only(left: 24, right: 24),
                 child: Column(
                   children: [
-                    SizedBox(height: 32 + 44),
+                    const SizedBox(height: 32 + 44),
                     GestureDetector(
                       onTap: () {
                         // Navigator.push(
@@ -44,20 +44,20 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                       },
                       child: Container(
                         alignment: Alignment.topRight,
-                        child: Icon(Iconsax.story, size: 24, color: black),
+                        child: const Icon(Iconsax.story, size: 24, color: black),
                       ),
                     ),
-                    SizedBox(height: 42),
+                    const SizedBox(height: 42),
                     Container(
                       alignment: Alignment.center,
-                      child: Image(
+                      child: const Image(
                           image:
                               AssetImage("assets/vectors/vectorLogoFerce.png")),
                     ),
-                    SizedBox(height: 82),
+                    const SizedBox(height: 82),
                     Container(
                       alignment: Alignment.center,
-                      child: Text(
+                      child: const Text(
                         'Forgot Password!',
                         style: TextStyle(
                           fontFamily: 'Recoleta',
@@ -67,11 +67,11 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Container(
                       width: 327 + 24,
                       alignment: Alignment.center,
-                      child: Text(
+                      child: const Text(
                         'Please enter the email address associated with your account. We will email you a link have OTP code to reset your password.',
                         style: TextStyle(
                           fontFamily: 'Urbanist',
@@ -82,10 +82,10 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
                     Container(
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: const Text(
                         'Email / Phone Number',
                         style: TextStyle(
                           fontFamily: 'Urbanist',
@@ -96,7 +96,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Form(
                       // key: emailFormKey,
                       child: Container(
@@ -110,17 +110,17 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                           ),
                         ),
                         child: TextFormField(
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: 'Urbanist',
                                 fontSize: 16,
                                 color: black,
                                 fontWeight: FontWeight.w400),
                             controller: emailOrNumberController,
                             keyboardType: TextInputType.emailAddress,
-                            autofillHints: [AutofillHints.email],
+                            autofillHints: const [AutofillHints.email],
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.only(left: 20, right: 12),
+                                  const EdgeInsets.only(left: 20, right: 12),
                               hintStyle: TextStyle(
                                   fontFamily: 'Urbanist',
                                   fontSize: 16,
@@ -141,7 +141,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                             )),
                       ),
                     ),
-                    SizedBox(height: 27.5),
+                    const SizedBox(height: 27.5),
                     GestureDetector(
                       onTap: () {
                         // Navigator.push(
@@ -152,7 +152,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                       },
                       child: Container(
                         alignment: Alignment.topRight,
-                        child: Text(
+                        child: const Text(
                           'Instruction Manual',
                           style: TextStyle(
                             fontFamily: 'Urbanist',
@@ -163,7 +163,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 27.5),
+                    const SizedBox(height: 27.5),
                     GestureDetector(
                       onTap: () {
                         // late bool emailValid = RegExp(
@@ -186,13 +186,13 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                       child: Container(
                         width: 327 + 24,
                         height: 44,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           color: black,
                         ),
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             "Send",
                             style: TextStyle(
                               color: white,

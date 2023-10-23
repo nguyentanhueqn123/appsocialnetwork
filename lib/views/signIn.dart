@@ -363,13 +363,13 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18)),
                             child: isLoading
-                                ? SizedBox(
+                                ? const SizedBox(
                                     height: 48,
                                     width: 200,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         SizedBox(
                                             width: 24,
                                             height: 24,
@@ -405,9 +405,9 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                         const SizedBox(height: 24),
                         Container(
                           alignment: Alignment.center,
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 65,
                                 child: Divider(
@@ -456,7 +456,7 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                     color: Colors.transparent,
                                     border: Border.all(width: 1.5, color: gray),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
+                                        const BorderRadius.all(Radius.circular(8))),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -511,7 +511,7 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                             ],
                           ),
                         ),
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

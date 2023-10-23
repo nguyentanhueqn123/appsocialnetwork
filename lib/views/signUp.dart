@@ -42,12 +42,12 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
   TextEditingController emailVerificationController = TextEditingController();
   final GlobalKey<FormState> emailVerificationFormKey = GlobalKey<FormState>();
 
-  int _startEmail = 60;
-  int _startPhone = 60;
+  // int _startEmail = 60;
+  // int _startPhone = 60;
 
   bool isLoading = false;
 
-  bool _enabledPhone = true;
+  final bool _enabledPhone = true;
   bool _enabledEmail = true;
 
   bool submitValid = false;
@@ -93,12 +93,12 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
             child: Container(
               width: 40,
               height: 40,
-              margin: EdgeInsets.only(top: 80, left: 320),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.only(top: 80, left: 320),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(32)),
                 color: black,
               ),
-              child: Icon(
+              child: const Icon(
                 Iconsax.refresh_circle,
                 size: 36,
                 color: white,
@@ -106,8 +106,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 72 + 44, left: 24, right: 24),
-            child: Column(
+            margin: const EdgeInsets.only(top: 72 + 44, left: 24, right: 24),
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -119,11 +119,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                       color: black),
                 ),
                 SizedBox(height: 8),
-                Container(
+                SizedBox(
                   width: 327 + 24,
                   child: Text(
-                    'Only one step left to be part of the Social Network' +
-                        's World community!',
+                    'Only one step left to be part of the Social Network' 's World community!',
                     style: TextStyle(
                         fontFamily: 'Urbanist',
                         fontSize: 16,
@@ -135,22 +134,22 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 72 + 44 + 32 + 8 + 32 + 7 + 32),
+            margin: const EdgeInsets.only(top: 72 + 44 + 32 + 8 + 32 + 7 + 32),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                decoration: BoxDecoration(color: Colors.transparent),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: Container(
-                  margin: EdgeInsets.only(left: 24, right: 24),
+                  margin: const EdgeInsets.only(left: 24, right: 24),
                   child: Column(
                     children: [
                       // SizedBox(height: 32),
                       Container(
                         alignment: Alignment.center,
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 65,
                               child: Divider(
                                 color: gray,
@@ -174,7 +173,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                             SizedBox(
                               width: 16,
                             ),
-                            Container(
+                            SizedBox(
                               width: 65,
                               child: Divider(
                                 color: gray,
@@ -184,13 +183,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                           ],
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Container(
+                      const SizedBox(height: 16),
+                      SizedBox(
                         width: 327 + 24,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Email",
                               textAlign: TextAlign.left,
                               style: TextStyle(
@@ -200,7 +199,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Row(
@@ -219,7 +218,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     ),
                                     alignment: Alignment.topLeft,
                                     child: TextFormField(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: 'Urbanist',
                                             fontSize: 16,
                                             color: black,
@@ -245,9 +244,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           }
                                         },
                                         controller: emailController,
-                                        autofillHints: [AutofillHints.email],
+                                        autofillHints: const [AutofillHints.email],
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
+                                          contentPadding: const EdgeInsets.only(
                                               left: 20, right: 12),
                                           hintStyle: TextStyle(
                                               fontFamily: 'Urbanist',
@@ -262,7 +261,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
-                                          errorStyle: TextStyle(
+                                          errorStyle: const TextStyle(
                                             color: Colors.transparent,
                                             fontSize: 0,
                                             height: 0,
@@ -270,7 +269,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         )),
                                   ),
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 (_enabledEmail)
                                     ? GestureDetector(
                                         onTap: () async {
@@ -308,11 +307,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         child: Container(
                                           height: 44,
                                           width: 44,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               color: black,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8))),
-                                          child: Icon(
+                                          child: const Icon(
                                             Iconsax.scan,
                                             size: 20,
                                             color: white,
@@ -327,11 +326,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         child: Container(
                                           height: 44,
                                           width: 44,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               color: white,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8))),
-                                          child: Icon(
+                                          child: const Icon(
                                             Iconsax.repeat,
                                             size: 20,
                                             color: black,
@@ -339,8 +338,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         ))
                               ],
                             ),
-                            SizedBox(height: 24),
-                            Text(
+                            const SizedBox(height: 24),
+                            const Text(
                               "Phone number",
                               textAlign: TextAlign.left,
                               style: TextStyle(
@@ -350,7 +349,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Row(
@@ -369,7 +368,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     ),
                                     alignment: Alignment.topLeft,
                                     child: TextFormField(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: 'Urbanist',
                                             fontSize: 16,
                                             color: black,
@@ -395,12 +394,12 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           }
                                         },
                                         controller: phoneNumberController,
-                                        autofillHints: [
+                                        autofillHints: const [
                                           AutofillHints.telephoneNumber
                                         ],
                                         keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
+                                          contentPadding: const EdgeInsets.only(
                                               left: 20, right: 12),
                                           hintStyle: TextStyle(
                                               fontFamily: 'Urbanist',
@@ -415,7 +414,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
-                                          errorStyle: TextStyle(
+                                          errorStyle: const TextStyle(
                                             color: Colors.transparent,
                                             fontSize: 0,
                                             height: 0,
@@ -423,7 +422,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         )),
                                   ),
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 GestureDetector(
                                     onTap: (_enabledPhone)
                                         ? () {
@@ -438,11 +437,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     child: Container(
                                       height: 44,
                                       width: 44,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: black,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8))),
-                                      child: Icon(
+                                      child: const Icon(
                                         Iconsax.scan,
                                         size: 20,
                                         color: white,
@@ -450,7 +449,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     ))
                               ],
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
                               width: 327 + 24,
@@ -458,7 +457,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 children: [
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    child: Text(
+                                    child: const Text(
                                       'Password',
                                       style: TextStyle(
                                           fontFamily: 'Urbanist',
@@ -467,7 +466,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Row(
                                     children: [
                                       Form(
@@ -485,7 +484,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           ),
                                           alignment: Alignment.topLeft,
                                           child: TextFormField(
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Urbanist',
                                                   fontSize: 16,
                                                   color: black,
@@ -516,11 +515,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               obscureText: isHiddenPassword,
                                               keyboardType:
                                                   TextInputType.visiblePassword,
-                                              autofillHints: [
+                                              autofillHints: const [
                                                 AutofillHints.password
                                               ],
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.only(
+                                                contentPadding: const EdgeInsets.only(
                                                     left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
@@ -537,7 +536,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                       BorderRadius.circular(
                                                           8.0),
                                                 ),
-                                                errorStyle: TextStyle(
+                                                errorStyle: const TextStyle(
                                                   color: Colors.transparent,
                                                   fontSize: 0,
                                                   height: 0,
@@ -545,7 +544,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               )),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       GestureDetector(
                                         onTap: () {
                                           setState(() {
@@ -557,13 +556,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             ? Container(
                                                 height: 44,
                                                 width: 44,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: black,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye,
                                                   size: 20,
                                                   color: white,
@@ -577,10 +576,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                     border: Border.all(
                                                         color: gray, width: 1),
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye_slash,
                                                   size: 24,
                                                   color: black,
@@ -592,7 +591,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
                               width: 327 + 24,
@@ -600,7 +599,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 children: [
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    child: Text(
+                                    child: const Text(
                                       'Confirm Password',
                                       style: TextStyle(
                                           fontFamily: 'Urbanist',
@@ -609,7 +608,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Row(
                                     children: [
                                       Form(
@@ -627,7 +626,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           ),
                                           alignment: Alignment.topLeft,
                                           child: TextFormField(
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Urbanist',
                                                   fontSize: 16,
                                                   color: black,
@@ -638,11 +637,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                   isHiddenConfirmPassword,
                                               keyboardType:
                                                   TextInputType.visiblePassword,
-                                              autofillHints: [
+                                              autofillHints: const [
                                                 AutofillHints.password
                                               ],
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.only(
+                                                contentPadding: const EdgeInsets.only(
                                                     left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
@@ -660,7 +659,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                       BorderRadius.circular(
                                                           8.0),
                                                 ),
-                                                errorStyle: TextStyle(
+                                                errorStyle: const TextStyle(
                                                   color: Colors.transparent,
                                                   fontSize: 0,
                                                   height: 0,
@@ -668,7 +667,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               )),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       GestureDetector(
                                         onTap: () {
                                           setState(() {
@@ -680,13 +679,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             ? Container(
                                                 height: 44,
                                                 width: 44,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: black,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye,
                                                   size: 20,
                                                   color: white,
@@ -700,10 +699,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                     border: Border.all(
                                                         color: gray, width: 1),
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye_slash,
                                                   size: 24,
                                                   color: black,
@@ -715,13 +714,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.center,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 65,
                                     child: Divider(
                                       color: gray,
@@ -745,7 +744,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 65,
                                     child: Divider(
                                       color: gray,
@@ -755,7 +754,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
                               width: 327 + 24,
@@ -763,7 +762,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 children: [
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    child: Text(
+                                    child: const Text(
                                       'Email Verificatiion',
                                       style: TextStyle(
                                           fontFamily: 'Urbanist',
@@ -772,7 +771,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Row(
                                     children: [
                                       Form(
@@ -790,7 +789,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           ),
                                           alignment: Alignment.topLeft,
                                           child: TextFormField(
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Urbanist',
                                                   fontSize: 16,
                                                   color: black,
@@ -801,7 +800,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               keyboardType:
                                                   TextInputType.visiblePassword,
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.only(
+                                                contentPadding: const EdgeInsets.only(
                                                     left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
@@ -819,7 +818,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                       BorderRadius.circular(
                                                           8.0),
                                                 ),
-                                                errorStyle: TextStyle(
+                                                errorStyle: const TextStyle(
                                                   color: Colors.transparent,
                                                   fontSize: 0,
                                                   height: 0,
@@ -827,7 +826,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               )),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       GestureDetector(
                                         onTap: () {
                                           setState(() {
@@ -839,13 +838,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             ? Container(
                                                 height: 44,
                                                 width: 44,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: black,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye,
                                                   size: 20,
                                                   color: white,
@@ -859,10 +858,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                     border: Border.all(
                                                         color: gray, width: 1),
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye_slash,
                                                   size: 24,
                                                   color: black,
@@ -874,7 +873,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 24,
                             ),
                             Container(
@@ -884,7 +883,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 children: [
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    child: Text(
+                                    child: const Text(
                                       'Phone Number Verificatiion',
                                       style: TextStyle(
                                           fontFamily: 'Urbanist',
@@ -893,7 +892,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Row(
                                     children: [
                                       Form(
@@ -911,7 +910,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           ),
                                           alignment: Alignment.topLeft,
                                           child: TextFormField(
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Urbanist',
                                                   fontSize: 16,
                                                   color: black,
@@ -921,11 +920,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               obscureText: isHiddenPhoneCode,
                                               keyboardType:
                                                   TextInputType.visiblePassword,
-                                              autofillHints: [
+                                              autofillHints: const [
                                                 AutofillHints.password
                                               ],
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.only(
+                                                contentPadding: const EdgeInsets.only(
                                                     left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
@@ -943,7 +942,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                       BorderRadius.circular(
                                                           8.0),
                                                 ),
-                                                errorStyle: TextStyle(
+                                                errorStyle: const TextStyle(
                                                   color: Colors.transparent,
                                                   fontSize: 0,
                                                   height: 0,
@@ -951,7 +950,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               )),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       GestureDetector(
                                         onTap: () {
                                           setState(() {
@@ -963,13 +962,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             ? Container(
                                                 height: 44,
                                                 width: 44,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: black,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye,
                                                   size: 20,
                                                   color: white,
@@ -983,10 +982,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                     border: Border.all(
                                                         color: gray, width: 1),
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                             Radius.circular(
                                                                 8))),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Iconsax.eye_slash,
                                                   size: 24,
                                                   color: black,
@@ -998,7 +997,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 24,
                             ),
                             Row(
@@ -1026,7 +1025,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             Border.all(color: gray, width: 1),
                                       ),
                                       child: isChecked
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.check,
                                               color: white,
                                               size: 12,
@@ -1035,10 +1034,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
-                                Text(
+                                const Text(
                                   "Agree to ",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -1049,7 +1048,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   "Terms & Conditions",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -1062,11 +1061,11 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               width: 327 + 24,
                               height: 44,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8)),
                                 color: black,
@@ -1091,9 +1090,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     backgroundColor: Colors.transparent,
                                     elevation: 15,
                                     animationDuration:
-                                        Duration(milliseconds: 300),
+                                        const Duration(milliseconds: 300),
                                     // maximumSize: Size.fromWidth(200),
-                                    minimumSize: Size(327 + 24, 44),
+                                    minimumSize: const Size(327 + 24, 44),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(16.0)),
@@ -1104,7 +1103,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         fontWeight: FontWeight.w600,
                                         fontSize: 18)),
                                 child: isLoading
-                                    ? Container(
+                                    ? const SizedBox(
                                         height: 48,
                                         width: 200,
                                         child: Row(
@@ -1132,7 +1131,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                       )
                                     : Container(
                                         alignment: Alignment.center,
-                                        child: Text(
+                                        child: const Text(
                                           'Sign up',
                                           style: TextStyle(
                                             fontSize: 18,
@@ -1144,13 +1143,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                       ),
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.center,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 65,
                                     child: Divider(
                                       color: gray,
@@ -1174,7 +1173,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                   SizedBox(
                                     width: 16,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 65,
                                     child: Divider(
                                       color: gray,
@@ -1184,7 +1183,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               width: 327 + 24,
                               height: 44,
@@ -1198,7 +1197,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         color: Colors.transparent,
                                         border:
                                             Border.all(width: 1.5, color: gray),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
                                     child: Row(
                                       mainAxisAlignment:
@@ -1213,8 +1212,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             height: 16.0,
                                           ),
                                         ),
-                                        SizedBox(width: 12),
-                                        Text(
+                                        const SizedBox(width: 12),
+                                        const Text(
                                           'Facebook',
                                           style: TextStyle(
                                               fontFamily: 'Urbanist',
@@ -1225,7 +1224,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                       ],
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Container(
                                     width: 156,
                                     height: 44,
@@ -1233,7 +1232,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         color: Colors.transparent,
                                         border:
                                             Border.all(width: 1.5, color: gray),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
                                     child: Row(
                                       mainAxisAlignment:
@@ -1248,8 +1247,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             height: 16.0,
                                           ),
                                         ),
-                                        SizedBox(width: 12),
-                                        Text(
+                                        const SizedBox(width: 12),
+                                        const Text(
                                           'Google',
                                           style: TextStyle(
                                               fontFamily: 'Urbanist',
@@ -1263,10 +1262,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 40),
+                            const SizedBox(height: 40),
                             Container(
                               alignment: Alignment.center,
-                              child: Text(
+                              child: const Text(
                                 'To be able to register, you must agree to our',
                                 style: TextStyle(
                                     fontFamily: 'Urbanist',
@@ -1275,7 +1274,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     color: gray),
                               ),
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -1304,7 +1303,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 67 + 44),
+                            const SizedBox(height: 67 + 44),
                           ],
                         ),
                       ),
@@ -1322,7 +1321,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
 
 mixin InputValidationMixin {
   bool isEmailValid(String email) {
-    RegExp regex = new RegExp(
+    RegExp regex = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     return regex.hasMatch(email);
   }
@@ -1332,7 +1331,7 @@ mixin InputValidationMixin {
   bool isPasswordValid(String password) => password.length >= 6;
 
   bool isPhoneNumberValid(String phoneNumber) {
-    RegExp regex = new RegExp(r'(^(?:[+84])?[0-9]{10,12}$)');
+    RegExp regex = RegExp(r'(^(?:[+84])?[0-9]{10,12}$)');
     return regex.hasMatch(phoneNumber);
   }
 }

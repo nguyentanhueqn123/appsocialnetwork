@@ -1,29 +1,24 @@
 import 'dart:io';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:iconsax/iconsax.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:social_network_app/views/loadingWidget.dart';
+import 'package:social_network_app/views/snackBarWidget.dart';
+import 'package:social_network_app/views/widget_auth.dart';
 
-import 'dart:typed_data';
-
-import 'package:social_network_app/views/authentication/loadingWidget.dart';
-import 'package:social_network_app/views/authentication/snackBarWidget.dart';
-import 'package:social_network_app/views/authentication/widgetAuth.dart';
 
 import '../../constants/colors.dart';
 
 class InformationScreen extends StatefulWidget {
-  InformationScreen({Key? key}) : super(key: key);
+  const InformationScreen({Key? key}) : super(key: key);
 
   @override
   State<InformationScreen> createState() => _InformationScreenState();
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   final GlobalKey<FormState> _infoKey = GlobalKey<FormState>();
   final TextEditingController _fullname = TextEditingController();
@@ -47,7 +42,7 @@ class _InformationScreenState extends State<InformationScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
@@ -57,7 +52,7 @@ class _InformationScreenState extends State<InformationScreen> {
         body: Form(
           key: _infoKey,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image:
                     AssetImage('assets/images/background/signInBackground.png'),
@@ -65,14 +60,14 @@ class _InformationScreenState extends State<InformationScreen> {
               ),
             ),
             child: _isLoading
-                ? LoadingWidget()
+                ? const LoadingWidget()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 62,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -88,7 +83,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 32,
                       ),
                       GestureDetector(
@@ -118,7 +113,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   BorderRadius.circular(8),
                                               border: Border.all(color: black),
                                             ),
-                                            child: Center(
+                                            child: const Center(
                                               child: Icon(
                                                 Iconsax.camera,
                                                 size: 24,
@@ -133,11 +128,11 @@ class _InformationScreenState extends State<InformationScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 32,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18),
                         child: Text(
                           "Full Name",
                           textAlign: TextAlign.center,
@@ -150,7 +145,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       InfomationTextFormField(
@@ -168,11 +163,11 @@ class _InformationScreenState extends State<InformationScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18),
                         child: Text(
                           "User Name",
                           textAlign: TextAlign.center,
@@ -185,7 +180,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       InfomationTextFormField(
@@ -203,11 +198,11 @@ class _InformationScreenState extends State<InformationScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18),
                         child: Text(
                           "Phone number",
                           textAlign: TextAlign.center,
@@ -220,7 +215,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       InfomationTextFormField(
@@ -238,11 +233,11 @@ class _InformationScreenState extends State<InformationScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18),
                         child: Text(
                           "Biography",
                           textAlign: TextAlign.center,
@@ -255,7 +250,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       InfomationTextFormField(
@@ -273,7 +268,7 @@ class _InformationScreenState extends State<InformationScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       ConFirmButton(context, 'Confirm', size),
@@ -346,7 +341,7 @@ class _InformationScreenState extends State<InformationScreen> {
         child: Container(
           width: 327 + 24,
           height: 44,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             color: black,
           ),
@@ -354,7 +349,7 @@ class _InformationScreenState extends State<InformationScreen> {
             alignment: Alignment.center,
             child: Text(
               buttonName,
-              style: TextStyle(
+              style: const TextStyle(
                 color: white,
                 fontFamily: 'Urbanist',
                 fontSize: 20,

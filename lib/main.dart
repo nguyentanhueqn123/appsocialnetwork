@@ -1,66 +1,37 @@
 import 'package:flutter/material.dart';
+// Import the generated file
+//import others
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_network_app/views/signIn.dart';
 
-void main() {
-  runApp(const MyApp());
+int initScreen = 0;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = (preferences.getInt('initScreenstore') ?? 0);
+  await preferences.setInt('initScreen', 1);
+  runApp(FerceApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class FerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ferce',
+      debugShowCheckedModeBanner: false,
+      // themeMode: ThemeMode.dark,
+      // darkTheme: ThemeData.dark(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.black,
+        dialogBackgroundColor: Colors.white,
+        primarySwatch: Colors.grey,
+        cardColor: Colors.white70,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      initialRoute: initScreen == 0 || initScreen == null ? 'signin' : 'signin',
+      routes: {
+        'signin': (context) => SignInScreen(),
+        // onboarding4(),
+      },
     );
   }
 }
