@@ -33,17 +33,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
   TextEditingController usernameController = TextEditingController();
   final GlobalKey<FormState> usernameFormKey = GlobalKey<FormState>();
 
-  TextEditingController phoneNumberController = TextEditingController();
-  final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
-
-  TextEditingController phoneVerificationController = TextEditingController();
-  final GlobalKey<FormState> phoneVerificationFormKey = GlobalKey<FormState>();
-
   TextEditingController emailVerificationController = TextEditingController();
   final GlobalKey<FormState> emailVerificationFormKey = GlobalKey<FormState>();
-
-  // int _startEmail = 60;
-  // int _startPhone = 60;
 
   bool isLoading = false;
 
@@ -122,7 +113,8 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                 SizedBox(
                   width: 327 + 24,
                   child: Text(
-                    'Only one step left to be part of the Social Network' 's World community!',
+                    'Only one step left to be part of the Social Network'
+                    's World community!',
                     style: TextStyle(
                         fontFamily: 'Urbanist',
                         fontSize: 16,
@@ -244,7 +236,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           }
                                         },
                                         controller: emailController,
-                                        autofillHints: const [AutofillHints.email],
+                                        autofillHints: const [
+                                          AutofillHints.email
+                                        ],
                                         decoration: InputDecoration(
                                           contentPadding: const EdgeInsets.only(
                                               left: 20, right: 12),
@@ -339,117 +333,6 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                               ],
                             ),
                             const SizedBox(height: 24),
-                            const Text(
-                              "Phone number",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Urbanist',
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                Form(
-                                  key: phoneNumberFormKey,
-                                  child: Container(
-                                    width: 275 + 16,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: gray,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    alignment: Alignment.topLeft,
-                                    child: TextFormField(
-                                        style: const TextStyle(
-                                            fontFamily: 'Urbanist',
-                                            fontSize: 16,
-                                            color: black,
-                                            fontWeight: FontWeight.w400),
-                                        validator: (phoneNumber) {
-                                          if (isPhoneNumberValid(
-                                              phoneNumber.toString())) {
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {
-                                              setState(() {
-                                                notiColorPhoneNumber = green;
-                                              });
-                                            });
-                                            return null;
-                                          } else {
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {
-                                              setState(() {
-                                                notiColorPhoneNumber = red;
-                                              });
-                                            });
-                                            return '';
-                                          }
-                                        },
-                                        controller: phoneNumberController,
-                                        autofillHints: const [
-                                          AutofillHints.telephoneNumber
-                                        ],
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                          contentPadding: const EdgeInsets.only(
-                                              left: 20, right: 12),
-                                          hintStyle: TextStyle(
-                                              fontFamily: 'Urbanist',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: black.withOpacity(0.5)),
-                                          hintText: "Enter your phone number",
-                                          filled: true,
-                                          fillColor: Colors.transparent,
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorStyle: const TextStyle(
-                                            color: Colors.transparent,
-                                            fontSize: 0,
-                                            height: 0,
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                GestureDetector(
-                                    onTap: (_enabledPhone)
-                                        ? () {
-                                            // setState(() {
-                                            //   _enabledPhone = false;
-                                            //   isSendVerifyCodePhone =
-                                            //       !isSendVerifyCodePhone;
-                                            //   sendOtpPhone();
-                                            // });
-                                          }
-                                        : null,
-                                    child: Container(
-                                      height: 44,
-                                      width: 44,
-                                      decoration: const BoxDecoration(
-                                          color: black,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8))),
-                                      child: const Icon(
-                                        Iconsax.scan,
-                                        size: 20,
-                                        color: white,
-                                      ),
-                                    ))
-                              ],
-                            ),
-                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
                               width: 327 + 24,
@@ -519,8 +402,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                 AutofillHints.password
                                               ],
                                               decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(
-                                                    left: 20, right: 12),
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
                                                     fontSize: 16,
@@ -641,8 +525,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                                 AutofillHints.password
                                               ],
                                               decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(
-                                                    left: 20, right: 12),
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
                                                     fontSize: 16,
@@ -800,8 +685,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                               keyboardType:
                                                   TextInputType.visiblePassword,
                                               decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(
-                                                    left: 20, right: 12),
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 20, right: 12),
                                                 hintStyle: TextStyle(
                                                     fontFamily: 'Urbanist',
                                                     fontSize: 16,
@@ -835,130 +721,6 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                           });
                                         },
                                         child: (isHiddenEmailCode)
-                                            ? Container(
-                                                height: 44,
-                                                width: 44,
-                                                decoration: const BoxDecoration(
-                                                    color: black,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                8))),
-                                                child: const Icon(
-                                                  Iconsax.eye,
-                                                  size: 20,
-                                                  color: white,
-                                                ),
-                                              )
-                                            : Container(
-                                                height: 44,
-                                                width: 44,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.transparent,
-                                                    border: Border.all(
-                                                        color: gray, width: 1),
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                            Radius.circular(
-                                                                8))),
-                                                child: const Icon(
-                                                  Iconsax.eye_slash,
-                                                  size: 24,
-                                                  color: black,
-                                                ),
-                                              ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              width: 327 + 24,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: const Text(
-                                      'Phone Number Verificatiion',
-                                      style: TextStyle(
-                                          fontFamily: 'Urbanist',
-                                          fontSize: 16,
-                                          color: black,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      Form(
-                                        key: phoneVerificationFormKey,
-                                        child: Container(
-                                          width: 275 + 16,
-                                          height: 44,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: gray,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          alignment: Alignment.topLeft,
-                                          child: TextFormField(
-                                              style: const TextStyle(
-                                                  fontFamily: 'Urbanist',
-                                                  fontSize: 16,
-                                                  color: black,
-                                                  fontWeight: FontWeight.w400),
-                                              controller:
-                                                  phoneVerificationController,
-                                              obscureText: isHiddenPhoneCode,
-                                              keyboardType:
-                                                  TextInputType.visiblePassword,
-                                              autofillHints: const [
-                                                AutofillHints.password
-                                              ],
-                                              decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(
-                                                    left: 20, right: 12),
-                                                hintStyle: TextStyle(
-                                                    fontFamily: 'Urbanist',
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color:
-                                                        black.withOpacity(0.5)),
-                                                hintText:
-                                                    "Enter your phone code verification",
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                border: OutlineInputBorder(
-                                                  borderSide: BorderSide.none,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorStyle: const TextStyle(
-                                                  color: Colors.transparent,
-                                                  fontSize: 0,
-                                                  height: 0,
-                                                ),
-                                              )),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            isHiddenPhoneCode =
-                                                !isHiddenPhoneCode;
-                                          });
-                                        },
-                                        child: (isHiddenPhoneCode)
                                             ? Container(
                                                 height: 44,
                                                 width: 44,
@@ -1073,17 +835,17 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                               child: ElevatedButton(
                                 //action navigate to dashboard screen
                                 onPressed: () async {
-                                  // if (isLoading) return;
-                                  // setState(() {
-                                  //   isLoading = true;
-                                  //   controlSignUp();
-                                  // });
-                                  // await Future.delayed(Duration(seconds: 3));
-                                  // if (this.mounted) {
-                                  //   setState(() {
-                                  //     isLoading = false;
-                                  //   });
-                                  // }
+                                  if (isLoading) return;
+                                  setState(() {
+                                    isLoading = true;
+                                    // controlSignUp();
+                                  });
+                                  await Future.delayed(Duration(seconds: 3));
+                                  if (this.mounted) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                     shadowColor: black.withOpacity(0.25),

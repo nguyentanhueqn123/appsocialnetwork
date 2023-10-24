@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:social_network_app/views/instructionManual.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/images.dart';
@@ -36,15 +37,16 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     const SizedBox(height: 32 + 44),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => instructionManualScreen()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InstructionManualScreen()),
+                        );
                       },
                       child: Container(
                         alignment: Alignment.topRight,
-                        child: const Icon(Iconsax.story, size: 24, color: black),
+                        child:
+                            const Icon(Iconsax.story, size: 24, color: black),
                       ),
                     ),
                     const SizedBox(height: 42),
@@ -144,11 +146,12 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     const SizedBox(height: 27.5),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => instructionManualScreen()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const InstructionManualScreen()),
+                        );
                       },
                       child: Container(
                         alignment: Alignment.topRight,
@@ -196,6 +199,35 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                             "Send",
                             style: TextStyle(
                               color: white,
+                              fontFamily: 'Urbanist',
+                              fontSize: 18,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () {
+                        // Trowr laij tragn truocws
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 327 + 24,
+                        height: 44,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            color: white,
+                            border: Border.all(color: black)),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(
+                              color: black,
                               fontFamily: 'Urbanist',
                               fontSize: 18,
                               fontStyle: FontStyle.normal,

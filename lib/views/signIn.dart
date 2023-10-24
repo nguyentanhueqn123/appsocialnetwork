@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/constants/colors.dart';
+import 'package:social_network_app/views/forgotPassword.dart';
+import 'package:social_network_app/views/signUp.dart';
 
 import '../../constants/images.dart';
 
@@ -39,6 +41,8 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                   image: AssetImage(signInBackground), fit: BoxFit.cover),
             ),
             child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(left: 24, right: 24),
                 child: Column(
                   children: [
@@ -284,12 +288,11 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                         const SizedBox(height: 24),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           forgotPasswordScreen()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForgotPasswordScreen()),
+                            );
                           },
                           child: Container(
                             alignment: Alignment.topRight,
@@ -455,8 +458,8 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                 decoration: BoxDecoration(
                                     color: Colors.transparent,
                                     border: Border.all(width: 1.5, color: gray),
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(8))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8))),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -525,11 +528,11 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                             ),
                             GestureDetector(
                               onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => signUpScreen()),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUpScreen()),
+                                );
                               },
                               child: const Text(
                                 ' Sign up for free',
@@ -550,11 +553,12 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                       margin: const EdgeInsets.only(bottom: 34),
                       child: GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => signUpScreen()),
-                          // );
+                          // chuyển page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()),
+                          );
                         },
                         child: Container(
                           width: 40,
