@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/constants/colors.dart';
-import 'package:social_network_app/views/forgotPassword.dart';
-import 'package:social_network_app/views/signUp.dart';
+import 'package:social_network_app/views/authentication/forgotPassword.dart';
 
 import '../../constants/images.dart';
+import '../../repository/authen_repository.dart';
+import '../snackBarWidget.dart';
+import 'signUp.dart';
 
 class SignInScreen extends StatefulWidget with InputValidationMixin {
   const SignInScreen({Key? key}) : super(key: key);
@@ -29,21 +31,19 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.light,
-            statusBarIconBrightness: Brightness.light,
-            statusBarColor: Colors.transparent),
-        child: Scaffold(
-          body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(signInBackground), fit: BoxFit.cover),
-            ),
-            child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 24, right: 24),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(signInBackground), fit: BoxFit.cover),
+          )),
+          Container(
+            margin: const EdgeInsets.only(left: 24, right: 24),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: 800,
                 child: Column(
                   children: [
                     const SizedBox(height: 44 + 32),
@@ -318,36 +318,26 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                           child: ElevatedButton(
                             //action navigate to dashboard screen
                             onPressed: () async {
-                              // if (isLoading) return;
-                              // setState(() {
-                              // isLoading = true;
-                              // if (emailFormKey.currentState!.validate() &&
-                              //     passwordFormKey.currentState!
-                              //         .validate()) {
-                              //   signIn(emailController.text,
-                              //       passwordController.text, context);
-                              // } else {
-                              //   showSnackBar(
-                              //       context,
-                              //       'Please check your information!',
-                              //       'error');
-                              //   ;
-                              // }
-                              // Navigator.pushReplacement(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => navigationBar(
-                              //             required,
-                              //             uid: 'h')));
-                              // signIn(emailController.text,
-                              //     passwordController.text, context);
-                              // });
-                              // await Future.delayed(Duration(seconds: 3));
-                              // if (this.mounted) {
-                              //   setState(() {
-                              //     isLoading = false;
-                              //   });
-                              // }
+                              if (isLoading) return;
+                              setState(() {
+                                isLoading = true;
+                                if (emailFormKey.currentState!.validate() &&
+                                    passwordFormKey.currentState!.validate()) {
+                                  signIn(emailController.text,
+                                      passwordController.text, context);
+                                } else {
+                                  showSnackBar(
+                                      context,
+                                      'Please check your information!',
+                                      'error');
+                                }
+                              });
+                              await Future.delayed(Duration(seconds: 3));
+                              if (this.mounted) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
@@ -366,13 +356,13 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18)),
                             child: isLoading
-                                ? const SizedBox(
+                                ? SizedBox(
                                     height: 48,
                                     width: 200,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
+                                      children: const [
                                         SizedBox(
                                             width: 24,
                                             height: 24,
@@ -403,115 +393,6 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                       ),
                                     ),
                                   ),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.center,
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 65,
-                                child: Divider(
-                                  color: gray,
-                                  thickness: 0.5,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                "or continue with",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontFamily: 'Urbanist',
-                                  color: gray,
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 16,
-                              ),
-                              SizedBox(
-                                width: 65,
-                                child: Divider(
-                                  color: gray,
-                                  thickness: 0.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Container(
-                          width: 327 + 24,
-                          height: 44,
-                          alignment: Alignment.center,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 156,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    border: Border.all(width: 1.5, color: gray),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(8))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/vectors/vectorFacebook.png',
-                                      width: 16.0,
-                                      height: 16.0,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    const Text(
-                                      'Facebook',
-                                      style: TextStyle(
-                                          fontFamily: 'Urbanist',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              Container(
-                                width: 156,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    border: Border.all(width: 1.5, color: gray),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(8))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/vectors/vectorGoogle.png',
-                                      width: 16.0,
-                                      height: 16.0,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    const Text(
-                                      'Google',
-                                      style: TextStyle(
-                                          fontFamily: 'Urbanist',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: black),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
                           ),
                         ),
                         const SizedBox(height: 40),
@@ -574,9 +455,13 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                       ),
                     ),
                   ],
-                )),
+                ),
+              ),
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
 

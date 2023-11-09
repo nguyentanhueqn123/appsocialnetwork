@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/constants/colors.dart';
-import 'package:social_network_app/views/signUp.dart';
+import 'package:social_network_app/views/authentication/signUp.dart';
 
 Widget EmailTextFormField(
     {required String hintText,
@@ -89,7 +89,8 @@ Widget PasswordTextFormField({
                 : Stack(alignment: Alignment.centerRight, children: [
                     Container(
                         padding: const EdgeInsets.only(right: 16),
-                        child: const Icon(Iconsax.eye_slash, size: 24, color: gray))
+                        child: const Icon(Iconsax.eye_slash,
+                            size: 24, color: gray))
                   ])),
         contentPadding: const EdgeInsets.only(left: 8, right: 8),
         hintStyle: const TextStyle(

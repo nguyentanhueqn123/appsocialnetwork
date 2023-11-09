@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Import the generated file
 //import others
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:social_network_app/views/signIn.dart';
+
+import 'views/authentication/signIn.dart';
 
 int initScreen = 0;
 Future<void> main() async {
@@ -10,6 +12,7 @@ Future<void> main() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = (preferences.getInt('initScreenstore') ?? 0);
   await preferences.setInt('initScreen', 1);
+  await Firebase.initializeApp();
   runApp(FerceApp());
 }
 

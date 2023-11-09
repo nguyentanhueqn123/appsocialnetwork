@@ -5,6 +5,8 @@ import 'package:email_otp/email_otp.dart';
 import 'package:social_network_app/constants/images.dart';
 
 import '../../constants/colors.dart';
+import '../../repository/authen_repository.dart';
+import '../snackBarWidget.dart';
 
 class SignUpScreen extends StatefulWidget with InputValidationMixin {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -48,6 +50,34 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
   Color notiColorPhoneNumber = red;
   Color notiColorPassword = red;
   EmailOTP myauth = EmailOTP();
+
+  bool checkEmail = false;
+  Future<void> controlSignUp() async {
+    // PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+    //     verificationId: verificationId,
+    //     smsCode: phoneVerificationController.value.text);
+    // signInWithPhoneAuthCredential(phoneAuthCredential);
+
+    if (await myauth.verifyOTP(otp: emailVerificationController.text) == true) {
+      showSnackBar(context, "OTP is verified", 'success');
+      setState(() {
+        checkEmail = true;
+      });
+    } else {
+      showSnackBar(context, "Invalid OTP", 'error');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Invalid OTP"),
+      ));
+    }
+    if (checkEmail == true &&
+        isChecked == true &&
+        emailFormKey.currentState!.validate() &&
+        passwordFormKey.currentState!.validate()) {
+      registerUser(emailController.text, passwordController.text, context);
+    } else {
+      showSnackBar(context, "Please! Check your information!", 'error');
+    }
+  }
 
   @override
   void initState() {
@@ -98,9 +128,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
           ),
           Container(
             margin: const EdgeInsets.only(top: 72 + 44, left: 24, right: 24),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
                   'Sign up!',
                   style: TextStyle(
@@ -136,45 +166,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                   child: Column(
                     children: [
                       // SizedBox(height: 32),
-                      Container(
-                        alignment: Alignment.center,
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 65,
-                              child: Divider(
-                                color: gray,
-                                thickness: 0.5,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            Text(
-                              "personal information",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Urbanist',
-                                color: gray,
-                                fontSize: 14,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            SizedBox(
-                              width: 65,
-                              child: Divider(
-                                color: gray,
-                                thickness: 0.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+
                       const SizedBox(height: 16),
                       SizedBox(
                         width: 327 + 24,
@@ -267,36 +259,36 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                 (_enabledEmail)
                                     ? GestureDetector(
                                         onTap: () async {
-                                          // if (emailController.text == '') {
-                                          //   showSnackBar(
-                                          //       context,
-                                          //       "Please fill your email",
-                                          //       'error');
-                                          // } else {
-                                          //   myauth.setConfig(
-                                          //     appEmail:
-                                          //         "binkstore2022@gmail.com",
-                                          //     appName: "Email OTP",
-                                          //     userEmail: emailController.text,
-                                          //   );
-                                          //   if (await myauth.sendOTP() ==
-                                          //       true) {
-                                          //     ScaffoldMessenger.of(context)
-                                          //         .showSnackBar(const SnackBar(
-                                          //       content:
-                                          //           Text("OTP has been sent"),
-                                          //     ));
-                                          //   } else {
-                                          //     ScaffoldMessenger.of(context)
-                                          //         .showSnackBar(const SnackBar(
-                                          //       content: Text(
-                                          //           "Oops, OTP send failed"),
-                                          //     ));
-                                          //   }
-                                          //   setState(() {
-                                          //     _enabledEmail = false;
-                                          //   });
-                                          // }
+                                          if (emailController.text == '') {
+                                            showSnackBar(
+                                                context,
+                                                "Please fill your email",
+                                                'error');
+                                          } else {
+                                            myauth.setConfig(
+                                              appEmail:
+                                                  "binkstore2022@gmail.com",
+                                              appName: "Email OTP",
+                                              userEmail: emailController.text,
+                                            );
+                                            if (await myauth.sendOTP() ==
+                                                true) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("OTP has been sent"),
+                                              ));
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "Oops, OTP send failed"),
+                                              ));
+                                            }
+                                            setState(() {
+                                              _enabledEmail = false;
+                                            });
+                                          }
                                         },
                                         child: Container(
                                           height: 44,
@@ -602,9 +594,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                             const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.center,
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   SizedBox(
                                     width: 65,
                                     child: Divider(
@@ -838,7 +830,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                   if (isLoading) return;
                                   setState(() {
                                     isLoading = true;
-                                    // controlSignUp();
+                                    controlSignUp();
                                   });
                                   await Future.delayed(Duration(seconds: 3));
                                   if (this.mounted) {
@@ -865,13 +857,13 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                         fontWeight: FontWeight.w600,
                                         fontSize: 18)),
                                 child: isLoading
-                                    ? const SizedBox(
+                                    ? SizedBox(
                                         height: 48,
                                         width: 200,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [
+                                          children: const [
                                             SizedBox(
                                                 width: 24,
                                                 height: 24,
@@ -908,125 +900,6 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                             const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.center,
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 65,
-                                    child: Divider(
-                                      color: gray,
-                                      thickness: 0.5,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    "or continue with",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: 'Urbanist',
-                                      color: gray,
-                                      fontSize: 14,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  SizedBox(
-                                    width: 65,
-                                    child: Divider(
-                                      color: gray,
-                                      thickness: 0.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            Container(
-                              width: 327 + 24,
-                              height: 44,
-                              alignment: Alignment.center,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 156,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        border:
-                                            Border.all(width: 1.5, color: gray),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          child: Image.asset(
-                                            'assets/vectors/vectorFacebook.png',
-                                            width: 16.0,
-                                            height: 16.0,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        const Text(
-                                          'Facebook',
-                                          style: TextStyle(
-                                              fontFamily: 'Urbanist',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: black),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Container(
-                                    width: 156,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        border:
-                                            Border.all(width: 1.5, color: gray),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          child: Image.asset(
-                                            'assets/vectors/vectorGoogle.png',
-                                            width: 16.0,
-                                            height: 16.0,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        const Text(
-                                          'Google',
-                                          style: TextStyle(
-                                              fontFamily: 'Urbanist',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: black),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 40),
-                            Container(
-                              alignment: Alignment.center,
                               child: const Text(
                                 'To be able to register, you must agree to our',
                                 style: TextStyle(
@@ -1036,9 +909,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     color: gray),
                               ),
                             ),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: const [
                                 Text(
                                   'Terms of Use',
                                   style: TextStyle(

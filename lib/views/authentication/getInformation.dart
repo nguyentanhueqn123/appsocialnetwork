@@ -1,14 +1,19 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:iconsax/iconsax.dart';
-import 'package:social_network_app/views/loadingWidget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:social_network_app/views/authentication/signIn.dart';
 import 'package:social_network_app/views/snackBarWidget.dart';
-import 'package:social_network_app/views/widget_auth.dart';
-
+import 'package:social_network_app/views/authentication/widget_auth.dart';
 
 import '../../constants/colors.dart';
+import '../../repository/cloud_data_management.dart';
+import 'loadingWidget.dart';
 
 class InformationScreen extends StatefulWidget {
   const InformationScreen({Key? key}) : super(key: key);
@@ -18,7 +23,7 @@ class InformationScreen extends StatefulWidget {
 }
 
 class _InformationScreenState extends State<InformationScreen> {
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   final GlobalKey<FormState> _infoKey = GlobalKey<FormState>();
   final TextEditingController _fullname = TextEditingController();
@@ -26,8 +31,30 @@ class _InformationScreenState extends State<InformationScreen> {
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _bio = TextEditingController();
   File? _image;
-  // final CloudStoreDataManagement _cloudStoreDataManagement =
-  //     CloudStoreDataManagement();
+  final CloudStoreDataManagement _cloudStoreDataManagement =
+      CloudStoreDataManagement();
+  pickImage(ImageSource source) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowCompression: false,
+    );
+    print('result');
+    print(result);
+    if (result != null) {
+      Uint8List? fileBytes = result.files.first.bytes;
+      String fileName = result.files.first.name;
+      return File(result.files.first.path.toString());
+    }
+    print('No Image Selected');
+  }
+
+  selectImage() async {
+    File im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
+  }
 
   @override
   void dispose() {
@@ -67,9 +94,9 @@ class _InformationScreenState extends State<InformationScreen> {
                       const SizedBox(
                         height: 62,
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             "Update Your Profile",
                             textAlign: TextAlign.center,
@@ -87,6 +114,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         height: 32,
                       ),
                       GestureDetector(
+                        onTap: selectImage,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -285,58 +313,58 @@ class _InformationScreenState extends State<InformationScreen> {
       padding: const EdgeInsets.only(left: 122, right: 122),
       child: GestureDetector(
         onTap: () async {
-          // if (this._infoKey.currentState!.validate()) {
-          //   print('Validated');
-          //   SystemChannels.textInput.invokeMethod('TextInput.hide');
+          if (this._infoKey.currentState!.validate()) {
+            print('Validated');
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
 
-          //   if (mounted) {
-          //     setState(() {
-          //       this._isLoading = true;
-          //     });
-          //   }
+            if (mounted) {
+              setState(() {
+                _isLoading = true;
+              });
+            }
 
-          //   String msg = '';
+            String msg = '';
 
-          //   final bool canRegisterNewUser = await _cloudStoreDataManagement
-          //       .checkThisUserAlreadyPresentOrNot(
-          //           userName: this._username.text);
+            final bool canRegisterNewUser = await _cloudStoreDataManagement
+                .checkThisUserAlreadyPresentOrNot(
+                    userName: this._username.text);
 
-          //   if (!canRegisterNewUser)
-          //     msg = 'User Name Already Present';
-          //   else {
-          //     final bool _userEntryResponse =
-          //         await _cloudStoreDataManagement.registerNewUser(
-          //       fullname: this._fullname.text,
-          //       userName: this._username.text,
-          //       phone: this._phone.text,
-          //       bio: this._bio.text,
-          //       file: _image!,
-          //     );
+            if (!canRegisterNewUser)
+              msg = 'User Name Already Present';
+            else {
+              final bool _userEntryResponse =
+                  await _cloudStoreDataManagement.registerNewUser(
+                fullname: this._fullname.text,
+                userName: this._username.text,
+                phone: this._phone.text,
+                bio: this._bio.text,
+                file: _image!,
+              );
 
-          //     if (_userEntryResponse) {
-          //       msg = 'Create account Successfully';
+              if (_userEntryResponse) {
+                msg = 'Create account Successfully';
 
-          //       /// Calling Local Databases Methods To Intitialize Local Database with required MEthods
-          //       // Navigator.pushAndRemoveUntil(
-          //       //     context,
-          //       //     MaterialPageRoute(
-          //       //       builder: (_) => signInScreen(),
-          //       //     ),
-          //       //     (route) => false);
-          //       showSnackBar(context, msg, 'success');
-          //     } else
-          //       msg = 'User Data Not Entry Successfully';
-          //     showSnackBar(context, msg, 'error');
-          //   }
+                /// Calling Local Databases Methods To Intitialize Local Database with required MEthods
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SignInScreen(),
+                    ),
+                    (route) => false);
+                showSnackBar(context, msg, 'success');
+              } else
+                msg = 'User Data Not Entry Successfully';
+              showSnackBar(context, msg, 'error');
+            }
 
-          //   if (mounted) {
-          //     setState(() {
-          //       this._isLoading = true;
-          //     });
-          //   }
-          // } else {
-          //   print('Not Validated');
-          // }
+            if (mounted) {
+              setState(() {
+                _isLoading = true;
+              });
+            }
+          } else {
+            print('Not Validated');
+          }
         },
         child: Container(
           width: 327 + 24,
