@@ -43,11 +43,11 @@ class _atSearchScreen extends State<atSearchScreen>
       setState(() {
         postListCaption.clear();
         postList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           postListCaption.add(PostModel.fromDocument(element.data()));
-        });
+        }
 
-        postListCaption.forEach((element) {
+        for (var element in postListCaption) {
           print(
               (element.caption.toUpperCase().contains(search.toUpperCase())) ==
                   true);
@@ -58,7 +58,7 @@ class _atSearchScreen extends State<atSearchScreen>
             postList.add(element);
             print(postList.length);
           }
-        });
+        }
         if (postList.isEmpty) {}
       });
     });
@@ -70,11 +70,11 @@ class _atSearchScreen extends State<atSearchScreen>
       setState(() {
         userSearch.clear();
         userList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           userSearch.add(UserModel.fromDocument(element.data()));
-        });
+        }
 
-        userSearch.forEach((element) {
+        for (var element in userSearch) {
           print((element.email.toUpperCase().contains(search.toUpperCase())) ==
               true);
           if (((element.email + " ")
@@ -84,15 +84,15 @@ class _atSearchScreen extends State<atSearchScreen>
             userList.add(element);
             print(userList.length);
           }
-        });
-        userList.forEach((element) {
+        }
+        for (var element in userList) {
           print(element.id);
           if (element.id == uid) {
             setState(() {
               userList.remove(element);
             });
           }
-        });
+        }
       });
     });
   }
@@ -106,31 +106,23 @@ class _atSearchScreen extends State<atSearchScreen>
         .listen((value) {
       setState(() {
         postList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           postList.add(PostModel.fromDocument(element.data()));
-        });
+        }
       });
     });
   }
 
   List<UserModel> userList = [];
-
   Future getAllUser() async {
     FirebaseFirestore.instance.collection("users").get().then((value) {
       setState(() {
         userList.clear();
-        value.docs.forEach((element) {
-          userList.add(UserModel.fromDocument(element.data()));
-        });
-        userList.forEach((element) {
-          print(element.id);
-          if (element.id == uid) {
-            setState(() {
-              userList.remove(element);
-            });
+        for (var element in value.docs) {
+          if (element.id != uid) {
+            userList.add(UserModel.fromDocument(element.data()));
           }
-        });
-        print(userList);
+        }
       });
     });
     setState(() {});
@@ -169,6 +161,7 @@ class _atSearchScreen extends State<atSearchScreen>
           ),
           Container(
             padding: EdgeInsets.only(top: 32, right: 16, left: 16),
+            margin: EdgeInsets.only(bottom: 32 + 24),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -357,19 +350,17 @@ class _atSearchScreen extends State<atSearchScreen>
                                           Container(
                                             width: 44,
                                             height: 44,
-                                            margin: EdgeInsets.only(
+                                            margin: const EdgeInsets.only(
                                                 left: 16, bottom: 16, top: 16),
-                                            decoration: new BoxDecoration(
+                                            decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      // userList[index]
-                                                      //     .avatar
-                                                      (userList[index].avatar !=
-                                                              '')
-                                                          ? userList[index]
-                                                              .avatar
-                                                          : 'https://i.imgur.com/RUgPziD.jpg'),
+                                                  image: NetworkImage((userList[
+                                                                  index]
+                                                              .avatar !=
+                                                          '')
+                                                      ? userList[index].avatar
+                                                      : 'https://i.imgur.com/RUgPziD.jpg'),
                                                   fit: BoxFit.cover),
                                             ),
                                           ),
@@ -407,7 +398,6 @@ class _atSearchScreen extends State<atSearchScreen>
                 ],
               ),
             ),
-            margin: EdgeInsets.only(bottom: 32 + 24),
           )
         ])));
   }

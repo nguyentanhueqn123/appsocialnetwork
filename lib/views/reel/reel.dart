@@ -6,9 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:chewie/chewie.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:video_player/video_player.dart';
-
 import '../../constants/colors.dart';
 import '../../models/reelModel.dart';
 import 'contentScreen.dart';
@@ -46,7 +44,7 @@ class _atReelScreen extends State<atReelScreen>
     });
   }
 
-  late SwiperController swiperController = SwiperController();
+  // late SwiperController swiperController = SwiperController();
   @override
   void initState() {
     super.initState();
@@ -77,18 +75,18 @@ class _atReelScreen extends State<atReelScreen>
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Swiper(
-                controller: swiperController,
-                itemBuilder: (BuildContext context, int index) {
-                  return ContentScreen(
-                    src: reelList[index].urlVideo,
-                    uid: reelList[index].idUser,
-                    reelId: reelList[index].id,
-                  );
-                },
-                itemCount: reelList.length,
-                scrollDirection: Axis.vertical,
-              ),
+              // Swiper(
+              //   controller: swiperController,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return ContentScreen(
+              //       src: reelList[index].urlVideo,
+              //       uid: reelList[index].idUser,
+              //       reelId: reelList[index].id,
+              //     );
+              //   },
+              //   itemCount: reelList.length,
+              //   scrollDirection: Axis.vertical,
+              // ),
               Column(
                 children: [
                   Container(

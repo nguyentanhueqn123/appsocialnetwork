@@ -7,7 +7,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:chewie/chewie.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+//import 'package:flutter_swiper/flutter_swiper.dart';
 
 ///add constants
 import 'package:video_player/video_player.dart';
@@ -58,7 +58,7 @@ class _atStoryScreen extends State<atStoryScreen>
     });
   }
 
-  late SwiperController swiperController;
+  //late SwiperController swiperController;
 
   @override
   void initState() {
@@ -78,17 +78,18 @@ class _atStoryScreen extends State<atStoryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          return ContentStoryScreen(
-            src: videoList[index],
-            uid: ownerId[index],
-            storyId: storiesId[index],
-          );
-        },
-        itemCount: videoList.length,
-        scrollDirection: Axis.horizontal,
-      ),
+      body: Container()
+      // Swiper(
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return ContentStoryScreen(
+      //       src: videoList[index],
+      //       uid: ownerId[index],
+      //       storyId: storiesId[index],
+      //     );
+      //   },
+      //   itemCount: videoList.length,
+      //   scrollDirection: Axis.horizontal,
+      // ),
     );
   }
 }

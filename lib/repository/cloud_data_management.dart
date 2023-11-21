@@ -19,7 +19,7 @@ class CloudStoreDataManagement {
       final QuerySnapshot<Map<String, dynamic>> findResults =
           await FirebaseFirestore.instance
               .collection(_collectionName)
-              .where('user_name', isEqualTo: userName)
+              .where('userName', isEqualTo: userName)
               .get();
 
       print('Debug 1: ${findResults.docs.isEmpty}');
@@ -92,9 +92,7 @@ class CloudStoreDataManagement {
   Future<bool> userRecordPresentOrNot({required String email}) async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await FirebaseFirestore.instance
-              .doc('${this._collectionName}/$email')
-              .get();
+          await FirebaseFirestore.instance.doc('$_collectionName/$email').get();
       return documentSnapshot.exists;
     } catch (e) {
       print('Error in user Record Present or not: ${e.toString()}');

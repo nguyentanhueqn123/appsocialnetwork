@@ -27,7 +27,7 @@ class commentModel {
         id: doc['id'],
         idUser: doc['userId'],
         idPost: doc['postId'],
-        timeCreate: doc['timeCreate'],
+        timeCreate: doc['time'],
         content: doc['content'],
         state: doc['state'],
         ownerAvatar: doc['ownerAvatar'],

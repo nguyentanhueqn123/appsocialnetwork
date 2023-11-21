@@ -53,11 +53,6 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
 
   bool checkEmail = false;
   Future<void> controlSignUp() async {
-    // PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-    //     verificationId: verificationId,
-    //     smsCode: phoneVerificationController.value.text);
-    // signInWithPhoneAuthCredential(phoneAuthCredential);
-
     if (await myauth.verifyOTP(otp: emailVerificationController.text) == true) {
       showSnackBar(context, "OTP is verified", 'success');
       setState(() {
