@@ -21,14 +21,17 @@ import '../notification/postNotification.dart';
 import '../widget/image.dart';
 import '../widget/video.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atSearchScreen extends StatefulWidget {
   String uid;
   atSearchScreen(required, {Key? key, required this.uid}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _atSearchScreen createState() => _atSearchScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atSearchScreen extends State<atSearchScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -48,15 +51,15 @@ class _atSearchScreen extends State<atSearchScreen>
         }
 
         for (var element in postListCaption) {
+          // ignore: avoid_print
           print(
               (element.caption.toUpperCase().contains(search.toUpperCase())) ==
                   true);
-          if (((element.caption + " ")
+          if ((("${element.caption} ")
                   .toUpperCase()
                   .contains(search.toUpperCase())) ==
               true) {
             postList.add(element);
-            print(postList.length);
           }
         }
         if (postList.isEmpty) {}
@@ -75,17 +78,21 @@ class _atSearchScreen extends State<atSearchScreen>
         }
 
         for (var element in userSearch) {
+          // ignore: avoid_print
           print((element.email.toUpperCase().contains(search.toUpperCase())) ==
               true);
+          // ignore: prefer_interpolation_to_compose_strings
           if (((element.email + " ")
                   .toUpperCase()
                   .contains(search.toUpperCase())) ==
               true) {
             userList.add(element);
+            // ignore: avoid_print
             print(userList.length);
           }
         }
         for (var element in userList) {
+          // ignore: avoid_print
           print(element.id);
           if (element.id == uid) {
             setState(() {
@@ -148,20 +155,20 @@ class _atSearchScreen extends State<atSearchScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 32, right: 16, left: 16),
-            margin: EdgeInsets.only(bottom: 32 + 24),
+            padding: const EdgeInsets.only(top: 32, right: 16, left: 16),
+            margin: const EdgeInsets.only(bottom: 32 + 24),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -175,14 +182,14 @@ class _atSearchScreen extends State<atSearchScreen>
                           child: Container(
                             width: 327,
                             height: 40,
-                            padding: EdgeInsets.only(left: 2, right: 24),
+                            padding: const EdgeInsets.only(left: 2, right: 24),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 color: white,
                                 border: Border.all(color: gray)),
                             alignment: Alignment.topCenter,
                             child: TextFormField(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'Urbanist',
                                     fontSize: 14,
                                     color: black,
@@ -196,6 +203,7 @@ class _atSearchScreen extends State<atSearchScreen>
                                   setState(() {});
                                 },
                                 decoration: InputDecoration(
+                                  // ignore: avoid_unnecessary_containers
                                   prefixIcon: Container(
                                       child: Stack(
                                           alignment: Alignment.center,
@@ -205,7 +213,7 @@ class _atSearchScreen extends State<atSearchScreen>
                                       ])),
                                   border: InputBorder.none,
                                   hintText: "What are you looking for?",
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 14,
                                       color: black,
@@ -214,7 +222,7 @@ class _atSearchScreen extends State<atSearchScreen>
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                           onTap: () {
                             // Navigator.push(
@@ -224,13 +232,14 @@ class _atSearchScreen extends State<atSearchScreen>
                             //               uid: uid,
                             //             )));
                           },
-                          child: Icon(Iconsax.scan, size: 24, color: black)),
+                          child:
+                              const Icon(Iconsax.scan, size: 24, color: black)),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Post',
                       style: TextStyle(
                           fontFamily: 'Recoleta',
@@ -241,12 +250,13 @@ class _atSearchScreen extends State<atSearchScreen>
                   ),
                   Container(
                       width: 327 + 24,
-                      padding: EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(bottom: 8),
                       // height: 400,
                       child: GridView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           mainAxisSpacing: 2,
                           crossAxisSpacing: 2,
