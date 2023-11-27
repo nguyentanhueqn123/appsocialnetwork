@@ -55,11 +55,14 @@ class _atSearchScreen extends State<atSearchScreen>
           print(
               (element.caption.toUpperCase().contains(search.toUpperCase())) ==
                   true);
-          if ((("${element.caption} ")
+          // ignore: prefer_interpolation_to_compose_strings
+          if (((element.caption + " ")
                   .toUpperCase()
                   .contains(search.toUpperCase())) ==
               true) {
             postList.add(element);
+            // ignore: avoid_print
+            print(postList.length);
           }
         }
         if (postList.isEmpty) {}

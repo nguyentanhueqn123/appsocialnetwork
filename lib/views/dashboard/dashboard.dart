@@ -3,14 +3,10 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/src/widgets/text.dart';
 import 'package:intl/intl.dart';
 
 ///add constants
@@ -27,14 +23,17 @@ import 'comment.dart';
 import 'createPost.dart';
 import 'postVideo.dart';
 
+// ignore: camel_case_types
 class atDashboardScreen extends StatefulWidget {
   final String uid;
-  atDashboardScreen({Key? key, required this.uid}) : super(key: key);
+  const atDashboardScreen({Key? key, required this.uid}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _atDashboardScreen createState() => _atDashboardScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atDashboardScreen extends State<atDashboardScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -72,6 +71,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
         y = user.follow;
       });
@@ -89,23 +89,24 @@ class _atDashboardScreen extends State<atDashboardScreen>
       setState(() {
         postList.clear();
         postListCheck.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           if (element.data()["state"] == "show") {
             postListCheck.add(PostModel.fromDocument(element.data()));
           }
-        });
-        postListCheck.forEach((element) {
+        }
+        for (var element in postListCheck) {
           if (y.contains(element.idUser) || uid == element.idUser) {
             postList.add(element);
           }
-        });
+        }
       });
     });
   }
 
   late VideoPlayerController _videoPlayerController;
 
-  late ChewieController _chewieController =
+  // ignore: unused_field
+  late final ChewieController _chewieController =
       ChewieController(videoPlayerController: _videoPlayerController);
   bool check = false;
   bool play = false;
@@ -135,8 +136,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
             'content': 'liked your photo',
             'category': 'like',
             'nameSender': user.userName,
-            'timeCreate':
-                "${DateFormat('y MMMM d, hh:mm a').format(DateTime.now())}"
+            'timeCreate': DateFormat('y MMMM d, hh:mm a').format(DateTime.now())
           }).then((value) {
             FirebaseFirestore.instance
                 .collection('notifies')
@@ -187,7 +187,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 32, right: 16, left: 16),
+                  padding: const EdgeInsets.only(top: 32, right: 16, left: 16),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +196,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                         alignment: Alignment.topLeft,
                         child: Text(
                           user.userName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Recoleta',
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -204,7 +204,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         children: [
                           Container(
@@ -221,7 +221,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                 },
                                 child: AnimatedContainer(
                                   alignment: Alignment.topRight,
-                                  duration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 300),
                                   height: 24,
                                   width: 24,
                                   decoration: BoxDecoration(
@@ -234,11 +234,11 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                   child: Container(
                                       padding: EdgeInsets.zero,
                                       alignment: Alignment.center,
-                                      child: Icon(Iconsax.add,
+                                      child: const Icon(Iconsax.add,
                                           size: 16, color: black)),
                                 ),
                               )),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Container(
                             alignment: Alignment.topRight,
                             child: GestureDetector(
@@ -253,7 +253,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                               child: Container(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.topRight,
-                                  child: Icon(Iconsax.message,
+                                  child: const Icon(Iconsax.message,
                                       size: 24, color: black)),
                             ),
                           ),
@@ -264,7 +264,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                 ),
                 // SizedBox(height: 32),
                 Container(
-                    margin: EdgeInsets.only(top: 88, left: 16),
+                    margin: const EdgeInsets.only(top: 88, left: 16),
                     height: 78,
                     width: 375,
                     child: ListView.separated(
@@ -272,11 +272,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
                         separatorBuilder: (BuildContext context, int index) =>
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                         itemCount: 2,
                         itemBuilder: (context, index) {
                           return Container(
                               child: (index == 0)
+                                  // ignore: avoid_unnecessary_containers
                                   ? Container(
                                       child: Column(
                                         children: [
@@ -291,7 +292,8 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                         width: 1.5,
                                                       ),
                                                       borderRadius:
-                                                          BorderRadius.all(
+                                                          const BorderRadius
+                                                                  .all(
                                                               Radius.circular(
                                                                   8)))),
                                               GestureDetector(
@@ -308,7 +310,8 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                 child: Container(
                                                   width: 48,
                                                   height: 48,
-                                                  margin: EdgeInsets.all(4),
+                                                  margin:
+                                                      const EdgeInsets.all(4),
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -321,25 +324,28 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                 ),
                                               ),
                                               Container(
-                                                padding: EdgeInsets.only(
+                                                padding: const EdgeInsets.only(
                                                     top: 45, left: 45),
                                                 child: Container(
                                                     width: 16,
                                                     height: 16,
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                         color: white,
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     16))),
-                                                    child: Icon(Iconsax.add,
-                                                        size: 14, color: gray)),
+                                                    child: const Icon(
+                                                        Iconsax.add,
+                                                        size: 14,
+                                                        color: gray)),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 3),
+                                          const SizedBox(height: 3),
+                                          // ignore: avoid_unnecessary_containers
                                           Container(
-                                              child: Text(
+                                              child: const Text(
                                             'Your Story',
                                             style: TextStyle(
                                                 fontSize: 12,
@@ -350,6 +356,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                         ],
                                       ),
                                     )
+                                  // ignore: avoid_unnecessary_containers
                                   : Container(
                                       child: Column(
                                         children: [
@@ -364,11 +371,13 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                         width: 1.5,
                                                       ),
                                                       borderRadius:
-                                                          BorderRadius.all(
+                                                          const BorderRadius
+                                                                  .all(
                                                               Radius.circular(
                                                                   8)))),
                                               Container(
-                                                padding: EdgeInsets.all(4),
+                                                padding:
+                                                    const EdgeInsets.all(4),
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(4),
@@ -381,9 +390,10 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 8),
+                                          const SizedBox(height: 8),
+                                          // ignore: avoid_unnecessary_containers
                                           Container(
-                                              child: Text(
+                                              child: const Text(
                                             'Pan',
                                             style: TextStyle(
                                                 fontSize: 12,
@@ -411,12 +421,14 @@ class _atDashboardScreen extends State<atDashboardScreen>
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
                         separatorBuilder: (BuildContext context, int index) =>
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                         itemCount: postList.length,
                         itemBuilder: (context, index) {
+                          // ignore: avoid_unnecessary_containers
                           return Container(
                             child: Column(
                               children: <Widget>[
+                                // ignore: avoid_unnecessary_containers
                                 Container(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -437,7 +449,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                         child: Row(
                                           children: [
                                             Container(
-                                              padding: EdgeInsets.all(4),
+                                              padding: const EdgeInsets.all(4),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(16),
@@ -448,11 +460,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(width: 8),
+                                            const SizedBox(width: 8),
+                                            // ignore: avoid_unnecessary_containers
                                             Container(
                                                 child: Text(
                                               postList[index].ownerUsername,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: 'Urbanist',
                                                   fontWeight: FontWeight.w600,
@@ -461,7 +474,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                           ],
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       GestureDetector(
                                         onTap: () {
                                           if (uid == postList[index].idUser) {
@@ -479,9 +492,9 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                           }
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           alignment: Alignment.topRight,
-                                          child: Icon(Iconsax.more,
+                                          child: const Icon(Iconsax.more,
                                               size: 24, color: black),
                                         ),
                                       )
@@ -492,8 +505,8 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     ? Container(
                                         width: 360,
                                         height: 340,
-                                        padding:
-                                            EdgeInsets.only(top: 8, bottom: 16),
+                                        padding: const EdgeInsets.only(
+                                            top: 8, bottom: 16),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(16),
@@ -505,6 +518,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                       )
                                     : postVideoWidget(context,
                                         src: postList[index].urlVideo),
+                                // ignore: avoid_unnecessary_containers
                                 Container(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -524,24 +538,31 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                   .contains(uid))
                                               ? Container(
                                                   padding:
-                                                      EdgeInsets.only(left: 8),
+                                                      const EdgeInsets.only(
+                                                          left: 8),
                                                   alignment: Alignment.topRight,
-                                                  child: Icon(Iconsax.like_15,
-                                                      size: 24, color: pink),
+                                                  child: const Icon(
+                                                      Iconsax.like_15,
+                                                      size: 24,
+                                                      color: pink),
                                                 )
                                               : Container(
                                                   padding:
-                                                      EdgeInsets.only(left: 8),
+                                                      const EdgeInsets.only(
+                                                          left: 8),
                                                   alignment: Alignment.topRight,
-                                                  child: Icon(Iconsax.like_1,
-                                                      size: 24, color: black),
+                                                  child: const Icon(
+                                                      Iconsax.like_1,
+                                                      size: 24,
+                                                      color: black),
                                                 )),
                                       GestureDetector(
                                         onTap: () {
                                           //likes post
                                         },
                                         child: Container(
-                                            padding: EdgeInsets.only(left: 8),
+                                            padding:
+                                                const EdgeInsets.only(left: 8),
                                             alignment: Alignment.centerLeft,
                                             child: Text(
                                               (postList[index].likes.isEmpty)
@@ -550,7 +571,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                       .likes
                                                       .length
                                                       .toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                                 color: black,
                                                 fontFamily: 'Urbanist',
@@ -559,7 +580,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                             )),
                                       ),
                                       IconButton(
-                                        padding: EdgeInsets.only(left: 8),
+                                        padding: const EdgeInsets.only(left: 8),
                                         onPressed: () {
                                           Navigator.push(
                                               context,
@@ -574,9 +595,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                             .idUser,
                                                       ))));
                                         },
+                                        // ignore: avoid_unnecessary_containers
                                         icon: Container(
-                                          child: Icon(Iconsax.message_text,
-                                              size: 24, color: black),
+                                          child: const Icon(
+                                              Iconsax.message_text,
+                                              size: 24,
+                                              color: black),
                                         ),
                                       ),
                                       // Container(
@@ -591,7 +615,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                       //         fontWeight: FontWeight.w600,
                                       //       ),
                                       //     )),
-                                      Spacer(),
+                                      const Spacer(),
                                       (isVideo)
                                           ? IconButton(
                                               onPressed: () {
@@ -599,23 +623,25 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                               },
                                               icon: (silent == true)
                                                   ? Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 8),
-                                                      child: Icon(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              right: 8),
+                                                      child: const Icon(
                                                           Iconsax.volume_slash,
                                                           size: 24,
                                                           color: gray),
                                                     )
                                                   : Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 8),
-                                                      child: Icon(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              right: 8),
+                                                      child: const Icon(
                                                           Iconsax.volume_high,
                                                           size: 24,
                                                           color: black),
                                                     ))
                                           : Container(
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                   color: Colors.transparent),
                                             )
                                     ],
@@ -628,11 +654,11 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                   },
                                   child: Container(
                                       width: 327 + 24,
-                                      margin: EdgeInsets.only(left: 8),
+                                      margin: const EdgeInsets.only(left: 8),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         postList[index].caption,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             color: black,
                                             fontFamily: 'Urbanist',
@@ -641,13 +667,13 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                         maxLines: 1,
                                       )),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Container(
-                                    margin: EdgeInsets.only(left: 8),
+                                    margin: const EdgeInsets.only(left: 8),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       postList[index].timeCreate,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: gray,
                                         fontFamily: 'Urbanist',

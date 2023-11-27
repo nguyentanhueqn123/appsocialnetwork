@@ -1,11 +1,11 @@
-import 'dart:io';
+// ignore_for_file: file_names
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable, camel_case_types
 class postVideoWidget extends StatefulWidget {
   final String? src;
 
@@ -13,9 +13,11 @@ class postVideoWidget extends StatefulWidget {
 
   bool liked = false;
   @override
+  // ignore: library_private_types_in_public_api
   _postVideoWidgetState createState() => _postVideoWidgetState();
 }
 
+// ignore: camel_case_types
 class _postVideoWidgetState extends State<postVideoWidget> {
   late VideoPlayerController _videoPlayerController;
 
@@ -77,7 +79,6 @@ class _postVideoWidgetState extends State<postVideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
         onTap: () {
           setState(() {
@@ -91,7 +92,7 @@ class _postVideoWidgetState extends State<postVideoWidget> {
         child: Container(
           width: 360,
           height: 340,
-          padding: EdgeInsets.only(top: 8, bottom: 16),
+          padding: const EdgeInsets.only(top: 8, bottom: 16),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: FittedBox(

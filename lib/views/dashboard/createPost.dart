@@ -1,34 +1,29 @@
+// ignore_for_file: file_names, must_be_immutable, no_logic_in_create_state, camel_case_types, duplicate_ignore
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:intl/intl.dart';
-
-///add constants
-import 'package:video_player/video_player.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/images.dart';
 import '../../models/userModel.dart';
 import 'postVideo.dart';
 
+// ignore: camel_case_types
 class atCreatePostScreen extends StatefulWidget {
   String uid;
 
   atCreatePostScreen(required, {Key? key, required this.uid}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _atCreatePostScreen createState() => _atCreatePostScreen(uid);
 }
 
@@ -52,25 +47,32 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
       type: FileType.any,
       allowCompression: false,
     );
+    // ignore: avoid_print
     print('result');
+    // ignore: avoid_print
     print(result);
     if (result != null) {
+      // ignore: unused_local_variable
       Uint8List? fileBytes = result.files.first.bytes;
       String fileName = result.files.first.name;
 
       // Upload file
+      // ignore: avoid_print
       print(result.files.first.name);
+      // ignore: avoid_print
       print(result.files.first.path);
       if (result.files.first.path != null) {
         FirebaseStorage storage = FirebaseStorage.instance;
         Reference ref = storage.ref('uploads/$fileName');
+        // ignore: unused_local_variable
         UploadTask uploadTask =
             ref.putFile(File(result.files.first.path.toString()));
         Reference ref_2 =
-            await FirebaseStorage.instance.ref().child('uploads/$fileName');
+            FirebaseStorage.instance.ref().child('uploads/$fileName');
 
         link = (await ref_2.getDownloadURL()).toString();
 
+        // ignore: avoid_print
         print(result.files.first.path.toString());
         if (result.files.first.name.contains('.mp4')) {
           setState(() {
@@ -92,7 +94,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
         context: context,
         builder: (context) {
           return SimpleDialog(
-            title: Text(
+            title: const Text(
               "Choose Resource",
               style: TextStyle(
                   fontFamily: 'Recoleta',
@@ -102,7 +104,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
             ),
             children: [
               SimpleDialogOption(
-                child: Text(
+                child: const Text(
                   "Photo with Camera",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -113,7 +115,8 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                 onPressed: () {},
               ),
               SimpleDialogOption(
-                child: Text(
+                // ignore: sort_child_properties_last
+                child: const Text(
                   "Photo with Gallery",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -124,7 +127,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                 onPressed: handleTakeGallery,
               ),
               SimpleDialogOption(
-                child: Text(
+                child: const Text(
                   "Cancel",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -163,9 +166,12 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
         userFollower = user.favoriteList;
+        // ignore: avoid_print
         print('userFollower.length');
+        // ignore: avoid_print
         print(userFollower.length);
       });
     });
@@ -183,13 +189,13 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
       'mode': 'public',
       'state': 'show',
       'likes': FieldValue.arrayUnion([]),
-      'timeCreate': "${DateFormat('y MMMM d, hh:mm:ss').format(DateTime.now())}"
+      'timeCreate': DateFormat('y MMMM d, hh:mm:ss').format(DateTime.now())
     }).then((value) {
       FirebaseFirestore.instance
           .collection('posts')
           .doc(value.id)
           .update({'id': value.id}).then((value2) {
-        userFollower.forEach((element) {
+        for (var element in userFollower) {
           FirebaseFirestore.instance.collection('notifies').add({
             'idSender': uid,
             'idReceiver': element,
@@ -199,15 +205,14 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
             'content': 'just post the new photo',
             'category': 'post',
             'nameSender': user.userName,
-            'timeCreate':
-                "${DateFormat('y MMMM d, hh:mm a').format(DateTime.now())}"
+            'timeCreate': DateFormat('y MMMM d, hh:mm a').format(DateTime.now())
           }).then((value3) {
             FirebaseFirestore.instance
                 .collection('notifies')
                 .doc(value3.id)
                 .update({'id': value3.id});
           });
-        });
+        }
       });
     });
     Navigator.pop(context);
@@ -222,6 +227,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
     getUserDetail();
   }
 
+  @override
   void dispose() {
     super.dispose();
   }
@@ -229,14 +235,14 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
@@ -244,10 +250,10 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                  decoration: BoxDecoration(color: Colors.transparent),
+                  decoration: const BoxDecoration(color: Colors.transparent),
                   child: Container(
-                      margin:
-                          EdgeInsets.only(left: 24, right: 24, top: 20 + 20),
+                      margin: const EdgeInsets.only(
+                          left: 24, right: 24, top: 20 + 20),
                       child: Column(children: [
                         Row(
                           children: [
@@ -255,25 +261,26 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(Iconsax.back_square, size: 28),
+                              child: const Icon(Iconsax.back_square, size: 28),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             GestureDetector(
                               onTap: () {
                                 post();
                               },
-                              child: Icon(Iconsax.add_square, size: 28),
+                              child: const Icon(Iconsax.add_square, size: 28),
                             )
                           ],
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
+                        // ignore: avoid_unnecessary_containers
                         Container(
                             // margin: EdgeInsets.only(
                             //     left: 24, right: 24, top: 20 + 20),
                             child: Column(children: [
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Create Post',
                               style: TextStyle(
                                   fontFamily: 'Recoleta',
@@ -282,24 +289,24 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                   color: black),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 192,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 144,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
@@ -309,17 +316,18 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                               (urlImage == '')
                                   ? ((urlVideo == '')
                                       ? Container(
-                                          padding: EdgeInsets.all(24),
+                                          padding: const EdgeInsets.all(24),
                                           alignment: Alignment.center,
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: gray, width: 1),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8)),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(8)),
                                                 color: Colors.transparent),
                                             child: IconButton(
-                                                icon: Icon(Iconsax.add,
+                                                icon: const Icon(Iconsax.add,
                                                     size: 30, color: gray),
                                                 onPressed: () =>
                                                     selectImage(context)),
@@ -329,8 +337,8 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                   : Container(
                                       width: 360,
                                       height: 340,
-                                      padding:
-                                          EdgeInsets.only(top: 24, bottom: 16),
+                                      padding: const EdgeInsets.only(
+                                          top: 24, bottom: 16),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
                                         child: Image.network(
@@ -341,10 +349,10 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                     )
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Caption: ',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -357,7 +365,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                             key: captionFormKey,
                             child: Container(
                               width: 327 + 24,
-                              margin: EdgeInsets.only(top: 8),
+                              margin: const EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
@@ -367,7 +375,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                               ),
                               alignment: Alignment.topCenter,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
@@ -395,8 +403,8 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                   controller: captionController,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 16, right: 16),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 16, right: 16),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -409,7 +417,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,

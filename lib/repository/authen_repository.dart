@@ -1,11 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //import firebase
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_network_app/views/dashboard/dashboard.dart';
 
 import '../views/authentication/getInformation.dart';
 import '../views/authentication/signIn.dart';
@@ -15,15 +11,17 @@ import '../views/snackBarWidget.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 Future registerUser(String email, String password, context) async {
+  // ignore: no_leading_underscores_for_local_identifiers
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   try {
     await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) async {
       await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => InformationScreen()));
+          MaterialPageRoute(builder: (context) => const InformationScreen()));
     });
   } on FirebaseAuthException catch (e) {
+    // ignore: avoid_print
     print(e.code);
     switch (e.code) {
       case "operation-not-allowed":
@@ -54,6 +52,7 @@ Future signIn(String email, String password, context) async {
     await auth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) async {
+      // ignore: avoid_print
       print("successfully login!");
       final User? user = auth.currentUser;
       final uid = user?.uid;
@@ -64,6 +63,7 @@ Future signIn(String email, String password, context) async {
       }
     });
   } on FirebaseAuthException catch (e) {
+    // ignore: avoid_print
     print(e.code);
     switch (e.code) {
       case "user-not-found":
@@ -99,9 +99,10 @@ Future signIn(String email, String password, context) async {
 
 //Sign-out
 signOut(context) async {
+  // ignore: no_leading_underscores_for_local_identifiers
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (context) => SignInScreen()));
+      context, MaterialPageRoute(builder: (context) => const SignInScreen()));
   await _firebaseAuth.signOut();
 }
 

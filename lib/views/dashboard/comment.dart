@@ -1,8 +1,8 @@
+// ignore_for_file: unnecessary_this
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +12,7 @@ import '../../constants/images.dart';
 import '../../models/commentModel.dart';
 import '../../models/userModel.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atCommentScreen extends StatefulWidget {
   String uid;
   String postId;
@@ -24,10 +25,13 @@ class atCommentScreen extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _atCommentScreen createState() =>
+      // ignore: no_logic_in_create_state
       _atCommentScreen(this.uid, this.postId, this.ownerId);
 }
 
+// ignore: camel_case_types
 class _atCommentScreen extends State<atCommentScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -58,6 +62,7 @@ class _atCommentScreen extends State<atCommentScreen>
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
       });
     });
@@ -78,9 +83,9 @@ class _atCommentScreen extends State<atCommentScreen>
         .listen((value) {
       setState(() {
         commentList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           commentList.add(commentModel.fromDocument(element.data()));
-        });
+        }
       });
     });
   }
@@ -118,7 +123,7 @@ class _atCommentScreen extends State<atCommentScreen>
               'category': 'comment',
               'nameSender': user.userName,
               'timeCreate':
-                  "${DateFormat('y MMMM d, hh:mm a').format(DateTime.now())}"
+                  DateFormat('y MMMM d, hh:mm a').format(DateTime.now())
             }).then((value) {
               FirebaseFirestore.instance
                   .collection('notifies')
@@ -136,7 +141,8 @@ class _atCommentScreen extends State<atCommentScreen>
     final userid = user?.uid.toString();
     uid = userid!;
     getUserDetail();
-    print('Day la :' + postId);
+    // ignore: avoid_print
+    print('Day la :$postId');
     getCommentList();
   }
 
@@ -148,7 +154,7 @@ class _atCommentScreen extends State<atCommentScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
@@ -157,28 +163,29 @@ class _atCommentScreen extends State<atCommentScreen>
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
           ),
           SingleChildScrollView(
             child: Container(
-                decoration: BoxDecoration(color: Colors.transparent),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: Container(
-                    margin: EdgeInsets.only(left: 24, right: 24, top: 20 + 20),
+                    margin: const EdgeInsets.only(
+                        left: 24, right: 24, top: 20 + 20),
                     child: Column(children: [
                       Row(children: [
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Iconsax.back_square, size: 28),
+                          child: const Icon(Iconsax.back_square, size: 28),
                         ),
-                        SizedBox(width: 32),
+                        const SizedBox(width: 32),
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text(
+                          child: const Text(
                             'Comment',
                             style: TextStyle(
                                 fontFamily: 'Recoleta',
@@ -192,7 +199,7 @@ class _atCommentScreen extends State<atCommentScreen>
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                            Container(
+                            SizedBox(
                               height: MediaQuery.of(context).size.height * 0.8,
                               width: MediaQuery.of(context).size.width,
                               child: ListView.separated(
@@ -202,7 +209,7 @@ class _atCommentScreen extends State<atCommentScreen>
                                   shrinkWrap: true,
                                   separatorBuilder:
                                       (BuildContext context, int index) =>
-                                          SizedBox(height: 0),
+                                          const SizedBox(height: 0),
                                   itemCount: commentList.length,
                                   itemBuilder: (context, index) {
                                     return Container(
@@ -213,12 +220,12 @@ class _atCommentScreen extends State<atCommentScreen>
                                               color: black.withOpacity(0.25),
                                               spreadRadius: 0,
                                               blurRadius: 64,
-                                              offset: Offset(8, 8),
+                                              offset: const Offset(8, 8),
                                             ),
                                           ],
                                           borderRadius:
                                               BorderRadius.circular(8)),
-                                      margin: EdgeInsets.only(top: 16),
+                                      margin: const EdgeInsets.only(top: 16),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -230,7 +237,8 @@ class _atCommentScreen extends State<atCommentScreen>
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  padding: EdgeInsets.all(4),
+                                                  padding:
+                                                      const EdgeInsets.all(4),
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -244,7 +252,8 @@ class _atCommentScreen extends State<atCommentScreen>
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(width: 8),
+                                                const SizedBox(width: 8),
+                                                // ignore: avoid_unnecessary_containers
                                                 Container(
                                                     child: Text(
                                                   commentList[index]
@@ -304,11 +313,12 @@ class _atCommentScreen extends State<atCommentScreen>
                                     );
                                   }),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               height: 54,
-                              padding: EdgeInsets.only(left: 24, right: 24),
-                              margin: EdgeInsets.only(bottom: 24),
+                              padding:
+                                  const EdgeInsets.only(left: 24, right: 24),
+                              margin: const EdgeInsets.only(bottom: 24),
                               decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16.0)),
@@ -317,6 +327,7 @@ class _atCommentScreen extends State<atCommentScreen>
                               child: Row(
                                 children: <Widget>[
                                   // SizedBox(width: 16),
+                                  // ignore: sized_box_for_whitespace
                                   Container(
                                     width: 241,
                                     child: Expanded(
@@ -339,7 +350,7 @@ class _atCommentScreen extends State<atCommentScreen>
                                           )),
                                     )),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -350,10 +361,12 @@ class _atCommentScreen extends State<atCommentScreen>
                                       });
                                       setState(() {});
                                     },
+                                    // ignore: avoid_unnecessary_containers
                                     child: Container(
                                       child: AnimatedContainer(
                                         alignment: Alignment.center,
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         height: 32,
                                         width: 32,
                                         decoration: BoxDecoration(
@@ -365,20 +378,20 @@ class _atCommentScreen extends State<atCommentScreen>
                                               color: black.withOpacity(0.25),
                                               spreadRadius: 0,
                                               blurRadius: 64,
-                                              offset: Offset(8, 8),
+                                              offset: const Offset(8, 8),
                                             ),
                                             BoxShadow(
                                               color: black.withOpacity(0.2),
                                               spreadRadius: 0,
                                               blurRadius: 4,
-                                              offset: Offset(0, 4),
+                                              offset: const Offset(0, 4),
                                             ),
                                           ],
                                         ),
                                         child: Container(
                                           // padding: EdgeInsets.zero,
                                           alignment: Alignment.center,
-                                          child: Icon(Iconsax.send1,
+                                          child: const Icon(Iconsax.send1,
                                               size: 20, color: white),
                                         ),
                                       ),
