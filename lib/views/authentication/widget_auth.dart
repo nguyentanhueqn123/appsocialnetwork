@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/constants/colors.dart';
 import 'package:social_network_app/views/authentication/signUp.dart';
 
+// ignore: non_constant_identifier_names
 Widget EmailTextFormField(
     {required String hintText,
     required TextEditingController textEditingController,
@@ -53,6 +54,7 @@ Widget EmailTextFormField(
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget PasswordTextFormField({
   required BuildContext context,
   required String hintText,
@@ -156,6 +158,7 @@ Widget switchAnotherAuthScreen(
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget RecoveryTextFormField(
     {required String hintText,
     required String? Function(String?)? validator,
@@ -181,7 +184,8 @@ Widget RecoveryTextFormField(
   );
 }
 
-Widget InfomationTextFormField({
+// ignore: non_constant_identifier_names
+Widget InformationTextFormField({
   required String hintText,
   required TextEditingController textEditingController,
   required Size size,

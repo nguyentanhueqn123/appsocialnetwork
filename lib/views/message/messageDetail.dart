@@ -1,10 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +11,7 @@ import '../../constants/images.dart';
 import '../../models/contentMessageModel.dart';
 import '../../models/userModel.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class messageDetailScreen extends StatefulWidget {
   String uid;
   String uid2;
@@ -25,10 +24,13 @@ class messageDetailScreen extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _messageDetailScreenState createState() =>
-      _messageDetailScreenState(uid, uid2, this.messagesId);
+      // ignore: no_logic_in_create_state
+      _messageDetailScreenState(uid, uid2, messagesId);
 }
 
+// ignore: camel_case_types
 class _messageDetailScreenState extends State<messageDetailScreen> {
   String uid = '';
   String uid2 = '';
@@ -68,6 +70,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
       });
     });
@@ -80,9 +83,9 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
         'content': messageController.text,
         'sendBy': uid,
         'messageId': messagesId,
-        'timeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
+        'timeSend': DateFormat('hh:mm a').format(DateTime.now()),
         'timeSendDetail':
-            "${DateFormat('y MMMM d, hh:mm:ss').format(DateTime.now())}"
+            DateFormat('y MMMM d, hh:mm:ss').format(DateTime.now())
       }).then((value) {
         FirebaseFirestore.instance
             .collection("messages")
@@ -90,7 +93,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
             .update({
           'contentList': FieldValue.arrayUnion([value.id]),
           'lastMessage': messageController.text,
-          'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}"
+          'lastTimeSend': DateFormat('hh:mm a').format(DateTime.now())
         });
         FirebaseFirestore.instance.collection("contents").doc(value.id).update({
           'contentId': value.id,
@@ -120,16 +123,17 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
         setState(() {
           chatting.clear();
           contentList = value1.data()!["contentList"];
-          value2.docs.forEach((element) {
+          for (var element in value2.docs) {
             if (contentList.contains(element.data()['contentId'] as String)) {
               chatting.add(Content.fromDocument(element.data()));
             }
-          });
+          }
         });
       });
     });
   }
 
+  @override
   void initState() {
     super.initState();
     getUserDetail();
@@ -142,30 +146,31 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
           ),
+          // ignore: avoid_unnecessary_containers
           Container(
             // scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      padding: EdgeInsets.only(left: 28),
+                      padding: const EdgeInsets.only(left: 28),
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Iconsax.arrow_square_left,
+                      icon: const Icon(Iconsax.arrow_square_left,
                           size: 28, color: black),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                         alignment: Alignment.center,
                         child: GestureDetector(
@@ -180,7 +185,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                           },
                           child: AnimatedContainer(
                             alignment: Alignment.center,
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
@@ -191,26 +196,26 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                   color: black.withOpacity(0.25),
                                   spreadRadius: 0,
                                   blurRadius: 64,
-                                  offset: Offset(8, 8),
+                                  offset: const Offset(8, 8),
                                 ),
                                 BoxShadow(
                                   color: black.withOpacity(0.2),
                                   spreadRadius: 0,
                                   blurRadius: 4,
-                                  offset: Offset(0, 4),
+                                  offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
                             child: Container(
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.center,
-                                child:
-                                    Icon(Iconsax.call, size: 18, color: white)),
+                                child: const Icon(Iconsax.call,
+                                    size: 18, color: white)),
                           ),
                         )),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Container(
-                        padding: EdgeInsets.only(right: 28),
+                        padding: const EdgeInsets.only(right: 28),
                         alignment: Alignment.center,
                         child: GestureDetector(
                           onTap: () {
@@ -224,7 +229,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                           },
                           child: AnimatedContainer(
                             alignment: Alignment.center,
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
@@ -235,41 +240,41 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                   color: black.withOpacity(0.25),
                                   spreadRadius: 0,
                                   blurRadius: 64,
-                                  offset: Offset(8, 8),
+                                  offset: const Offset(8, 8),
                                 ),
                                 BoxShadow(
                                   color: black.withOpacity(0.2),
                                   spreadRadius: 0,
                                   blurRadius: 4,
-                                  offset: Offset(0, 4),
+                                  offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
                             child: Container(
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.center,
-                                child: Icon(Iconsax.video,
+                                child: const Icon(Iconsax.video,
                                     size: 18, color: white)),
                           ),
                         )),
                   ],
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Container(
-                  padding: EdgeInsets.only(left: 28),
+                  padding: const EdgeInsets.only(left: 28),
                   child: Text(
                     user.userName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 24.0,
                         color: black,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   height: 700,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(36.0),
@@ -279,6 +284,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        // ignore: sized_box_for_whitespace
                         Container(
                             height: 530,
                             child: SingleChildScrollView(
@@ -286,10 +292,10 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    SizedBox(height: 32),
+                                    const SizedBox(height: 32),
                                     Container(
-                                      padding:
-                                          EdgeInsets.only(left: 24, right: 24),
+                                      padding: const EdgeInsets.only(
+                                          left: 24, right: 24),
                                       child: ListView.separated(
                                           physics:
                                               const NeverScrollableScrollPhysics(),
@@ -299,11 +305,12 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                           separatorBuilder:
                                               (BuildContext context,
                                                       int index) =>
-                                                  SizedBox(height: 16),
+                                                  const SizedBox(height: 16),
                                           itemCount: chatting.length,
                                           itemBuilder: (context, index) {
                                             return (uid ==
                                                     chatting[index].userId)
+                                                // ignore: avoid_unnecessary_containers
                                                 ? Container(
                                                     // padding: EdgeInsets.only(
                                                     //     left: 28, right: 28),
@@ -312,7 +319,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                         Text(
                                                           chatting[index]
                                                               .createAt,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontFamily:
                                                                   "Poppins",
                                                               fontSize: 10.0,
@@ -321,14 +328,15 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                                   FontWeight
                                                                       .w400),
                                                         ),
-                                                        Spacer(),
+                                                        const Spacer(),
                                                         Container(
                                                           constraints:
-                                                              BoxConstraints(
+                                                              const BoxConstraints(
                                                                   maxWidth:
                                                                       264),
                                                           padding:
-                                                              EdgeInsets.only(
+                                                              const EdgeInsets
+                                                                      .only(
                                                                   top: 16,
                                                                   left: 24,
                                                                   bottom: 16,
@@ -336,7 +344,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                           // height: 73,
                                                           // width: 236 - 12,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             borderRadius: BorderRadius.only(
                                                                 topLeft: Radius
                                                                     .circular(
@@ -352,7 +360,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                           child: Text(
                                                             chatting[index]
                                                                 .message,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontFamily:
                                                                     "Poppins",
                                                                 fontSize: 12.0,
@@ -365,6 +373,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                       ],
                                                     ),
                                                   )
+                                                // ignore: avoid_unnecessary_containers
                                                 : Container(
                                                     // padding: EdgeInsets.only(
                                                     //     left: 28, right: 28),
@@ -376,7 +385,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                           width: 32,
                                                           height: 32,
                                                           decoration:
-                                                              new BoxDecoration(
+                                                              BoxDecoration(
                                                             image: DecorationImage(
                                                                 image: NetworkImage(
                                                                     // '${projects[index]!["background"]}'),
@@ -386,20 +395,22 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                                 BoxShape.circle,
                                                           ),
                                                         ),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(
+                                                            width: 8),
                                                         Container(
                                                           constraints:
-                                                              BoxConstraints(
+                                                              const BoxConstraints(
                                                                   maxWidth:
                                                                       254),
                                                           padding:
-                                                              EdgeInsets.only(
+                                                              const EdgeInsets
+                                                                      .only(
                                                                   top: 16,
                                                                   left: 24,
                                                                   bottom: 16,
                                                                   right: 24),
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             borderRadius: BorderRadius.only(
                                                                 topLeft: Radius
                                                                     .circular(
@@ -417,7 +428,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                                 .message,
                                                             textAlign:
                                                                 TextAlign.left,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontFamily:
                                                                     "Poppins",
                                                                 fontSize: 12.0,
@@ -427,11 +438,11 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                                                         .w500),
                                                           ),
                                                         ),
-                                                        Spacer(),
+                                                        const Spacer(),
                                                         Text(
                                                           chatting[index]
                                                               .createAt,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontFamily:
                                                                   "Poppins",
                                                               fontSize: 10.0,
@@ -447,7 +458,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                     ),
                                   ],
                                 ))),
-                        SizedBox(height: 100),
+                        const SizedBox(height: 100),
                         Container(
                           height: 54,
                           width: 319 + 32,
@@ -455,12 +466,12 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                           // margin: EdgeInsets.only(left: 24, right: 24),
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
+                                  const BorderRadius.all(Radius.circular(24.0)),
                               color: Colors.transparent,
                               border: Border.all(color: gray)),
                           child: Row(
                             children: <Widget>[
-                              SizedBox(width: 28),
+                              const SizedBox(width: 28),
                               Expanded(
                                   child: Form(
                                 key: messageFormKey,
@@ -476,7 +487,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                         // messageController.clear();
                                       });
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
@@ -486,12 +497,12 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                       hintText: "Type your message...",
                                     )),
                               )),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               Container(
-                                margin: EdgeInsets.only(right: 8),
+                                margin: const EdgeInsets.only(right: 8),
                                 child: AnimatedContainer(
                                   alignment: Alignment.center,
-                                  duration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 300),
                                   height: 32,
                                   width: 32,
                                   decoration: BoxDecoration(
@@ -502,22 +513,22 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                         color: black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 64,
-                                        offset: Offset(8, 8),
+                                        offset: const Offset(8, 8),
                                       ),
                                       BoxShadow(
                                         color: black.withOpacity(0.2),
                                         spreadRadius: 0,
                                         blurRadius: 4,
-                                        offset: Offset(0, 4),
+                                        offset: const Offset(0, 4),
                                       ),
                                     ],
                                   ),
                                   child: Container(
-                                      margin: EdgeInsets.only(right: 8),
+                                      margin: const EdgeInsets.only(right: 8),
                                       // padding: EdgeInsets.zero,
                                       alignment: Alignment.center,
                                       child: IconButton(
-                                          icon: Icon(Iconsax.send1),
+                                          icon: const Icon(Iconsax.send1),
                                           iconSize: 18,
                                           color: white,
                                           onPressed: () {
@@ -532,7 +543,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 40)
+                        const SizedBox(height: 40)
                       ],
                     ),
                   ),

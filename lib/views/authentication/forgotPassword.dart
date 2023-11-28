@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,6 +11,7 @@ import 'instructionManual.dart';
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _ForgotPasswordScreen createState() => _ForgotPasswordScreen();
 }
 
@@ -40,7 +43,8 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => InstructionManualScreen()),
+                              builder: (context) =>
+                                  const InstructionManualScreen()),
                         );
                       },
                       child: Container(
@@ -208,10 +212,9 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     GestureDetector(
                       onTap: () {
-                        // Trowr laij tragn truocws
                         Navigator.pop(context);
                       },
                       child: Container(

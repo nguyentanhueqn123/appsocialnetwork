@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: file_names
 
-import 'dart:io';
+import 'dart:io' show File;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,13 +38,18 @@ class _InformationScreenState extends State<InformationScreen> {
       type: FileType.image,
       allowCompression: false,
     );
+    // ignore: avoid_print
     print('result');
+    // ignore: avoid_print
     print(result);
     if (result != null) {
+      // ignore: unused_local_variable
       Uint8List? fileBytes = result.files.first.bytes;
+      // ignore: unused_local_variable
       String fileName = result.files.first.name;
       return File(result.files.first.path.toString());
     }
+    // ignore: avoid_print
     print('No Image Selected');
   }
 
@@ -176,7 +181,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      InfomationTextFormField(
+                      InformationTextFormField(
                         textEditingController: _fullname,
                         hintText: '  Enter your full name',
                         size: size,
@@ -211,7 +216,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      InfomationTextFormField(
+                      InformationTextFormField(
                         textEditingController: _username,
                         hintText: '  Enter your user name',
                         size: size,
@@ -246,7 +251,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      InfomationTextFormField(
+                      InformationTextFormField(
                         textEditingController: _phone,
                         hintText: '  Enter your phone number',
                         size: size,
@@ -281,7 +286,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      InfomationTextFormField(
+                      InformationTextFormField(
                         textEditingController: _bio,
                         hintText: '  Enter your biography',
                         size: size,
@@ -308,12 +313,14 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget ConFirmButton(BuildContext context, String buttonName, Size size) {
     return Padding(
       padding: const EdgeInsets.only(left: 122, right: 122),
       child: GestureDetector(
         onTap: () async {
-          if (this._infoKey.currentState!.validate()) {
+          if (_infoKey.currentState!.validate()) {
+            // ignore: avoid_print
             print('Validated');
             SystemChannels.textInput.invokeMethod('TextInput.hide');
 
@@ -326,34 +333,36 @@ class _InformationScreenState extends State<InformationScreen> {
             String msg = '';
 
             final bool canRegisterNewUser = await _cloudStoreDataManagement
-                .checkThisUserAlreadyPresentOrNot(
-                    userName: this._username.text);
+                .checkThisUserAlreadyPresentOrNot(userName: _username.text);
 
-            if (!canRegisterNewUser)
+            if (!canRegisterNewUser) {
               msg = 'User Name Already Present';
-            else {
-              final bool _userEntryResponse =
+            } else {
+              final bool userEntryResponse =
                   await _cloudStoreDataManagement.registerNewUser(
-                fullname: this._fullname.text,
-                userName: this._username.text,
-                phone: this._phone.text,
-                bio: this._bio.text,
+                fullname: _fullname.text,
+                userName: _username.text,
+                phone: _phone.text,
+                bio: _bio.text,
                 file: _image!,
               );
 
-              if (_userEntryResponse) {
+              if (userEntryResponse) {
                 msg = 'Create account Successfully';
 
-                /// Calling Local Databases Methods To Intitialize Local Database with required MEthods
+                // ignore: use_build_context_synchronously
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (_) => SignInScreen(),
                     ),
                     (route) => false);
+                // ignore: use_build_context_synchronously
                 showSnackBar(context, msg, 'success');
-              } else
+              } else {
                 msg = 'User Data Not Entry Successfully';
+              }
+              // ignore: use_build_context_synchronously
               showSnackBar(context, msg, 'error');
             }
 
@@ -363,6 +372,7 @@ class _InformationScreenState extends State<InformationScreen> {
               });
             }
           } else {
+            // ignore: avoid_print
             print('Not Validated');
           }
         },

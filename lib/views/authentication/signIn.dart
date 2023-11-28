@@ -1,5 +1,5 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/constants/colors.dart';
 import 'package:social_network_app/views/authentication/forgotPassword.dart';
@@ -13,6 +13,7 @@ class SignInScreen extends StatefulWidget with InputValidationMixin {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignInScreen createState() => _SignInScreen();
 }
 
@@ -291,7 +292,8 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ForgotPasswordScreen()),
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen()),
                             );
                           },
                           child: Container(
@@ -332,8 +334,8 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                       'error');
                                 }
                               });
-                              await Future.delayed(Duration(seconds: 3));
-                              if (this.mounted) {
+                              await Future.delayed(const Duration(seconds: 3));
+                              if (mounted) {
                                 setState(() {
                                   isLoading = false;
                                 });
@@ -412,7 +414,8 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignUpScreen()),
+                                      builder: (context) =>
+                                          const SignUpScreen()),
                                 );
                               },
                               child: const Text(
@@ -434,11 +437,10 @@ class _SignInScreen extends State<SignInScreen> with InputValidationMixin {
                       margin: const EdgeInsets.only(bottom: 34),
                       child: GestureDetector(
                         onTap: () {
-                          // chuyển page
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpScreen()),
+                                builder: (context) => const SignUpScreen()),
                           );
                         },
                         child: Container(

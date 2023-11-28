@@ -1,12 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
@@ -15,14 +13,17 @@ import '../../models/messageModel.dart';
 import '../../models/userModel.dart';
 import 'messageDetail.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class messsageScreen extends StatefulWidget {
   String uid;
   messsageScreen(required, {Key? key, required this.uid}) : super(key: key);
 
   @override
-  _messsageScreenState createState() => _messsageScreenState(this.uid);
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _messsageScreenState createState() => _messsageScreenState(uid);
 }
 
+// ignore: camel_case_types
 class _messsageScreenState extends State<messsageScreen> {
   String uid = '';
   _messsageScreenState(uid);
@@ -33,17 +34,19 @@ class _messsageScreenState extends State<messsageScreen> {
     FirebaseFirestore.instance.collection("users").get().then((value) {
       setState(() {
         userList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           userList.add(UserModel.fromDocument(element.data()));
-        });
-        userList.forEach((element) {
+        }
+        for (var element in userList) {
+          // ignore: avoid_print
           print(element.id);
           if (element.id == uid) {
             setState(() {
               userList.remove(element);
             });
           }
-        });
+        }
+        // ignore: avoid_print
         print(userList);
       });
     });
@@ -74,6 +77,7 @@ class _messsageScreenState extends State<messsageScreen> {
         .listen((value) {
       setState(() {
         currentUser = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(currentUser.userName);
       });
     });
@@ -85,7 +89,7 @@ class _messsageScreenState extends State<messsageScreen> {
   Future createMessage(String userName, String userIdS2, String userName2,
       String background2) async {
     FirebaseFirestore.instance.collection("messages").get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         if ((uid == (element.data()['userId1'] as String) &&
                     userIdS2 == (element.data()['userId2'] as String)) ||
                 (uid == (element.data()['userId2'] as String) &&
@@ -94,20 +98,21 @@ class _messsageScreenState extends State<messsageScreen> {
             // element.data()['timeSend'] != null
             ) {
           newMessageId = element.id;
+          // ignore: avoid_print
           print(newMessageId);
         }
-      });
+      }
       setState(() {
         if (newMessageId == '') {
           FirebaseFirestore.instance.collection("messages").add({
             'userId1': uid,
             'userId2': userIdS2,
-            'name1': "$userName",
-            'name2': "$userName2",
+            'name1': userName,
+            'name2': userName2,
             'background1': currentUser.avatar,
             'background2': background2,
             'contentList': FieldValue.arrayUnion([]),
-            'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
+            'lastTimeSend': DateFormat('hh:mm a').format(DateTime.now()),
             'lastMessage': '',
           }).then((value) {
             setState(() {
@@ -157,18 +162,20 @@ class _messsageScreenState extends State<messsageScreen> {
         .listen((value2) {
       setState(() {
         messagesList.clear();
-        value2.docs.forEach((element) {
+        for (var element in value2.docs) {
           if (uid.contains(element.data()['userId1'] as String) ||
               uid.contains(element.data()['userId2'] as String)) {
             messagesList.add(Message.fromDocument(element.data()));
           }
-        });
+        }
       });
+      // ignore: avoid_print
       print(messagesList.length);
     });
     setState(() {});
   }
 
+  @override
   void initState() {
     super.initState();
     User? user = FirebaseAuth.instance.currentUser;
@@ -185,31 +192,32 @@ class _messsageScreenState extends State<messsageScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
           ),
+          // ignore: avoid_unnecessary_containers
           Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 62),
+                const SizedBox(height: 62),
                 Container(
-                  padding: EdgeInsets.only(right: 28),
+                  padding: const EdgeInsets.only(right: 28),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        padding: EdgeInsets.only(left: 28),
+                        padding: const EdgeInsets.only(left: 28),
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(Iconsax.arrow_square_left,
+                        icon: const Icon(Iconsax.arrow_square_left,
                             size: 24, color: black),
                       ),
-                      SizedBox(width: 6),
+                      const SizedBox(width: 6),
                       // Container(
                       //   padding: EdgeInsets.only(left: 16),
                       //   child: ClipRRect(
@@ -221,7 +229,7 @@ class _messsageScreenState extends State<messsageScreen> {
                       //     ),
                       //   ),
                       // ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -229,7 +237,7 @@ class _messsageScreenState extends State<messsageScreen> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 currentUser.userName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Poppins',
                                     color: black,
@@ -238,17 +246,17 @@ class _messsageScreenState extends State<messsageScreen> {
                               )),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                           // padding: EdgeInsets.only(right: 28),
                           ),
                     ],
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Container(
-                  padding: EdgeInsets.only(left: 28),
-                  child: Text(
+                  padding: const EdgeInsets.only(left: 28),
+                  child: const Text(
                     "Messages",
                     style: TextStyle(
                         fontFamily: "Poppins",
@@ -257,13 +265,13 @@ class _messsageScreenState extends State<messsageScreen> {
                         fontWeight: FontWeight.w700),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
                       Container(
-                          padding: EdgeInsets.only(left: 28),
+                          padding: const EdgeInsets.only(left: 28),
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
@@ -278,7 +286,7 @@ class _messsageScreenState extends State<messsageScreen> {
                             },
                             child: AnimatedContainer(
                               alignment: Alignment.center,
-                              duration: Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 300),
                               height: 48,
                               width: 48,
                               decoration: BoxDecoration(
@@ -288,11 +296,12 @@ class _messsageScreenState extends State<messsageScreen> {
                               child: Container(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.center,
-                                  child: Icon(Iconsax.search_normal,
+                                  child: const Icon(Iconsax.search_normal,
                                       size: 18, color: black)),
                             ),
                           )),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
+                      // ignore: sized_box_for_whitespace
                       Container(
                         width: 367,
                         height: 48 + 14 + 16,
@@ -303,7 +312,8 @@ class _messsageScreenState extends State<messsageScreen> {
                             itemBuilder: (context, index) {
                               return Container(
                                   height: 48 + 16,
-                                  padding: EdgeInsets.only(left: 4, right: 4),
+                                  padding:
+                                      const EdgeInsets.only(left: 4, right: 4),
                                   alignment: Alignment.center,
                                   child: GestureDetector(
                                     onTap: () {
@@ -318,8 +328,9 @@ class _messsageScreenState extends State<messsageScreen> {
                                       children: [
                                         Container(
                                           alignment: Alignment.bottomCenter,
+                                          // ignore: sort_child_properties_last
                                           child: Container(
-                                            padding: EdgeInsets.all(4),
+                                            padding: const EdgeInsets.all(4),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(16),
@@ -331,16 +342,16 @@ class _messsageScreenState extends State<messsageScreen> {
                                               ),
                                             ),
                                           ),
-                                          decoration: new BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                           ),
                                         ),
-                                        SizedBox(height: 8),
+                                        const SizedBox(height: 8),
                                         Container(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             userList[index].userName,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontFamily: 'Urbanist',
                                                 fontSize: 12,
                                                 color: black,
@@ -355,11 +366,11 @@ class _messsageScreenState extends State<messsageScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
                 Container(
-                    padding: EdgeInsets.only(left: 28, right: 28),
+                    padding: const EdgeInsets.only(left: 28, right: 28),
                     height: 700 - 107 - 14 - 16,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(36),
                           topRight: Radius.circular(36)),
@@ -369,13 +380,14 @@ class _messsageScreenState extends State<messsageScreen> {
                         child: Column(children: [
                       ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(top: 16),
+                          padding: const EdgeInsets.only(top: 16),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: messagesList.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              padding: EdgeInsets.only(top: 12, bottom: 12),
+                              padding:
+                                  const EdgeInsets.only(top: 12, bottom: 12),
                               alignment: Alignment.center,
                               child: GestureDetector(
                                   onTap: () {
@@ -423,8 +435,9 @@ class _messsageScreenState extends State<messsageScreen> {
                                         alignment: Alignment.center,
                                         width: 60,
                                         height: 60,
+                                        // ignore: sort_child_properties_last
                                         child: Container(
-                                          padding: EdgeInsets.all(4),
+                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(16),
@@ -441,11 +454,11 @@ class _messsageScreenState extends State<messsageScreen> {
                                             ),
                                           ),
                                         ),
-                                        decoration: new BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                         ),
                                       ),
-                                      SizedBox(width: 16),
+                                      const SizedBox(width: 16),
                                       Container(
                                         alignment: Alignment.center,
                                         height: 64,
@@ -458,6 +471,7 @@ class _messsageScreenState extends State<messsageScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               children: [
+                                                // ignore: sized_box_for_whitespace
                                                 Container(
                                                   width: 100,
                                                   child: Text(
@@ -471,7 +485,7 @@ class _messsageScreenState extends State<messsageScreen> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontFamily: "Poppins",
                                                         fontSize: 14.0,
                                                         color: black,
@@ -480,14 +494,14 @@ class _messsageScreenState extends State<messsageScreen> {
                                                         height: 1.4),
                                                   ),
                                                 ),
-                                                Spacer(),
+                                                const Spacer(),
                                                 Text(
                                                   messagesList[index]
                                                       .lastTimeSend,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontFamily: "Poppins",
                                                       fontSize: 12.0,
                                                       color: black,
@@ -496,14 +510,15 @@ class _messsageScreenState extends State<messsageScreen> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 8),
+                                            const SizedBox(height: 8),
+                                            // ignore: sized_box_for_whitespace
                                             Container(
                                               width: 232,
                                               child: Text(
                                                 messagesList[index].lastMessage,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 12.0,
                                                     color: black,
@@ -511,7 +526,7 @@ class _messsageScreenState extends State<messsageScreen> {
                                                         FontWeight.w400),
                                               ),
                                             ),
-                                            SizedBox(height: 6)
+                                            const SizedBox(height: 6)
                                           ],
                                         ),
                                       )
@@ -519,7 +534,7 @@ class _messsageScreenState extends State<messsageScreen> {
                                   )),
                             );
                           }),
-                      SizedBox(height: 24)
+                      const SizedBox(height: 24)
                     ])))
               ],
             ),

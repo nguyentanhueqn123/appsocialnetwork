@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:social_network_app/constants/colors.dart';
@@ -6,6 +8,7 @@ import 'package:social_network_app/constants/images.dart';
 class InstructionManualScreen extends StatefulWidget {
   const InstructionManualScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _InstructionManualScreen createState() => _InstructionManualScreen();
 }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,6 +13,7 @@ import '../snackBarWidget.dart';
 class SignUpScreen extends StatefulWidget with InputValidationMixin {
   const SignUpScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpScreen createState() => _SignUpScreen();
 }
 
@@ -40,6 +43,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
 
   bool isLoading = false;
 
+  // ignore: unused_field
   final bool _enabledPhone = true;
   bool _enabledEmail = true;
 
@@ -54,12 +58,15 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
   bool checkEmail = false;
   Future<void> controlSignUp() async {
     if (await myauth.verifyOTP(otp: emailVerificationController.text) == true) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, "OTP is verified", 'success');
       setState(() {
         checkEmail = true;
       });
     } else {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, "Invalid OTP", 'error');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Invalid OTP"),
       ));
@@ -68,8 +75,10 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
         isChecked == true &&
         emailFormKey.currentState!.validate() &&
         passwordFormKey.currentState!.validate()) {
+      // ignore: use_build_context_synchronously
       registerUser(emailController.text, passwordController.text, context);
     } else {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, "Please! Check your information!", 'error');
     }
   }
@@ -268,12 +277,14 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                             );
                                             if (await myauth.sendOTP() ==
                                                 true) {
+                                              // ignore: use_build_context_synchronously
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(
                                                 content:
                                                     Text("OTP has been sent"),
                                               ));
                                             } else {
+                                              // ignore: use_build_context_synchronously
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(
                                                 content: Text(
@@ -751,6 +762,7 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                             ),
                             Row(
                               children: [
+                                // ignore: avoid_unnecessary_containers
                                 Container(
                                   child: GestureDetector(
                                     onTap: () {
@@ -827,8 +839,9 @@ class _SignUpScreen extends State<SignUpScreen> with InputValidationMixin {
                                     isLoading = true;
                                     controlSignUp();
                                   });
-                                  await Future.delayed(Duration(seconds: 3));
-                                  if (this.mounted) {
+                                  await Future.delayed(
+                                      const Duration(seconds: 3));
+                                  if (mounted) {
                                     setState(() {
                                       isLoading = false;
                                     });
