@@ -13,11 +13,13 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:social_network_app/views/searching/classifyImage.dart';
 
 import '../../constants/colors.dart';
 import '../../models/postModel.dart';
 import '../../models/userModel.dart';
 import '../notification/postNotification.dart';
+import '../profile/profile.dart';
 import '../widget/image.dart';
 import '../widget/video.dart';
 
@@ -346,15 +348,14 @@ class _atSearchScreen extends State<atSearchScreen>
                                             Radius.circular(8))),
                                     child: GestureDetector(
                                       onTap: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: ((context) =>
-                                        //             atProfileScreen(
-                                        //               context,
-                                        //               ownerId:
-                                        //                   userList[index].id,
-                                        //             ))));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    atProfileScreen(
+                                                      ownerId:
+                                                          userList[index].id,
+                                                    ))));
                                       },
                                       child: Row(
                                         crossAxisAlignment:

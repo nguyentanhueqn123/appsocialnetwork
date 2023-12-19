@@ -100,9 +100,7 @@ class _atProfileScreen extends State<atProfileScreen>
         .where("userId", isEqualTo: userId)
         .snapshots()
         .listen((value) {
-      setState(() {
-        user = UserModel.fromDocument(value.docs.first.data());
-      });
+      user = UserModel.fromDocument(value.docs.first.data());
     });
   }
 

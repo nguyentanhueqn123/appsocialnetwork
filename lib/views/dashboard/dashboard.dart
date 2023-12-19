@@ -17,6 +17,7 @@ import '../../constants/images.dart';
 import '../../models/postModel.dart';
 import '../../models/userModel.dart';
 import '../message/messagesCenter.dart';
+import '../profile/profile.dart';
 import '../story/storyScreen.dart';
 import '../widget/dialogWidget.dart';
 import 'comment.dart';
@@ -69,12 +70,10 @@ class _atDashboardScreen extends State<atDashboardScreen>
         .where("userId", isEqualTo: uid)
         .snapshots()
         .listen((value) {
-      setState(() {
-        user = UserModel.fromDocument(value.docs.first.data());
-        // ignore: avoid_print
-        print(user.userName);
-        y = user.follow;
-      });
+      user = UserModel.fromDocument(value.docs.first.data());
+      // ignore: avoid_print
+      print(user.userName);
+      y = user.follow;
     });
   }
 
@@ -416,16 +415,17 @@ class _atDashboardScreen extends State<atDashboardScreen>
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8))),
                     padding: const EdgeInsets.all(8),
-                    child: ListView.separated(
+                    child: ListView.builder(
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(height: 16),
+                        // separatorBuilder: (BuildContext context, int index) =>
+                        //     const SizedBox(height: 16),
                         itemCount: postList.length,
                         itemBuilder: (context, index) {
                           // ignore: avoid_unnecessary_containers
                           return Container(
+                            margin: EdgeInsets.only(bottom: 16),
                             child: Column(
                               children: <Widget>[
                                 // ignore: avoid_unnecessary_containers
@@ -437,14 +437,14 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             atProfileScreen(required,
-                                          //                 ownerId:
-                                          //                     postList[index]
-                                          //                         .idUser)));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      atProfileScreen(
+                                                          ownerId:
+                                                              postList[index]
+                                                                  .idUser)));
                                         },
                                         child: Row(
                                           children: [

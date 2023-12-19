@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:social_network_app/views/profile/profile.dart';
 import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
 
@@ -157,7 +158,8 @@ class _postNotificationState extends State<postNotification> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 32),
-                    Row(mainAxisAlignment: MainAxisAlignment.start,
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
@@ -179,12 +181,11 @@ class _postNotificationState extends State<postNotification> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => atProfileScreen(
-                              //             required,
-                              //             ownerId: post.idUser)));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => atProfileScreen(
+                                          ownerId: post.idUser)));
                             },
                             child: Row(
                               children: [
