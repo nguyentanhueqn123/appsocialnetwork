@@ -230,12 +230,12 @@ class _atSearchScreen extends State<atSearchScreen>
                       const Spacer(),
                       GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => atClassifyImageScreen(
-                            //               uid: uid,
-                            //             )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => atClassifyImageScreen(
+                                          uid: uid,
+                                        )));
                           },
                           child:
                               const Icon(Iconsax.scan, size: 24, color: black)),

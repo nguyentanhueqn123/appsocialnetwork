@@ -65,8 +65,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
         FirebaseStorage storage = FirebaseStorage.instance;
         Reference ref = storage.ref('uploads/$fileName');
         // ignore: unused_local_variable
-        UploadTask uploadTask =
-            ref.putFile(File(result.files.first.path.toString()));
+        await ref.putFile(File(result.files.first.path.toString()));
         Reference ref_2 =
             FirebaseStorage.instance.ref().child('uploads/$fileName');
 
@@ -234,20 +233,24 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarColor: Colors.transparent),
-        child: Scaffold(
-            body: Stack(children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(profileBackground), fit: BoxFit.cover),
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 1.3,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
             ),
-          ),
-          SingleChildScrollView(
+            color: white),
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset: false, // this is new
+
+          body: SingleChildScrollView(
+              // this is new
+              reverse: true,
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               child: Container(
                   decoration: const BoxDecoration(color: Colors.transparent),
@@ -425,8 +428,13 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                   )),
                             ),
                           ),
-                        ]))
-                      ]))))
-        ])));
+                        ])),
+                        Padding(
+                            // this is new
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom)),
+                      ])))),
+        ));
   }
 }

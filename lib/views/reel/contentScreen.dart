@@ -25,7 +25,9 @@ class _ContentScreenState extends State<ContentScreen> {
       ChewieController(videoPlayerController: _videoPlayerController);
 
   Future initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.network(widget.src!);
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.src!));
+    // VideoPlayerController.network(widget.src!);
     await Future.wait([_videoPlayerController.initialize()]);
 
     _chewieController = ChewieController(

@@ -26,7 +26,8 @@ class _postVideoWidgetState extends State<postVideoWidget> {
   bool check = false;
   bool play = false;
   void initializePlayer() async {
-    // _videoPlayerController = VideoPlayerController.network(widget.src);
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.src!));
 
     await Future.wait([_videoPlayerController.initialize()]);
 

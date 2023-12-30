@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:intl/intl.dart';
@@ -210,13 +211,20 @@ class _atDashboardScreen extends State<atDashboardScreen>
                               alignment: Alignment.topRight,
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            atCreatePostScreen(required,
-                                                uid: uid)),
-                                  );
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      shape: const RoundedRectangleBorder(
+                                        // <-- for border radius
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12.0),
+                                          topRight: Radius.circular(12.0),
+                                        ),
+                                      ),
+                                      builder: (_) {
+                                        return atCreatePostScreen(required,
+                                            uid: uid);
+                                      });
                                 },
                                 child: AnimatedContainer(
                                   alignment: Alignment.topRight,
@@ -381,9 +389,10 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                   borderRadius:
                                                       BorderRadius.circular(4),
                                                   child: Image.network(
-                                                    'https://i.imgur.com/eYOEUb7.jpg',
+                                                    'https://i.imgur.com/Bh3CDBU.jpg',
                                                     width: 48,
                                                     height: 48,
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
@@ -393,7 +402,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                           // ignore: avoid_unnecessary_containers
                                           Container(
                                               child: const Text(
-                                            'Pan',
+                                            'Katty',
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 fontFamily: 'Urbanist',
@@ -410,22 +419,27 @@ class _atDashboardScreen extends State<atDashboardScreen>
                         left: 16,
                         right: 16,
                         bottom: 56),
-                    decoration: BoxDecoration(
-                        color: white.withOpacity(0.87),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8))),
-                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: ListView.builder(
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
-                        // separatorBuilder: (BuildContext context, int index) =>
-                        //     const SizedBox(height: 16),
                         itemCount: postList.length,
                         itemBuilder: (context, index) {
-                          // ignore: avoid_unnecessary_containers
+                          var timestamp = postList[index]
+                              .timeCreate; // [DateTime] formatted as String.
+                          var convertedTimestamp =
+                              DateFormat('y MMMM d, hh:mm:ss').parse(
+                                  timestamp); // Converting into [DateTime] object
+                          var result = GetTimeAgo.parse(convertedTimestamp);
                           return Container(
-                            margin: EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.all(8),
+                            margin: const EdgeInsets.only(bottom: 16),
+                            decoration: BoxDecoration(
+                                color: white.withOpacity(0.87),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8))),
                             child: Column(
                               children: <Widget>[
                                 // ignore: avoid_unnecessary_containers
@@ -455,6 +469,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                     BorderRadius.circular(16),
                                                 child: Image.network(
                                                   postList[index].ownerAvatar,
+                                                  fit: BoxFit.cover,
                                                   width: 32,
                                                   height: 32,
                                                 ),
@@ -603,18 +618,6 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                               color: black),
                                         ),
                                       ),
-                                      // Container(
-                                      //     margin: EdgeInsets.only(left: 8),
-                                      //     alignment: Alignment.centerLeft,
-                                      //     child: Text(
-                                      //       '24',
-                                      //       style: TextStyle(
-                                      //         fontSize: 16,
-                                      //         color: black,
-                                      //         fontFamily: 'Urbanist',
-                                      //         fontWeight: FontWeight.w600,
-                                      //       ),
-                                      //     )),
                                       const Spacer(),
                                       (isVideo)
                                           ? IconButton(
@@ -648,38 +651,42 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                   ),
                                 ),
                                 // SizedBox(height: 12),
-                                GestureDetector(
-                                  onTap: () {
-                                    //likes post
-                                  },
-                                  child: Container(
-                                      width: 327 + 24,
-                                      margin: const EdgeInsets.only(left: 8),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        postList[index].caption,
-                                        style: const TextStyle(
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        //likes post
+                                      },
+                                      child: Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 8),
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            postList[index].caption,
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                color: black,
+                                                fontFamily: 'Urbanist',
+                                                fontWeight: FontWeight.w600,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            maxLines: 1,
+                                          )),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          result,
+                                          style: const TextStyle(
                                             fontSize: 16,
-                                            color: black,
+                                            color: gray,
                                             fontFamily: 'Urbanist',
                                             fontWeight: FontWeight.w600,
-                                            overflow: TextOverflow.ellipsis),
-                                        maxLines: 1,
-                                      )),
+                                          ),
+                                        )),
+                                  ],
                                 ),
-                                const SizedBox(height: 8),
-                                Container(
-                                    margin: const EdgeInsets.only(left: 8),
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      postList[index].timeCreate,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: gray,
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )),
                               ],
                             ),
                           );

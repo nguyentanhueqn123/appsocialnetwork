@@ -33,23 +33,15 @@ class _messsageScreenState extends State<messsageScreen> {
   Future getAllUser() async {
     FirebaseFirestore.instance.collection("users").get().then((value) {
       setState(() {
-        userList.clear();
         for (var element in value.docs) {
-          userList.add(UserModel.fromDocument(element.data()));
-        }
-        for (var element in userList) {
-          // ignore: avoid_print
-          print(element.id);
           if (element.id == uid) {
-            setState(() {
-              userList.remove(element);
-            });
+          } else {
+            userList.add(UserModel.fromDocument(element.data()));
           }
         }
-        // ignore: avoid_print
-        print(userList);
       });
     });
+
     setState(() {});
   }
 
@@ -160,15 +152,15 @@ class _messsageScreenState extends State<messsageScreen> {
         .collection("messages")
         .snapshots()
         .listen((value2) {
-      setState(() {
-        messagesList.clear();
-        for (var element in value2.docs) {
-          if (uid.contains(element.data()['userId1'] as String) ||
-              uid.contains(element.data()['userId2'] as String)) {
-            messagesList.add(Message.fromDocument(element.data()));
-          }
+      setState(() {});
+      messagesList.clear();
+      for (var element in value2.docs) {
+        if (uid.contains(element.data()['userId1'] as String) ||
+            uid.contains(element.data()['userId2'] as String)) {
+          messagesList.add(Message.fromDocument(element.data()));
         }
-      });
+      }
+
       // ignore: avoid_print
       print(messagesList.length);
     });
@@ -367,137 +359,159 @@ class _messsageScreenState extends State<messsageScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                Container(
-                    padding: const EdgeInsets.only(left: 28, right: 28),
-                    height: 700 - 107 - 14 - 16,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(36),
-                          topRight: Radius.circular(36)),
-                      color: white,
-                    ),
-                    child: SingleChildScrollView(
-                        child: Column(children: [
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: const EdgeInsets.only(top: 16),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: messagesList.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding:
-                                  const EdgeInsets.only(top: 12, bottom: 12),
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                  onTap: () {
-                                    (currentUser.id ==
-                                            messagesList[index].userId2)
-                                        ? Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  messageDetailScreen(
-                                                      required,
-                                                      uid:
-                                                          messagesList[index]
-                                                              .userId1,
-                                                      uid2: messagesList[index]
-                                                          .userId2,
-                                                      messagesId:
-                                                          messagesList[index]
-                                                              .messageId),
-                                            ),
-                                          )
-                                        : Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  messageDetailScreen(
-                                                      required,
-                                                      uid:
-                                                          messagesList[index]
-                                                              .userId2,
-                                                      uid2: messagesList[index]
-                                                          .userId1,
-                                                      messagesId:
-                                                          messagesList[index]
-                                                              .messageId),
-                                            ),
-                                          );
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.center,
-                                        width: 60,
-                                        height: 60,
-                                        // ignore: sort_child_properties_last
-                                        child: Container(
-                                          padding: const EdgeInsets.all(4),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                            child: Image.network(
-                                              (currentUser.id ==
-                                                      messagesList[index]
-                                                          .userId1)
-                                                  ? messagesList[index]
-                                                      .background2
-                                                  : messagesList[index]
-                                                      .background1,
-                                              width: 32,
-                                              height: 32,
+                Expanded(
+                  child: Container(
+                      padding: const EdgeInsets.only(left: 28, right: 28),
+                      // height: 700 - 107 - 14 - 16 - 70,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(36),
+                            topRight: Radius.circular(36)),
+                        color: white,
+                      ),
+                      child: SingleChildScrollView(
+                          child: Column(children: [
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(top: 16),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: messagesList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding:
+                                    const EdgeInsets.only(top: 12, bottom: 12),
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      (currentUser.id ==
+                                              messagesList[index].userId2)
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    messageDetailScreen(
+                                                        required,
+                                                        uid: messagesList[index]
+                                                            .userId1,
+                                                        uid2:
+                                                            messagesList[index]
+                                                                .userId2,
+                                                        messagesId:
+                                                            messagesList[index]
+                                                                .messageId),
+                                              ),
+                                            )
+                                          : Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    messageDetailScreen(
+                                                        required,
+                                                        uid: messagesList[index]
+                                                            .userId2,
+                                                        uid2:
+                                                            messagesList[index]
+                                                                .userId1,
+                                                        messagesId:
+                                                            messagesList[index]
+                                                                .messageId),
+                                              ),
+                                            );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.center,
+                                          width: 60,
+                                          height: 60,
+                                          // ignore: sort_child_properties_last
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              child: Image.network(
+                                                (currentUser.id ==
+                                                        messagesList[index]
+                                                            .userId1)
+                                                    ? messagesList[index]
+                                                        .background2
+                                                    : messagesList[index]
+                                                        .background1,
+                                                width: 32,
+                                                height: 32,
+                                              ),
                                             ),
                                           ),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          ),
                                         ),
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 64,
-                                        width: 232,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                // ignore: sized_box_for_whitespace
-                                                Container(
-                                                  width: 100,
-                                                  child: Text(
-                                                    (currentUser.id ==
-                                                            messagesList[index]
-                                                                .userId1)
-                                                        ? messagesList[index]
-                                                            .name2
-                                                        : messagesList[index]
-                                                            .name1,
+                                        const SizedBox(width: 16),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: 64,
+                                          width: 232,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  // ignore: sized_box_for_whitespace
+                                                  Container(
+                                                    width: 100,
+                                                    child: Text(
+                                                      (currentUser.id ==
+                                                              messagesList[
+                                                                      index]
+                                                                  .userId1)
+                                                          ? messagesList[index]
+                                                              .name2
+                                                          : messagesList[index]
+                                                              .name1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 14.0,
+                                                          color: black,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          height: 1.4),
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  Text(
+                                                    messagesList[index]
+                                                        .lastTimeSend,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 1,
                                                     style: const TextStyle(
                                                         fontFamily: "Poppins",
-                                                        fontSize: 14.0,
+                                                        fontSize: 12.0,
                                                         color: black,
                                                         fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 1.4),
+                                                            FontWeight.w400),
                                                   ),
-                                                ),
-                                                const Spacer(),
-                                                Text(
+                                                ],
+                                              ),
+                                              const SizedBox(height: 8),
+                                              // ignore: sized_box_for_whitespace
+                                              Container(
+                                                width: 232,
+                                                child: Text(
                                                   messagesList[index]
-                                                      .lastTimeSend,
+                                                      .lastMessage,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
@@ -508,34 +522,18 @@ class _messsageScreenState extends State<messsageScreen> {
                                                       fontWeight:
                                                           FontWeight.w400),
                                                 ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 8),
-                                            // ignore: sized_box_for_whitespace
-                                            Container(
-                                              width: 232,
-                                              child: Text(
-                                                messagesList[index].lastMessage,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    fontSize: 12.0,
-                                                    color: black,
-                                                    fontWeight:
-                                                        FontWeight.w400),
                                               ),
-                                            ),
-                                            const SizedBox(height: 6)
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                            );
-                          }),
-                      const SizedBox(height: 24)
-                    ])))
+                                              const SizedBox(height: 6)
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              );
+                            }),
+                        const SizedBox(height: 24)
+                      ]))),
+                )
               ],
             ),
           )

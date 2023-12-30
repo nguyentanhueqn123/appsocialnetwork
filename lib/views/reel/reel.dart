@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,7 +45,7 @@ class _atReelScreen extends State<atReelScreen>
     });
   }
 
-  // late SwiperController swiperController = SwiperController();
+  late SwiperController swiperController = SwiperController();
   @override
   void initState() {
     super.initState();
@@ -75,18 +76,18 @@ class _atReelScreen extends State<atReelScreen>
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Swiper(
-              //   controller: swiperController,
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return ContentScreen(
-              //       src: reelList[index].urlVideo,
-              //       uid: reelList[index].idUser,
-              //       reelId: reelList[index].id,
-              //     );
-              //   },
-              //   itemCount: reelList.length,
-              //   scrollDirection: Axis.vertical,
-              // ),
+              Swiper(
+                controller: swiperController,
+                itemBuilder: (BuildContext context, int index) {
+                  return ContentScreen(
+                    src: reelList[index].urlVideo,
+                    uid: reelList[index].idUser,
+                    reelId: reelList[index].id,
+                  );
+                },
+                itemCount: reelList.length,
+                scrollDirection: Axis.vertical,
+              ),
               Column(
                 children: [
                   Container(

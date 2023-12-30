@@ -68,13 +68,7 @@ class _OptionScreenState extends State<OptionScreen> {
         .where("userId", isEqualTo: widget.uid)
         .snapshots()
         .listen((value) {
-      setState(() {
-        owner = UserModel.fromDocument(value.docs.first.data());
-        print(owner.userName);
-        print("owner.background");
-        print(owner.background);
-        print(owner.avatar);
-      });
+      owner = UserModel.fromDocument(value.docs.first.data());
     });
   }
 
@@ -84,10 +78,7 @@ class _OptionScreenState extends State<OptionScreen> {
         .where("userId", isEqualTo: userId)
         .snapshots()
         .listen((value) {
-      setState(() {
-        user = UserModel.fromDocument(value.docs.first.data());
-        print(user.userName);
-      });
+      user = UserModel.fromDocument(value.docs.first.data());
     });
   }
 
@@ -109,9 +100,7 @@ class _OptionScreenState extends State<OptionScreen> {
         .where("id", isEqualTo: widget.reelId)
         .snapshots()
         .listen((value) {
-      setState(() {
-        reel = reelModel.fromDocument(value.docs.first.data());
-      });
+      reel = reelModel.fromDocument(value.docs.first.data());
     });
   }
 
@@ -124,9 +113,7 @@ class _OptionScreenState extends State<OptionScreen> {
         .snapshots()
         .listen((value) {
       value.docs.forEach((element) {
-        setState(() {
-          listCMR.add(commentReelModel.fromDocument(element.data()));
-        });
+        listCMR.add(commentReelModel.fromDocument(element.data()));
       });
     });
   }
