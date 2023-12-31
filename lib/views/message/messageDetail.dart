@@ -10,6 +10,7 @@ import '../../constants/colors.dart';
 import '../../constants/images.dart';
 import '../../models/contentMessageModel.dart';
 import '../../models/userModel.dart';
+import 'package:intl/intl.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class messageDetailScreen extends StatefulWidget {
@@ -117,7 +118,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
         .listen((value1) {
       FirebaseFirestore.instance
           .collection("contents")
-          .orderBy('timeSendDetail', descending: false)
+          // .orderBy('timeSendDetail', descending: false)
           .snapshots()
           .listen((value2) {
         setState(() {
@@ -128,9 +129,17 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
               chatting.add(Content.fromDocument(element.data()));
             }
           }
+          chatting.sort((a, b) => a.timeSendDetail.compareTo(b.timeSendDetail));
         });
       });
     });
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override
@@ -462,7 +471,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                       ),
                                     ],
                                   ))),
-                          // const SizedBox(height: 100),
+                          const SizedBox(height: 100),
                           Container(
                             height: 54,
                             width: 319 + 32,

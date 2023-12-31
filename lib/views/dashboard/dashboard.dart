@@ -211,20 +211,13 @@ class _atDashboardScreen extends State<atDashboardScreen>
                               alignment: Alignment.topRight,
                               child: GestureDetector(
                                 onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      shape: const RoundedRectangleBorder(
-                                        // <-- for border radius
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(12.0),
-                                          topRight: Radius.circular(12.0),
-                                        ),
-                                      ),
-                                      builder: (_) {
-                                        return atCreatePostScreen(required,
-                                            uid: uid);
-                                      });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            atCreatePostScreen(required,
+                                                uid: uid)),
+                                  );
                                 },
                                 child: AnimatedContainer(
                                   alignment: Alignment.topRight,
@@ -516,12 +509,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     ],
                                   ),
                                 ),
+                                SizedBox(height: 8),
                                 (postList[index].urlImage != '')
                                     ? Container(
-                                        width: 360,
-                                        height: 340,
-                                        padding: const EdgeInsets.only(
-                                            top: 8, bottom: 16),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 280,
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(16),

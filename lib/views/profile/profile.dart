@@ -248,10 +248,10 @@ class _atProfileScreen extends State<atProfileScreen>
 
   @override
   void initState() {
+    super.initState();
     User? user = FirebaseAuth.instance.currentUser;
     final userid = user?.uid.toString();
     userId = userid!;
-    super.initState();
     getOwnerDetail();
     getUserDetail();
     getPostList();
@@ -292,7 +292,7 @@ class _atProfileScreen extends State<atProfileScreen>
                     },
                     child: Container(
                         height: 186,
-                        width: 375 + 24,
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: white,
                         ),
@@ -545,7 +545,15 @@ class _atProfileScreen extends State<atProfileScreen>
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) => seeAll(
+                                                      idUser: idFollowers,
+                                                    ))));
+                                      },
                                       child: Text(
                                         "Followers",
                                         style: TextStyle(
@@ -595,159 +603,46 @@ class _atProfileScreen extends State<atProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            width: 64,
-                            height: 0.5,
-                            decoration: BoxDecoration(
-                              color: gray,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Container(
-                              child: Text(
-                                "Followers",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Urbanist',
-                                  fontWeight: FontWeight.w600,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => seeAll(
-                                              idUser: idFollowers,
-                                            ))));
-                              },
-                              child: Text(
-                                "See all",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Urbanist',
-                                  fontWeight: FontWeight.w600,
-                                  color: gray,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         SizedBox(height: 16),
                         Container(
-                          // width: 367,
-                          height: 72 + 8,
-                          child: ListView.builder(
-                              padding: EdgeInsets.only(left: 0),
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: idFollowers.length,
-                              // userList.length.clamp(0, 3),
-                              itemBuilder: (context, index) {
-                                return followerWidget(
-                                    uid: idFollowers[index].toString());
-                              }),
-                        ),
-                        SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            width: 64,
-                            height: 0.5,
-                            decoration: BoxDecoration(
-                              color: gray,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Photos",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Urbanist',
-                              fontWeight: FontWeight.w600,
-                              color: black,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Container(
-                          // width: 367,
                           height: 56,
-                          child: ListView.builder(
-                              padding: EdgeInsets.only(left: 0),
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: postListImage.length,
-                              // userList.length.clamp(0, 3),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                postNotification(
-                                                    context,
-                                                    uid: userId,
-                                                    postId: postListImage[index]
-                                                        .id))));
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin:
-                                            EdgeInsets.only(left: 0, right: 16),
-                                        child: Container(
-                                          width: 56,
-                                          height: 56,
-                                          decoration: new BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    // userList[index]
-                                                    //     .avatar
-                                                    postListImage[index]
-                                                        .urlImage),
-                                                fit: BoxFit.cover),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                        ),
-                        SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.center,
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                pageViewcontroller.nextPage(
-                                    duration: Duration(seconds: 1),
-                                    curve: Curves.linear);
-                              });
-                            },
-                            icon: Icon(Iconsax.arrow_square_down,
-                                size: 28, color: black),
+                          width: MediaQuery.of(context).size.width,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: TabBar(
+                              labelColor: black,
+                              unselectedLabelColor: Colors.transparent,
+                              indicator: UnderlineTabIndicator(
+                                  borderSide:
+                                      BorderSide(color: black, width: 1)),
+                              //For Indicator Show and Customization
+                              indicatorColor: black,
+                              tabs: [
+                                Tab(
+                                  icon: Icon(Iconsax.grid_8,
+                                      color: black, size: 24),
+                                ),
+                                Tab(
+                                  icon: Icon(Iconsax.video_circle,
+                                      color: black, size: 24),
+                                ),
+                                Tab(
+                                  icon: Icon(Iconsax.save_2,
+                                      color: black, size: 24),
+                                )
+                              ],
+                            ),
                           ),
                         ),
+                        Expanded(
+                            child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            profileTabPostScreen(postList),
+                            profileTabVideoScreen(postVideoList),
+                            profileTabPostScreen(postSaveList),
+                          ],
+                        ))
                       ],
                     ),
                   ),
@@ -760,9 +655,16 @@ class _atProfileScreen extends State<atProfileScreen>
                     child: Container(
                       margin: EdgeInsets.only(left: 24, top: 98 + 44),
                       child: Container(
-                        width: 88,
-                        height: 88,
-                        decoration: new BoxDecoration(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 30,
+                              offset: Offset(2, 4), // Shadow position
+                            ),
+                          ],
                           image: DecorationImage(
                               image: NetworkImage(
                                   // userList[index]
@@ -778,280 +680,6 @@ class _atProfileScreen extends State<atProfileScreen>
                   ),
                 ]),
               ),
-              Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(profileBackground),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Container(
-                      child: Column(
-                    children: [
-                      SizedBox(height: 24 + 20),
-                      Container(
-                        alignment: Alignment.center,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              pageViewcontroller.previousPage(
-                                  duration: Duration(seconds: 1),
-                                  curve: Curves.linear);
-                            });
-                          },
-                          icon: Icon(Iconsax.arrow_square_up,
-                              size: 28, color: black),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 24, right: 24),
-                        child: Row(
-                          children: [
-                            Container(
-                                alignment: Alignment.topRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              atCreatePostScreen(required,
-                                                  uid: userId)),
-                                    );
-                                  },
-                                  child: AnimatedContainer(
-                                    alignment: Alignment.topRight,
-                                    duration: Duration(milliseconds: 300),
-                                    height: 24,
-                                    width: 24,
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 1.5,
-                                        )),
-                                    child: Container(
-                                        padding: EdgeInsets.zero,
-                                        alignment: Alignment.center,
-                                        child: Icon(Iconsax.add,
-                                            size: 16, color: black)),
-                                  ),
-                                )),
-                            Spacer(),
-                            Container(
-                              alignment: Alignment.topRight,
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                    padding: EdgeInsets.zero,
-                                    alignment: Alignment.topRight,
-                                    child: Icon(Iconsax.menu_1,
-                                        size: 24, color: black)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      Container(
-                        margin: EdgeInsets.only(left: 24, right: 24),
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 80,
-                                decoration: new BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          // userList[index]
-                                          //     .avatar
-                                          (photoUrl != '')
-                                              ? photoUrl
-                                              : 'https://i.imgur.com/RUgPziD.jpg'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8)),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 32),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        owner.userName,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w600,
-                                          color: black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 16),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          alignment: Alignment.topLeft,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  (postList.length == 0)
-                                                      ? '0'
-                                                      : postList.length
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w600,
-                                                    color: black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                  "Posts",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w400,
-                                                    color: gray,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 32),
-                                        Container(
-                                          alignment: Alignment.topLeft,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  (owner.favoriteList.length ==
-                                                          0)
-                                                      ? '0'
-                                                      : owner
-                                                          .favoriteList.length
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w600,
-                                                    color: black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                  "Followers",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w400,
-                                                    color: gray,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 32),
-                                        Container(
-                                          alignment: Alignment.topLeft,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  (owner.follow.length == 0)
-                                                      ? '0'
-                                                      : owner.follow.length
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w600,
-                                                    color: black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                child: Text(
-                                                  "Following",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontFamily: 'Urbanist',
-                                                    fontWeight: FontWeight.w400,
-                                                    color: gray,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Container(
-                        height: 56,
-                        width: 375 + 24,
-                        child: Container(
-                          color: Colors.transparent,
-                          child: TabBar(
-                            labelColor: black,
-                            unselectedLabelColor: Colors.transparent,
-                            indicator: UnderlineTabIndicator(
-                                borderSide: BorderSide(color: black, width: 1)),
-                            //For Indicator Show and Customization
-                            indicatorColor: black,
-                            tabs: [
-                              Tab(
-                                icon: Icon(Iconsax.grid_8,
-                                    color: black, size: 24),
-                              ),
-                              Tab(
-                                icon: Icon(Iconsax.video_circle,
-                                    color: black, size: 24),
-                              ),
-                              Tab(
-                                icon: Icon(Iconsax.save_2,
-                                    color: black, size: 24),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          profileTabPostScreen(postList),
-                          profileTabVideoScreen(postVideoList),
-                          profileTabPostScreen(postSaveList),
-                        ],
-                      ))
-                    ],
-                  )))
             ],
           ),
         ),
@@ -1061,7 +689,7 @@ class _atProfileScreen extends State<atProfileScreen>
 
   profileTabPostScreen(List postList) {
     return Container(
-      padding: EdgeInsets.only(left: 24, right: 24),
+      // padding: EdgeInsets.only(left: 24, right: 24),
       child: GridView.custom(
         gridDelegate: (postList.length >= 4)
             ? SliverQuiltedGridDelegate(
