@@ -1,32 +1,31 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-
-//import others
-import 'package:meta/meta.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/images.dart';
 import '../../models/userModel.dart';
 import '../widget/dialogWidget.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atPersonalInformationScreen extends StatefulWidget {
   String uid;
   atPersonalInformationScreen(required, {Key? key, required this.uid})
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _atPersonalInformationScreen createState() =>
+      // ignore: no_logic_in_create_state
       _atPersonalInformationScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
   String uid = '';
   _atPersonalInformationScreen(this.uid);
@@ -78,6 +77,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
         usernameController.text = user.userName;
         emailController.text = user.email;
@@ -113,7 +113,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark,
           statusBarColor: Colors.transparent),
@@ -121,7 +121,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
         body: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(profileBackground), fit: BoxFit.cover),
               ),
@@ -129,37 +129,37 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
             SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
-                    decoration: BoxDecoration(color: Colors.transparent),
+                    decoration: const BoxDecoration(color: Colors.transparent),
                     child: Container(
-                      margin: EdgeInsets.only(left: 24, right: 24, top: 20),
-                      padding: EdgeInsets.only(top: 20),
+                      margin:
+                          const EdgeInsets.only(left: 24, right: 24, top: 20),
+                      padding: const EdgeInsets.only(top: 20),
                       child: Column(
                         children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(Iconsax.back_square,
-                                      size: 28, color: black),
-                                ),
-                                Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    print('more');
-                                  },
-                                  child: Icon(Iconsax.menu_1,
-                                      size: 28, color: black),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Icon(Iconsax.back_square,
+                                    size: 28, color: black),
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  // ignore: avoid_print
+                                  print('more');
+                                },
+                                child: const Icon(Iconsax.menu_1,
+                                    size: 28, color: black),
+                              )
+                            ],
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Personal Information',
                               style: TextStyle(
                                   fontFamily: 'Recoleta',
@@ -168,34 +168,34 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   color: black),
                             ),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 192,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 144,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Username',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -204,7 +204,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Form(
                             key: usernameFormKey,
                             child: Container(
@@ -219,13 +219,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                               ),
                               alignment: Alignment.topCenter,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
                                       fontWeight: FontWeight.w400),
                                   //validator
                                   validator: (email) {
+                                    return null;
+
                                     // if (isEmailValid(email.toString())) {
                                     //   WidgetsBinding.instance!
                                     //       .addPostFrameCallback((_) {
@@ -246,8 +248,8 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   },
                                   controller: usernameController,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -260,7 +262,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -268,10 +270,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   )),
                             ),
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Email',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -280,7 +282,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
                               Form(
@@ -299,13 +301,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   alignment: Alignment.topCenter,
                                   child: TextFormField(
                                       readOnly: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: 'Urbanist',
                                           fontSize: 16,
                                           color: black,
                                           fontWeight: FontWeight.w400),
                                       //validator
                                       validator: (email) {
+                                        return null;
+
                                         // if (isEmailValid(email.toString())) {
                                         //   WidgetsBinding.instance!
                                         //       .addPostFrameCallback((_) {
@@ -326,9 +330,11 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       },
                                       controller: emailController,
                                       keyboardType: TextInputType.emailAddress,
-                                      autofillHints: [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.only(
+                                        contentPadding: const EdgeInsets.only(
                                             left: 20, right: 12),
                                         hintStyle: TextStyle(
                                             fontFamily: 'Urbanist',
@@ -343,7 +349,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        errorStyle: TextStyle(
+                                        errorStyle: const TextStyle(
                                           color: Colors.transparent,
                                           fontSize: 0,
                                           height: 0,
@@ -351,7 +357,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       )),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               GestureDetector(
@@ -367,11 +373,11 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   child: Container(
                                     height: 44,
                                     width: 44,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: black,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.cloud_change,
                                       size: 20,
                                       color: white,
@@ -379,10 +385,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   ))
                             ],
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Phone Number',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -391,7 +397,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
                               Form(
@@ -409,13 +415,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   alignment: Alignment.topCenter,
                                   child: TextFormField(
                                       readOnly: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: 'Urbanist',
                                           fontSize: 16,
                                           color: black,
                                           fontWeight: FontWeight.w400),
                                       //validator
                                       validator: (email) {
+                                        return null;
+
                                         // if (isEmailValid(email.toString())) {
                                         //   WidgetsBinding.instance!
                                         //       .addPostFrameCallback((_) {
@@ -436,9 +444,11 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       },
                                       controller: phoneNumberController,
                                       keyboardType: TextInputType.emailAddress,
-                                      autofillHints: [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.only(
+                                        contentPadding: const EdgeInsets.only(
                                             left: 20, right: 12),
                                         hintStyle: TextStyle(
                                             fontFamily: 'Urbanist',
@@ -453,7 +463,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        errorStyle: TextStyle(
+                                        errorStyle: const TextStyle(
                                           color: Colors.transparent,
                                           fontSize: 0,
                                           height: 0,
@@ -461,7 +471,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       )),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               GestureDetector(
@@ -469,11 +479,11 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   child: Container(
                                     height: 44,
                                     width: 44,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: black,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.cloud_change,
                                       size: 20,
                                       color: white,
@@ -481,10 +491,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   ))
                             ],
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Gender',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -493,7 +503,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Form(
                             key: genderFormKey,
                             child: Container(
@@ -508,13 +518,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                               ),
                               alignment: Alignment.topCenter,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
                                       fontWeight: FontWeight.w400),
                                   //validator
                                   validator: (email) {
+                                    return null;
+
                                     // if (isEmailValid(email.toString())) {
                                     //   WidgetsBinding.instance!
                                     //       .addPostFrameCallback((_) {
@@ -535,10 +547,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   },
                                   controller: genderController,
                                   keyboardType: TextInputType.emailAddress,
-                                  autofillHints: [AutofillHints.email],
+                                  autofillHints: const [AutofillHints.email],
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         genderDialog(
@@ -546,9 +558,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                             .then((value) {
                                           genderController.text = value;
                                         });
+                                        // ignore: avoid_print
                                         print(genderController.text);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Iconsax.export_3,
                                         color: black,
                                         size: 24,
@@ -566,7 +579,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -574,10 +587,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   )),
                             ),
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Date of Birth',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -586,7 +599,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Form(
                             child: Container(
                               width: 327 + 24,
@@ -601,14 +614,14 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                               alignment: Alignment.topCenter,
                               child: TextFormField(
                                   controller: dayController,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         datePickerDialog(
@@ -617,13 +630,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                           if (value != null) {
                                             setState(() {
                                               dayController.text =
-                                                  "${DateFormat('yMMMMd').format(value)}";
+                                                  DateFormat('yMMMMd')
+                                                      .format(value);
+                                              // ignore: avoid_print
                                               print(dayController.text);
                                             });
                                           }
                                         });
                                       },
-                                      child: Icon(Iconsax.calendar_1,
+                                      child: const Icon(Iconsax.calendar_1,
                                           size: 24, color: black),
                                     ),
                                     hintStyle: TextStyle(
@@ -638,7 +653,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: black,
                                       fontSize: 0,
                                       height: 0,
@@ -647,10 +662,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                             ),
                           ),
 
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Biography',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -659,7 +674,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Form(
                             key: bioFormKey,
                             child: Container(
@@ -674,13 +689,15 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                               ),
                               alignment: Alignment.topCenter,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
                                       fontWeight: FontWeight.w400),
                                   //validator
                                   validator: (email) {
+                                    return null;
+
                                     // if (isEmailValid(email.toString())) {
                                     //   WidgetsBinding.instance!
                                     //       .addPostFrameCallback((_) {
@@ -701,10 +718,10 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                   },
                                   controller: bioController,
                                   keyboardType: TextInputType.emailAddress,
-                                  autofillHints: [AutofillHints.email],
+                                  autofillHints: const [AutofillHints.email],
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -717,7 +734,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -728,8 +745,8 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                           Container(
                             width: 327 + 24,
                             height: 44,
-                            margin: EdgeInsets.only(top: 32),
-                            decoration: BoxDecoration(
+                            margin: const EdgeInsets.only(top: 32),
+                            decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
                               color: black,
@@ -741,45 +758,46 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                 setState(() {
                                   editProfile();
                                 });
-                                await Future.delayed(Duration(seconds: 3));
-                                if (this.mounted) {
+                                await Future.delayed(
+                                    const Duration(seconds: 3));
+                                if (mounted) {
                                   setState(() {
                                     isLoading = false;
                                   });
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                  primary: black,
-                                  onPrimary: Colors.white,
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: black,
                                   shadowColor: black.withOpacity(0.25),
                                   elevation: 15,
                                   animationDuration:
-                                      Duration(milliseconds: 300),
+                                      const Duration(milliseconds: 300),
                                   // maximumSize: Size.fromWidth(200),
-                                  minimumSize: Size(327 + 24, 44),
+                                  minimumSize: const Size(327 + 24, 44),
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
-                                          new BorderRadius.circular(16.0)),
+                                          BorderRadius.circular(16.0)),
                                   // BorderRadius.all(Radius.circular(16)),
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       color: white,
                                       fontFamily: 'SFProText',
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18)),
                               child: isLoading
-                                  ? Container(
+                                  ? SizedBox(
                                       height: 48,
                                       width: 200,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: [
+                                        children: const [
                                           SizedBox(
                                               width: 24,
                                               height: 24,
                                               child: CircularProgressIndicator(
                                                   color: white)),
-                                          const SizedBox(width: 16),
+                                          SizedBox(width: 16),
                                           Text(
                                             "Please Wait...",
                                             style: TextStyle(
@@ -794,7 +812,7 @@ class _atPersonalInformationScreen extends State<atPersonalInformationScreen> {
                                     )
                                   : Container(
                                       alignment: Alignment.center,
-                                      child: Text(
+                                      child: const Text(
                                         'Save',
                                         style: TextStyle(
                                           fontSize: 18,

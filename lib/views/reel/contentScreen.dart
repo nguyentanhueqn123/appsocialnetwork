@@ -1,12 +1,14 @@
+// ignore_for_file: file_names
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:video_player/video_player.dart';
 
 import 'likeDoubleTap.dart';
 import 'optionScreen.dart';
 
+// ignore: must_be_immutable
 class ContentScreen extends StatefulWidget {
   final String? src;
   final String? uid;
@@ -16,6 +18,7 @@ class ContentScreen extends StatefulWidget {
 
   bool liked = false;
   @override
+  // ignore: library_private_types_in_public_api
   _ContentScreenState createState() => _ContentScreenState();
 }
 
@@ -85,6 +88,7 @@ class _ContentScreenState extends State<ContentScreen> {
     return Stack(
       fit: StackFit.expand,
       children: [
+        // ignore: unnecessary_null_comparison
         _chewieController != null &&
                 _chewieController.videoPlayerController.value.isInitialized
             ? GestureDetector(
@@ -94,7 +98,7 @@ class _ContentScreenState extends State<ContentScreen> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.only(top: 24 + 24),
+                  padding: const EdgeInsets.only(top: 24 + 24),
                   child: FittedBox(
                     fit: BoxFit.cover,
                     child: Chewie(
@@ -107,7 +111,7 @@ class _ContentScreenState extends State<ContentScreen> {
                 alignment: Alignment.center,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     CircularProgressIndicator(),
                     SizedBox(height: 10),
                     Text('Loading...')

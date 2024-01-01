@@ -1,8 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
+// ignore: use_key_in_widget_constructors
 class LikeIcon extends StatelessWidget {
   Future<int> tempFuture() async {
-    return Future.delayed(Duration(seconds: 1));
+    return Future.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -12,8 +15,8 @@ class LikeIcon extends StatelessWidget {
         future: tempFuture(),
         builder: (context, snapshot) =>
             snapshot.connectionState != ConnectionState.done
-                ? Icon(Icons.favorite, size: 100, color: Colors.red)
-                : SizedBox(),
+                ? const Icon(Icons.favorite, size: 100, color: Colors.red)
+                : const SizedBox(),
       ),
     );
   }

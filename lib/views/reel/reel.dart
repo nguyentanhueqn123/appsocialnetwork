@@ -1,26 +1,24 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:chewie/chewie.dart';
-import 'package:video_player/video_player.dart';
 import '../../constants/colors.dart';
 import '../../models/reelModel.dart';
 import 'contentScreen.dart';
 import 'createReel.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atReelScreen extends StatefulWidget {
   String uid;
   atReelScreen(required, {Key? key, required this.uid}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _atReelScreen createState() => _atReelScreen();
 }
 
+// ignore: camel_case_types
 class _atReelScreen extends State<atReelScreen>
     with SingleTickerProviderStateMixin {
   String userId = '';
@@ -37,9 +35,10 @@ class _atReelScreen extends State<atReelScreen>
         .listen((value) {
       setState(() {
         reelList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           reelList.add(reelModel.fromDocument(element.data()));
-        });
+        }
+        // ignore: avoid_print
         print(reelList.length);
       });
     });
@@ -52,6 +51,7 @@ class _atReelScreen extends State<atReelScreen>
     User? user = FirebaseAuth.instance.currentUser;
     final userid = user?.uid.toString();
     userId = userid!;
+    // ignore: avoid_print
     print(userId);
     getReelList();
   }
@@ -72,67 +72,63 @@ class _atReelScreen extends State<atReelScreen>
         onRefresh: () {
           return refreshController();
         },
-        child: Container(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Swiper(
-                controller: swiperController,
-                itemBuilder: (BuildContext context, int index) {
-                  return ContentScreen(
-                    src: reelList[index].urlVideo,
-                    uid: reelList[index].idUser,
-                    reelId: reelList[index].id,
-                  );
-                },
-                itemCount: reelList.length,
-                scrollDirection: Axis.vertical,
-              ),
-              Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 24 + 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(),
-                        // SizedBox(width: 117.5),
-                        Container(
-                          child: Text(
-                            'Reel',
-                            style: TextStyle(
-                                fontFamily: 'Recoleta',
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: white),
-                          ),
-                        ),
-                        // SizedBox(width: 117.5),
-                        Container(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          //             atPersonalInformationScreen(
-                                          //                 required,
-                                          //                 uid: ownerId))));
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Swiper(
+              controller: swiperController,
+              itemBuilder: (BuildContext context, int index) {
+                return ContentScreen(
+                  src: reelList[index].urlVideo,
+                  uid: reelList[index].idUser,
+                  reelId: reelList[index].id,
+                );
+              },
+              itemCount: reelList.length,
+              scrollDirection: Axis.vertical,
+            ),
+            Column(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.only(left: 24, right: 24, top: 24 + 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(),
+                      // SizedBox(width: 117.5),
+                      const Text(
+                        'Reel',
+                        style: TextStyle(
+                            fontFamily: 'Recoleta',
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: white),
+                      ),
+                      // SizedBox(width: 117.5),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      //             atPersonalInformationScreen(
+                                      //                 required,
+                                      //                 uid: ownerId))));
 
-                                          atCreateReelScreen(context,
-                                              uid: userId))));
-                            },
-                            child: Icon(Iconsax.camera, size: 28, color: white),
-                          ),
-                        )
-                      ],
-                    ),
+                                      atCreateReelScreen(context,
+                                          uid: userId))));
+                        },
+                        child:
+                            const Icon(Iconsax.camera, size: 28, color: white),
+                      )
+                    ],
                   ),
-                ],
-              ),
-              // ContentScreen(like: like,)
-            ],
-          ),
+                ),
+              ],
+            ),
+            // ContentScreen(like: like,)
+          ],
         ),
       ),
     );

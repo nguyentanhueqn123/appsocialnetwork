@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,9 @@ import 'commentReel.dart';
 class OptionScreen extends StatefulWidget {
   final String? uid;
   final String? reelId;
-  OptionScreen({Key? key, this.uid, this.reelId}) : super(key: key);
+  const OptionScreen({Key? key, this.uid, this.reelId}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _OptionScreenState createState() => _OptionScreenState();
 }
 
@@ -112,9 +115,9 @@ class _OptionScreenState extends State<OptionScreen> {
         .collection('comments')
         .snapshots()
         .listen((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         listCMR.add(commentReelModel.fromDocument(element.data()));
-      });
+      }
     });
   }
 
@@ -123,6 +126,7 @@ class _OptionScreenState extends State<OptionScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     final userid = user?.uid.toString();
     userId = userid!;
+    // ignore: avoid_print
     print(userId);
     getReelDetail();
     getOwnerDetail();
@@ -134,211 +138,197 @@ class _OptionScreenState extends State<OptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 24, right: 24),
+      padding: const EdgeInsets.only(left: 24, right: 24),
       child: Column(
         children: [
-          SizedBox(),
-          Spacer(),
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: 56 + 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(4),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  (owner.avatar != '')
-                                      ? owner.avatar
-                                      : 'https://i.imgur.com/RUgPziD.jpg',
-                                  width: 32,
-                                  height: 32,
-                                ),
-                              ),
+          const SizedBox(),
+          const Spacer(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 56 + 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.network(
+                              (owner.avatar != '')
+                                  ? owner.avatar
+                                  : 'https://i.imgur.com/RUgPziD.jpg',
+                              width: 32,
+                              height: 32,
                             ),
-                            SizedBox(width: 8),
-                            Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  owner.userName,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w600,
-                                      color: white),
-                                ))
-                          ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Container(
-                          width: 283,
-                          child: Text(
-                            reel.caption,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Urbanist',
-                                fontWeight: FontWeight.w600,
-                                overflow: TextOverflow.ellipsis,
-                                color: white),
-                            maxLines: 1,
-                          )),
-                      SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: GestureDetector(
-                                onTap: () {},
-                                child: Icon(Iconsax.music_square5,
-                                    color: white, size: 24)),
-                          ),
-                          SizedBox(width: 8),
-                          Container(
-                              alignment: Alignment.center,
-                              width: 128,
-                              child: Text(
-                                'turmoilisme • Original sound',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.w400,
-                                    overflow: TextOverflow.ellipsis,
-                                    color: white),
-                                maxLines: 1,
-                              )),
-                          SizedBox(width: 8),
-                          Container(
-                            child: GestureDetector(
-                                onTap: () {},
-                                child:
-                                    Icon(Iconsax.map5, color: white, size: 24)),
-                          ),
-                          SizedBox(width: 8),
-                          Container(
-                              alignment: Alignment.center,
-                              width: 90,
-                              child: Text(
-                                'Thu Duc city',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.w400,
-                                    overflow: TextOverflow.ellipsis,
-                                    color: white),
-                                maxLines: 1,
-                              )),
-                        ],
-                      )
-                    ],
-                  ),
+                        const SizedBox(width: 8),
+                        Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              owner.userName,
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w600,
+                                  color: white),
+                            ))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                        width: 283,
+                        child: Text(
+                          reel.caption,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Urbanist',
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis,
+                              color: white),
+                          maxLines: 1,
+                        )),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                            onTap: () {},
+                            child: const Icon(Iconsax.music_square5,
+                                color: white, size: 24)),
+                        const SizedBox(width: 8),
+                        Container(
+                            alignment: Alignment.center,
+                            width: 128,
+                            child: const Text(
+                              'turmoilisme • Original sound',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w400,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: white),
+                              maxLines: 1,
+                            )),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                            onTap: () {},
+                            child: const Icon(Iconsax.map5,
+                                color: white, size: 24)),
+                        const SizedBox(width: 8),
+                        Container(
+                            alignment: Alignment.center,
+                            width: 90,
+                            child: const Text(
+                              'Thu Duc city',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w400,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: white),
+                              maxLines: 1,
+                            )),
+                      ],
+                    )
+                  ],
                 ),
-                Spacer(),
-                Container(
-                  padding: EdgeInsets.only(bottom: 56 + 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              liked = !liked;
-                              print(' Like r ne');
-                              print(liked);
-                              like(reel.id, reel.likes);
-                            });
-                          },
-                          icon: (reel.likes.contains(userId))
-                              ? Container(
-                                  padding: EdgeInsets.only(left: 16),
-                                  alignment: Alignment.topRight,
-                                  child: Icon(Iconsax.like_15,
-                                      size: 24, color: pink),
-                                )
-                              : Container(
-                                  padding: EdgeInsets.only(left: 16),
-                                  alignment: Alignment.topRight,
-                                  child: Icon(Iconsax.like_1,
-                                      size: 24, color: white),
-                                )),
-                      Container(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Text(
-                          (reel.likes.isEmpty)
-                              ? '0'
-                              : reel.likes.length.toString(),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontFamily: "Urbanist",
-                              fontSize: 24.0,
-                              color: white,
-                              fontWeight: FontWeight.w400),
-                        ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.only(bottom: 56 + 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            liked = !liked;
+                            // ignore: avoid_print
+                            print(' Like r ne');
+                            // ignore: avoid_print
+                            print(liked);
+                            like(reel.id, reel.likes);
+                          });
+                        },
+                        icon: (reel.likes.contains(userId))
+                            ? Container(
+                                padding: const EdgeInsets.only(left: 16),
+                                alignment: Alignment.topRight,
+                                child: const Icon(Iconsax.like_15,
+                                    size: 24, color: pink),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.only(left: 16),
+                                alignment: Alignment.topRight,
+                                child: const Icon(Iconsax.like_1,
+                                    size: 24, color: white),
+                              )),
+                    Container(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        (reel.likes.isEmpty)
+                            ? '0'
+                            : reel.likes.length.toString(),
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                            fontFamily: "Urbanist",
+                            fontSize: 24.0,
+                            color: white,
+                            fontWeight: FontWeight.w400),
                       ),
-                      SizedBox(height: 14),
-                      Container(
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          atCommentReelScreen(
-                                            required,
-                                            uid: userId,
-                                            reelId: reel.id,
-                                          ))));
-                            },
-                            child: Icon(Iconsax.message_text,
-                                color: white, size: 24)),
+                    ),
+                    const SizedBox(height: 14),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => atCommentReelScreen(
+                                        required,
+                                        uid: userId,
+                                        reelId: reel.id,
+                                      ))));
+                        },
+                        child: const Icon(Iconsax.message_text,
+                            color: white, size: 24)),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        listCMR.length.toString(),
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(
+                            fontFamily: "Urbanist",
+                            fontSize: 24.0,
+                            color: white,
+                            fontWeight: FontWeight.w400),
                       ),
-                      SizedBox(height: 8),
-                      Container(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Text(
-                          listCMR.length.toString(),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontFamily: "Urbanist",
-                              fontSize: 24.0,
-                              color: white,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      SizedBox(height: 14),
-                      Container(
-                        child: GestureDetector(
-                            onTap: () {},
-                            child:
-                                Icon(Iconsax.send_2, color: white, size: 24)),
-                      ),
-                      SizedBox(height: 24),
-                      Container(
-                        child: GestureDetector(
-                            onTap: () {},
-                            child: Icon(Iconsax.more, color: white, size: 24)),
-                      ),
-                      SizedBox(height: 24),
-                      Container(
-                        child: GestureDetector(
-                            onTap: () {},
-                            child: Icon(Iconsax.voice_square,
-                                color: white, size: 24)),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                    const SizedBox(height: 14),
+                    GestureDetector(
+                        onTap: () {},
+                        child:
+                            const Icon(Iconsax.send_2, color: white, size: 24)),
+                    const SizedBox(height: 24),
+                    GestureDetector(
+                        onTap: () {},
+                        child:
+                            const Icon(Iconsax.more, color: white, size: 24)),
+                    const SizedBox(height: 24),
+                    GestureDetector(
+                        onTap: () {},
+                        child: const Icon(Iconsax.voice_square,
+                            color: white, size: 24)),
+                  ],
+                ),
+              )
+            ],
           )
         ],
       ),

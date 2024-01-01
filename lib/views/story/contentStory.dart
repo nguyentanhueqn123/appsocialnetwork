@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 
 import 'package:chewie/chewie.dart';
@@ -12,6 +14,7 @@ import '../../constants/colors.dart';
 import '../../models/storyModel.dart';
 import '../../models/userModel.dart';
 
+// ignore: must_be_immutable
 class ContentStoryScreen extends StatefulWidget {
   final String? src;
   final String? uid;
@@ -22,6 +25,7 @@ class ContentStoryScreen extends StatefulWidget {
 
   bool liked = false;
   @override
+  // ignore: library_private_types_in_public_api
   _ContentStoryScreenState createState() => _ContentStoryScreenState();
 }
 
@@ -53,8 +57,11 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
         .listen((value) {
       setState(() {
         owner = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(owner.userName);
+        // ignore: avoid_print
         print("owner.background");
+        // ignore: avoid_print
         print(owner.background);
       });
     });
@@ -62,6 +69,7 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
 
   Future initializePlayer() async {
     // if (story.urlVideo == '') {
+    // ignore: deprecated_member_use
     _videoPlayerController = VideoPlayerController.network(widget.src!);
     await Future.wait([_videoPlayerController.initialize()]);
 
@@ -99,7 +107,7 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
   late StoryController storyController;
   late Timer _timer;
   Future startTime() async {
-    _timer = Timer.periodic(Duration(microseconds: 10), ((timer) {
+    _timer = Timer.periodic(const Duration(microseconds: 10), ((timer) {
       setState(() {
         percent += 0.01;
         if (percent > 1) {
@@ -129,6 +137,7 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
         .listen((value) {
       setState(() {
         story = storyModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(story.urlVideo);
       });
     });
@@ -159,19 +168,21 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
     super.dispose();
   }
 
-  bool _liked = false;
+  // ignore: unused_field
+  final bool _liked = false;
   double percent = 0.0;
   @override
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [
+        // ignore: unnecessary_null_comparison
         _chewieController != null &&
                 _chewieController.videoPlayerController.value.isInitialized
             ? GestureDetector(
                 onTap: () {},
                 child: Container(
-                  padding: EdgeInsets.only(top: 24 + 24),
+                  padding: const EdgeInsets.only(top: 24 + 24),
                   child: Chewie(
                     controller: _chewieController,
                   ),
@@ -181,7 +192,7 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
                 alignment: Alignment.center,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     CircularProgressIndicator(),
                     SizedBox(height: 10),
                     Text('Loading...')
@@ -189,13 +200,13 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
                 ),
               ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 8),
           child: Column(
             children: [
               LinearProgressIndicator(
                 value: percent,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Container(
@@ -206,7 +217,8 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
                             color: black,
                             width: 1,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4))),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: (owner.avatar != '')
@@ -216,22 +228,23 @@ class _ContentStoryScreenState extends State<ContentStoryScreen> {
                               : Image.network(
                                   'https://i.imgur.com/RUgPziD.jpg',
                                 ))),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Text(
                     owner.userName,
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: "Urbanist",
                         fontSize: 16,
                         color: white,
                         fontWeight: FontWeight.w400),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Icon(Iconsax.back_square, size: 24, color: white),
+                    child:
+                        const Icon(Iconsax.back_square, size: 24, color: white),
                   ),
                 ],
               )

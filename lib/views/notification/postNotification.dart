@@ -1,13 +1,11 @@
-import 'dart:io';
+// ignore_for_file: file_names
 
-import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_network_app/views/profile/profile.dart';
-import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
@@ -17,6 +15,7 @@ import '../dashboard/comment.dart';
 import '../dashboard/postVideo.dart';
 import '../widget/dialogWidget.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class postNotification extends StatefulWidget {
   String uid;
   String postId;
@@ -24,10 +23,13 @@ class postNotification extends StatefulWidget {
       {Key? key, required this.uid, required this.postId})
       : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _postNotificationState createState() =>
+      // ignore: no_logic_in_create_state, unnecessary_this
       _postNotificationState(this.uid, this.postId);
 }
 
+// ignore: camel_case_types
 class _postNotificationState extends State<postNotification> {
   bool liked = false;
   bool silent = false;
@@ -59,6 +61,7 @@ class _postNotificationState extends State<postNotification> {
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
       });
     });
@@ -109,8 +112,7 @@ class _postNotificationState extends State<postNotification> {
             'content': 'liked your photo',
             'category': 'like',
             'nameSender': user.userName,
-            'timeCreate':
-                "${DateFormat('y MMMM d, hh:mm a').format(DateTime.now())}"
+            'timeCreate': DateFormat('y MMMM d, hh:mm a').format(DateTime.now())
           }).then((value) {
             FirebaseFirestore.instance
                 .collection('notifies')
@@ -138,9 +140,8 @@ class _postNotificationState extends State<postNotification> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark,
           statusBarColor: Colors.transparent),
@@ -148,100 +149,98 @@ class _postNotificationState extends State<postNotification> {
         body: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
               ),
             ),
             SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
+                margin: const EdgeInsets.only(left: 16, right: 16),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
-                            padding: EdgeInsets.only(left: 28),
+                            padding: const EdgeInsets.only(left: 28),
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Iconsax.arrow_square_left,
+                            icon: const Icon(Iconsax.arrow_square_left,
                                 size: 28, color: black),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Container()
                         ]),
-                    SizedBox(height: 16),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => atProfileScreen(
-                                          ownerId: post.idUser)));
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(4),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Image.network(
-                                      (post.ownerAvatar != '')
-                                          ? post.ownerAvatar
-                                          : 'https://i.imgur.com/RUgPziD.jpg',
-                                      width: 32,
-                                      height: 32,
-                                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        atProfileScreen(ownerId: post.idUser)));
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(4),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    (post.ownerAvatar != '')
+                                        ? post.ownerAvatar
+                                        : 'https://i.imgur.com/RUgPziD.jpg',
+                                    width: 32,
+                                    height: 32,
                                   ),
                                 ),
-                                SizedBox(width: 8),
-                                Container(
-                                    child: Text(
-                                  post.ownerUsername,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w600,
-                                      color: black),
-                                ))
-                              ],
-                            ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                post.ownerUsername,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Urbanist',
+                                    fontWeight: FontWeight.w600,
+                                    color: black),
+                              )
+                            ],
                           ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              if (uid == post.idUser) {
-                                if (post.state == 'show') {
-                                  hidePostDialog(context, post.id);
-                                } else {
-                                  showPostDialog(context, post.id);
-                                }
+                        ),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            if (uid == post.idUser) {
+                              if (post.state == 'show') {
+                                hidePostDialog(context, post.id);
                               } else {
-                                savePostDialog(context, post.id, uid);
+                                showPostDialog(context, post.id);
                               }
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(8),
-                              alignment: Alignment.topRight,
-                              child: Icon(Iconsax.more, size: 24, color: black),
-                            ),
-                          )
-                        ],
-                      ),
+                            } else {
+                              savePostDialog(context, post.id, uid);
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            alignment: Alignment.topRight,
+                            child: const Icon(Iconsax.more,
+                                size: 24, color: black),
+                          ),
+                        )
+                      ],
                     ),
                     (post.urlImage != '')
                         ? Container(
                             width: 360,
                             height: 340,
-                            padding: EdgeInsets.only(top: 8, bottom: 16),
+                            padding: const EdgeInsets.only(top: 8, bottom: 16),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
                               child: Image.network(
@@ -253,86 +252,82 @@ class _postNotificationState extends State<postNotification> {
                         : (post.urlVideo != '')
                             ? postVideoWidget(context, src: post.urlVideo)
                             : Container(),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  liked = !liked;
-                                  like(post.id, post.likes, post.idUser);
-                                });
-                              },
-                              icon: (post.likes.contains(uid))
-                                  ? Container(
-                                      padding: EdgeInsets.only(left: 8),
-                                      alignment: Alignment.topRight,
-                                      child: Icon(Iconsax.like_15,
-                                          size: 24, color: pink),
-                                    )
-                                  : Container(
-                                      padding: EdgeInsets.only(left: 8),
-                                      alignment: Alignment.topRight,
-                                      child: Icon(Iconsax.like_1,
-                                          size: 24, color: black),
-                                    )),
-                          GestureDetector(
-                            onTap: () {
-                              //likes post
-                            },
-                            child: Container(
-                                padding: EdgeInsets.only(left: 8),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  (post.likes.isEmpty)
-                                      ? '0'
-                                      : post.likes.length.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: black,
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )),
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.only(left: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => atCommentScreen(
-                                            required,
-                                            uid: uid,
-                                            postId: post.id,
-                                            ownerId: post.idUser,
-                                          ))));
+                              setState(() {
+                                liked = !liked;
+                                like(post.id, post.likes, post.idUser);
+                              });
                             },
-                            icon: Container(
-                              child: Icon(Iconsax.message_text,
-                                  size: 24, color: black),
-                            ),
-                          ),
-                          // Container(
-                          //     margin: EdgeInsets.only(left: 8),
-                          //     alignment: Alignment.centerLeft,
-                          //     child: Text(
-                          //       '24',
-                          //       style: TextStyle(
-                          //         fontSize: 16,
-                          //         color: black,
-                          //         fontFamily: 'Urbanist',
-                          //         fontWeight: FontWeight.w600,
-                          //       ),
-                          //     )),
-                          Spacer(),
-                          Container(
-                            decoration:
-                                BoxDecoration(color: Colors.transparent),
-                          )
-                        ],
-                      ),
+                            icon: (post.likes.contains(uid))
+                                ? Container(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    alignment: Alignment.topRight,
+                                    child: const Icon(Iconsax.like_15,
+                                        size: 24, color: pink),
+                                  )
+                                : Container(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    alignment: Alignment.topRight,
+                                    child: const Icon(Iconsax.like_1,
+                                        size: 24, color: black),
+                                  )),
+                        GestureDetector(
+                          onTap: () {
+                            //likes post
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.only(left: 8),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                (post.likes.isEmpty)
+                                    ? '0'
+                                    : post.likes.length.toString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: black,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )),
+                        ),
+                        IconButton(
+                          padding: const EdgeInsets.only(left: 8),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => atCommentScreen(
+                                          required,
+                                          uid: uid,
+                                          postId: post.id,
+                                          ownerId: post.idUser,
+                                        ))));
+                          },
+                          icon: const Icon(Iconsax.message_text,
+                              size: 24, color: black),
+                        ),
+                        // Container(
+                        //     margin: EdgeInsets.only(left: 8),
+                        //     alignment: Alignment.centerLeft,
+                        //     child: Text(
+                        //       '24',
+                        //       style: TextStyle(
+                        //         fontSize: 16,
+                        //         color: black,
+                        //         fontFamily: 'Urbanist',
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     )),
+                        const Spacer(),
+                        Container(
+                          decoration:
+                              const BoxDecoration(color: Colors.transparent),
+                        )
+                      ],
                     ),
                     // SizedBox(height: 12),
                     GestureDetector(
@@ -341,11 +336,11 @@ class _postNotificationState extends State<postNotification> {
                       },
                       child: Container(
                           width: 327 + 24,
-                          margin: EdgeInsets.only(left: 8),
+                          margin: const EdgeInsets.only(left: 8),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             post.caption,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 color: black,
                                 fontFamily: 'Urbanist',
@@ -354,13 +349,13 @@ class _postNotificationState extends State<postNotification> {
                             maxLines: 1,
                           )),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Container(
-                        margin: EdgeInsets.only(left: 8),
+                        margin: const EdgeInsets.only(left: 8),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           post.timeCreate,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: gray,
                             fontFamily: 'Urbanist',

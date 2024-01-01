@@ -1,21 +1,21 @@
-import 'dart:async';
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/images.dart';
 
+// ignore: camel_case_types
 class changingPasswordScreen extends StatefulWidget {
   const changingPasswordScreen({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _changingPasswordScreen createState() => _changingPasswordScreen();
 }
 
+// ignore: camel_case_types
 class _changingPasswordScreen extends State<changingPasswordScreen> {
   bool isHiddenCurrentPassword = true;
   bool isHiddenNewPassword = true;
@@ -27,43 +27,44 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(changingPasswordBackground),
                 fit: BoxFit.cover),
           ),
           child: Container(
-            margin: EdgeInsets.only(left: 24, right: 24),
+            margin: const EdgeInsets.only(left: 24, right: 24),
             child: Column(
               children: [
-                SizedBox(height: 20 + 44),
+                const SizedBox(height: 20 + 44),
                 Row(
                   children: [
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(Iconsax.back_square, size: 28),
+                      child: const Icon(Iconsax.back_square, size: 28),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () {
+                        // ignore: avoid_print
                         print('Menu');
                       },
-                      child: Icon(Iconsax.menu_14, size: 28),
+                      child: const Icon(Iconsax.menu_14, size: 28),
                     )
                   ],
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(
+                  child: const Text(
                     'Changing Password',
                     style: TextStyle(
                         fontFamily: 'Recoleta',
@@ -72,8 +73,8 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                         color: black),
                   ),
                 ),
-                SizedBox(height: 8),
-                Container(
+                const SizedBox(height: 8),
+                const SizedBox(
                   width: 327 + 24,
                   child: Text(
                     'Your new password must be different from the current password and ensure the safety of password.',
@@ -84,7 +85,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                         color: black),
                   ),
                 ),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
                 Container(
                   alignment: Alignment.topLeft,
                   width: 327 + 24,
@@ -92,7 +93,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
+                        child: const Text(
                           'Current Password',
                           style: TextStyle(
                               fontFamily: 'Urbanist',
@@ -101,7 +102,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Form(
@@ -118,7 +119,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               ),
                               alignment: Alignment.topLeft,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
@@ -126,10 +127,10 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   controller: currentPasswordController,
                                   obscureText: isHiddenCurrentPassword,
                                   keyboardType: TextInputType.visiblePassword,
-                                  autofillHints: [AutofillHints.password],
+                                  autofillHints: const [AutofillHints.password],
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -142,7 +143,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -150,7 +151,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   )),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -162,11 +163,11 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                 ? Container(
                                     height: 44,
                                     width: 44,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: black,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye,
                                       size: 20,
                                       color: white,
@@ -179,9 +180,9 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                         color: Colors.transparent,
                                         border:
                                             Border.all(color: gray, width: 1),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye_slash,
                                       size: 24,
                                       color: black,
@@ -193,7 +194,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Container(
                   alignment: Alignment.topLeft,
                   width: 327 + 24,
@@ -201,7 +202,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
+                        child: const Text(
                           'New Password',
                           style: TextStyle(
                               fontFamily: 'Urbanist',
@@ -210,7 +211,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Form(
@@ -227,7 +228,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               ),
                               alignment: Alignment.topLeft,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
@@ -235,10 +236,10 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   controller: newPasswordController,
                                   obscureText: isHiddenNewPassword,
                                   keyboardType: TextInputType.visiblePassword,
-                                  autofillHints: [AutofillHints.password],
+                                  autofillHints: const [AutofillHints.password],
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -251,7 +252,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -259,7 +260,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   )),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -270,11 +271,11 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                 ? Container(
                                     height: 44,
                                     width: 44,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: black,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye,
                                       size: 20,
                                       color: white,
@@ -287,9 +288,9 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                         color: Colors.transparent,
                                         border:
                                             Border.all(color: gray, width: 1),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye_slash,
                                       size: 24,
                                       color: black,
@@ -301,7 +302,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Container(
                   alignment: Alignment.topLeft,
                   width: 327 + 24,
@@ -309,7 +310,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
+                        child: const Text(
                           'Confirm New Password',
                           style: TextStyle(
                               fontFamily: 'Urbanist',
@@ -318,7 +319,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Form(
@@ -335,7 +336,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                               ),
                               alignment: Alignment.topLeft,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
@@ -343,10 +344,10 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   controller: confirmNewPasswordController,
                                   obscureText: isHiddenConfirmPassword,
                                   keyboardType: TextInputType.visiblePassword,
-                                  autofillHints: [AutofillHints.password],
+                                  autofillHints: const [AutofillHints.password],
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 20, right: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 12),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -359,7 +360,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -367,7 +368,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                   )),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -379,11 +380,11 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                 ? Container(
                                     height: 44,
                                     width: 44,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: black,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye,
                                       size: 20,
                                       color: white,
@@ -396,9 +397,9 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                                         color: Colors.transparent,
                                         border:
                                             Border.all(color: gray, width: 1),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
-                                    child: Icon(
+                                    child: const Icon(
                                       Iconsax.eye_slash,
                                       size: 24,
                                       color: black,
@@ -407,19 +408,19 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                           )
                         ],
                       ),
-                      SizedBox(height: 32),
+                      const SizedBox(height: 32),
                       GestureDetector(
                         onTap: () {},
                         child: Container(
                           width: 327 + 24,
                           height: 44,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
                             color: black,
                           ),
                           child: Container(
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               "Change",
                               style: TextStyle(
                                 color: white,
@@ -432,7 +433,7 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       GestureDetector(
                         onTap: () {
                           currentPasswordController.text = '';
@@ -442,13 +443,13 @@ class _changingPasswordScreen extends State<changingPasswordScreen> {
                         child: Container(
                           width: 327 + 24,
                           height: 44,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
                             color: Colors.transparent,
                           ),
                           child: Container(
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               "Reset",
                               style: TextStyle(
                                 color: black,

@@ -1,9 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../constants/colors.dart';
@@ -14,14 +13,17 @@ import '../profile/profile.dart';
 import '../reel/reel.dart';
 import '../searching/searching.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class navigationBar extends StatefulWidget {
   String uid;
 
   navigationBar({Key? key, required this.uid}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _navigationBar createState() => _navigationBar(uid);
 }
 
+// ignore: camel_case_types
 class _navigationBar extends State<navigationBar>
     with SingleTickerProviderStateMixin {
   String uid = "";
@@ -76,6 +78,9 @@ class _navigationBar extends State<navigationBar>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
+        controller: _tabController,
+        //onPageChanged: whenPageChanged,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           atDashboardScreen(uid: uid),
           atSearchScreen(required, uid: uid),
@@ -83,12 +88,9 @@ class _navigationBar extends State<navigationBar>
           atNotificationScreen(required, uid: uid),
           atProfileScreen(ownerId: uid)
         ],
-        controller: _tabController,
-        //onPageChanged: whenPageChanged,
-        physics: NeverScrollableScrollPhysics(),
       ),
       extendBody: true,
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 56,
         width: 375 + 24,
         // decoration: BoxDecoration(
@@ -103,30 +105,30 @@ class _navigationBar extends State<navigationBar>
             child: TabBar(
               labelColor: white,
               unselectedLabelColor: white,
-              indicator: UnderlineTabIndicator(
+              indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide(color: white, width: 1)),
               //For Indicator Show and Customization
               indicatorColor: black,
               tabs: <Widget>[
-                Tab(
+                const Tab(
                     // icon: SvgPicture.asset(
                     //   nbDashboard,
                     //   height: 24, width: 24
                     // )
                     icon: Icon(Iconsax.global, size: 24)),
-                Tab(
+                const Tab(
                     // icon: SvgPicture.asset(
                     //   nbAccountManagement,
                     //   height: 24, width: 24
                     // )
                     icon: Icon(Iconsax.search_normal, size: 24)),
-                Tab(
+                const Tab(
                     // icon: SvgPicture.asset(
                     //   nbIncidentReport,
                     //   height: 24, width: 24
                     // )
                     icon: Icon(Iconsax.video_play, size: 24)),
-                Tab(
+                const Tab(
                     // icon: SvgPicture.asset(
                     //   nbIncidentReport,
                     //   height: 24, width: 24
@@ -145,7 +147,8 @@ class _navigationBar extends State<navigationBar>
                             color: black,
                             width: 1,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4))),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: Image.network(

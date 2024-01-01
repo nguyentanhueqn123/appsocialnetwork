@@ -509,9 +509,9 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 (postList[index].urlImage != '')
-                                    ? Container(
+                                    ? SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         height: 280,
@@ -666,7 +666,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                             maxLines: 1,
                                           )),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(

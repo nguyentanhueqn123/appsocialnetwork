@@ -4,20 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'dart:math' as math;
-
-///add constants
-
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
@@ -26,22 +18,22 @@ import '../../models/postModel.dart';
 import '../../models/userModel.dart';
 import '../../repository/authen_repository.dart';
 import '../../repository/storage_method.dart';
-import '../dashboard/createPost.dart';
-import '../notification/postNotification.dart';
 import '../widget/image.dart';
 import '../widget/video.dart';
-import 'followerWidget.dart';
 import 'personalInformation.dart';
 import 'seeAllFollower.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atProfileScreen extends StatefulWidget {
   String ownerId;
   atProfileScreen({Key? key, required this.ownerId}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _atProfileScreen createState() => _atProfileScreen(ownerId);
 }
 
+// ignore: camel_case_types
 class _atProfileScreen extends State<atProfileScreen>
     with SingleTickerProviderStateMixin {
   String userId = '';
@@ -88,6 +80,7 @@ class _atProfileScreen extends State<atProfileScreen>
         owner = UserModel.fromDocument(value.docs.first.data());
         photoUrl = owner.avatar;
         idFollowers = owner.favoriteList;
+        // ignore: avoid_print
         print(idFollowers.length);
       });
     });
@@ -129,8 +122,7 @@ class _atProfileScreen extends State<atProfileScreen>
           'content': 'just follow to you',
           'category': 'follow',
           'nameSender': user.userName,
-          'timeCreate':
-              "${DateFormat('y MMMM d, hh:mm a').format(DateTime.now())}"
+          'timeCreate': DateFormat('y MMMM d, hh:mm a').format(DateTime.now())
         }).then((value) {
           FirebaseFirestore.instance
               .collection('notifies')
@@ -153,16 +145,16 @@ class _atProfileScreen extends State<atProfileScreen>
         postList.clear();
         postVideoList.clear();
         postListImage.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           postList.add(PostModel.fromDocument(element.data()));
-        });
-        postList.forEach((element) {
+        }
+        for (var element in postList) {
           if (element.urlVideo != '') {
             postVideoList.add(element);
           } else {
             postListImage.add(element);
           }
-        });
+        }
       });
     });
   }
@@ -182,10 +174,11 @@ class _atProfileScreen extends State<atProfileScreen>
         setState(() {
           saveIdList = value1.data()!["saveList"];
           postSaveList.clear();
-          value2.docs.forEach((element) {
-            if (saveIdList.contains(element.data()['id'] as String))
+          for (var element in value2.docs) {
+            if (saveIdList.contains(element.data()['id'] as String)) {
               postSaveList.add(PostModel.fromDocument(element.data()));
-          });
+            }
+          }
         });
       });
     });
@@ -214,7 +207,9 @@ class _atProfileScreen extends State<atProfileScreen>
       type: FileType.image,
       allowCompression: false,
     );
+    // ignore: avoid_print
     print('result');
+    // ignore: avoid_print
     print(result);
     if (result != null) {
       photoUrl = await StorageMethods().uploadImageToStorage(
@@ -233,7 +228,9 @@ class _atProfileScreen extends State<atProfileScreen>
       type: FileType.image,
       allowCompression: false,
     );
+    // ignore: avoid_print
     print('result');
+    // ignore: avoid_print
     print(result);
     if (result != null) {
       backgroundUrl = await StorageMethods().uploadImageToStorage(
@@ -269,7 +266,7 @@ class _atProfileScreen extends State<atProfileScreen>
     return DefaultTabController(
       length: 3,
       child: AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
@@ -279,7 +276,7 @@ class _atProfileScreen extends State<atProfileScreen>
             controller: pageViewcontroller,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(profileBackground), fit: BoxFit.cover),
                 ),
@@ -293,7 +290,7 @@ class _atProfileScreen extends State<atProfileScreen>
                     child: Container(
                         height: 186,
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: white,
                         ),
                         child: Image.network(
@@ -304,312 +301,295 @@ class _atProfileScreen extends State<atProfileScreen>
                   ),
                   (ownerId != userId)
                       ? IconButton(
-                          padding: EdgeInsets.only(left: 28),
+                          padding: const EdgeInsets.only(left: 28),
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Iconsax.arrow_square_left,
+                          icon: const Icon(Iconsax.arrow_square_left,
                               size: 28, color: black),
                         )
                       : Container(),
                   Container(
-                    margin: EdgeInsets.only(left: 24, right: 24),
+                    margin: const EdgeInsets.only(left: 24, right: 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20 + 186),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              (ownerId != userId)
-                                  ? (Row(
-                                      children: [
-                                        (user.follow.contains(ownerId))
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    followed = !followed;
-                                                    followEvent(user.follow);
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width: 72 + 24,
-                                                  height: 24,
-                                                  decoration: BoxDecoration(
-                                                    color: black,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(4)),
-                                                  ),
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: Text('Following',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Urbanist',
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: white)),
-                                                  ),
+                        const SizedBox(height: 20 + 186),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            (ownerId != userId)
+                                ? (Row(
+                                    children: [
+                                      (user.follow.contains(ownerId))
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  followed = !followed;
+                                                  followEvent(user.follow);
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 72 + 24,
+                                                height: 24,
+                                                decoration: const BoxDecoration(
+                                                  color: black,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(4)),
                                                 ),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    followed = !followed;
-                                                    followEvent(user.follow);
-                                                  });
-                                                },
                                                 child: Container(
-                                                  width: 72,
-                                                  height: 24,
-                                                  decoration: BoxDecoration(
-                                                    color: gray,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(4)),
-                                                  ),
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: Text('Follow',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Urbanist',
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: black)),
-                                                  ),
+                                                  alignment: Alignment.center,
+                                                  child: const Text('Following',
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'Urbanist',
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: white)),
                                                 ),
                                               ),
-                                        Container(
-                                          padding: EdgeInsets.only(left: 16),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: ((context) =>
-                                              //             atPersonalInformationScreen(
-                                              //                 required,
-                                              //                 uid: ownerId))));
-                                            },
-                                            child: Container(
-                                                padding:
-                                                    EdgeInsets.only(right: 16),
-                                                child: Icon(Iconsax.message,
-                                                    size: 24, color: black)),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              print('tap option');
-                                            },
-                                            child: Container(
-                                                child: Icon(Iconsax.more,
-                                                    size: 24, color: black)),
-                                          ),
-                                        ),
-                                      ],
-                                    ))
-                                  : Row(
-                                      children: [
-                                        GestureDetector(
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  followed = !followed;
+                                                  followEvent(user.follow);
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 72,
+                                                height: 24,
+                                                decoration: const BoxDecoration(
+                                                  color: gray,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(4)),
+                                                ),
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  child: const Text('Follow',
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'Urbanist',
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: black)),
+                                                ),
+                                              ),
+                                            ),
+                                      Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: GestureDetector(
                                           onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: ((context) =>
-                                                        atPersonalInformationScreen(
-                                                            required,
-                                                            uid: ownerId))));
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: ((context) =>
+                                            //             atPersonalInformationScreen(
+                                            //                 required,
+                                            //                 uid: ownerId))));
                                           },
                                           child: Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 16),
-                                              child: Icon(Iconsax.edit_2,
+                                              padding: const EdgeInsets.only(
+                                                  right: 16),
+                                              child: const Icon(Iconsax.message,
                                                   size: 24, color: black)),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            signOut(context);
-                                          },
-                                          child: Container(
-                                              child: Icon(Iconsax.logout,
-                                                  size: 24, color: black)),
-                                        ),
-                                      ],
-                                    ),
-                            ],
-                          ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          // ignore: avoid_print
+                                          print('tap option');
+                                        },
+                                        child: const Icon(Iconsax.more,
+                                            size: 24, color: black),
+                                      ),
+                                    ],
+                                  ))
+                                : Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      atPersonalInformationScreen(
+                                                          required,
+                                                          uid: ownerId))));
+                                        },
+                                        child: Container(
+                                            padding: const EdgeInsets.only(
+                                                right: 16),
+                                            child: const Icon(Iconsax.edit_2,
+                                                size: 24, color: black)),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          signOut(context);
+                                        },
+                                        child: const Icon(Iconsax.logout,
+                                            size: 24, color: black),
+                                      ),
+                                    ],
+                                  ),
+                          ],
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Container(
                           alignment: Alignment.topLeft,
                           child: Text(owner.userName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'Urbanist',
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                   color: black)),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 8),
+                          padding: const EdgeInsets.only(top: 8),
                           width: 327 + 24,
                           alignment: Alignment.topLeft,
                           child: Text(owner.role,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'Urbanist',
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   color: black)),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Container(
                           alignment: Alignment.topLeft,
                           child: Container(
                             width: 192,
                             height: 0.5,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: gray,
                             ),
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Container(
                           alignment: Alignment.topLeft,
                           child: Container(
                             width: 144,
                             height: 0.5,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: gray,
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        (postList.length == 0)
-                                            ? '0'
-                                            : postList.length.toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w600,
-                                          color: black,
-                                        ),
-                                      ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (postList.isEmpty)
+                                        ? '0'
+                                        : postList.length.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        "Posts",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w400,
-                                          color: gray,
-                                        ),
-                                      ),
+                                  ),
+                                  const Text(
+                                    "Posts",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w400,
+                                      color: gray,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 63.5),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        (owner.favoriteList.length == 0)
-                                            ? '0'
-                                            : owner.favoriteList.length
-                                                .toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w600,
-                                          color: black,
-                                        ),
+                            ),
+                            const SizedBox(width: 63.5),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (owner.favoriteList.isEmpty)
+                                        ? '0'
+                                        : owner.favoriteList.length.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) => seeAll(
+                                                    idUser: idFollowers,
+                                                  ))));
+                                    },
+                                    child: const Text(
+                                      "Followers",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.w400,
+                                        color: gray,
                                       ),
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) => seeAll(
-                                                      idUser: idFollowers,
-                                                    ))));
-                                      },
-                                      child: Text(
-                                        "Followers",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w400,
-                                          color: gray,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 63.5),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        (owner.follow.length == 0)
-                                            ? '0'
-                                            : owner.follow.length.toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w600,
-                                          color: black,
-                                        ),
-                                      ),
+                            ),
+                            const SizedBox(width: 63.5),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (owner.follow.isEmpty)
+                                        ? '0'
+                                        : owner.follow.length.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
                                     ),
-                                    Container(
-                                      child: Text(
-                                        "Following",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w400,
-                                          color: gray,
-                                        ),
-                                      ),
+                                  ),
+                                  const Text(
+                                    "Following",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.w400,
+                                      color: gray,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 16),
-                        Container(
+                        const SizedBox(height: 16),
+                        SizedBox(
                           height: 56,
                           width: MediaQuery.of(context).size.width,
                           child: Container(
                             color: Colors.transparent,
-                            child: TabBar(
+                            child: const TabBar(
                               labelColor: black,
                               unselectedLabelColor: Colors.transparent,
                               indicator: UnderlineTabIndicator(
@@ -653,12 +633,12 @@ class _atProfileScreen extends State<atProfileScreen>
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 24, top: 98 + 44),
+                      margin: const EdgeInsets.only(left: 24, top: 98 + 44),
                       child: Container(
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black,
                               blurRadius: 30,
@@ -673,7 +653,8 @@ class _atProfileScreen extends State<atProfileScreen>
                                       ? photoUrl
                                       : 'https://i.imgur.com/RUgPziD.jpg'),
                               fit: BoxFit.cover),
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
                         ),
                       ),
                     ),
@@ -688,60 +669,57 @@ class _atProfileScreen extends State<atProfileScreen>
   }
 
   profileTabPostScreen(List postList) {
-    return Container(
-      // padding: EdgeInsets.only(left: 24, right: 24),
-      child: GridView.custom(
-        gridDelegate: (postList.length >= 4)
-            ? SliverQuiltedGridDelegate(
-                crossAxisCount: 3,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 6,
-                repeatPattern: QuiltedGridRepeatPattern.inverted,
-                pattern: [
-                  QuiltedGridTile(2, 1),
-                  QuiltedGridTile(1, 1),
-                  QuiltedGridTile(1, 1),
-                  QuiltedGridTile(1, 2),
-                ],
-              )
-            : SliverQuiltedGridDelegate(
-                crossAxisCount: 3,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 6,
-                repeatPattern: QuiltedGridRepeatPattern.inverted,
-                pattern: [QuiltedGridTile(1, 1)],
-              ),
-        childrenDelegate: SliverChildBuilderDelegate(
-          (context, index) {
-            // (postList.length == 0)
-            //     ? Container()
-            //     :
-            return (postList[index].urlImage != '')
-                ? ImageWidget(
-                    src: postList[index].urlImage,
-                    postId: postList[index].id,
-                    uid: userId,
-                    position: index.toString(),
-                  )
-                : VideoWidget(
-                    src: postList[index].urlVideo,
-                    postId: postList[index].id,
-                    uid: userId,
-                    position: index.toString(),
-                  );
-          },
-          childCount: postList.length,
-        ),
+    return GridView.custom(
+      gridDelegate: (postList.length >= 4)
+          ? SliverQuiltedGridDelegate(
+              crossAxisCount: 3,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              repeatPattern: QuiltedGridRepeatPattern.inverted,
+              pattern: [
+                const QuiltedGridTile(2, 1),
+                const QuiltedGridTile(1, 1),
+                const QuiltedGridTile(1, 1),
+                const QuiltedGridTile(1, 2),
+              ],
+            )
+          : SliverQuiltedGridDelegate(
+              crossAxisCount: 3,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              repeatPattern: QuiltedGridRepeatPattern.inverted,
+              pattern: [const QuiltedGridTile(1, 1)],
+            ),
+      childrenDelegate: SliverChildBuilderDelegate(
+        (context, index) {
+          // (postList.length == 0)
+          //     ? Container()
+          //     :
+          return (postList[index].urlImage != '')
+              ? ImageWidget(
+                  src: postList[index].urlImage,
+                  postId: postList[index].id,
+                  uid: userId,
+                  position: index.toString(),
+                )
+              : VideoWidget(
+                  src: postList[index].urlVideo,
+                  postId: postList[index].id,
+                  uid: userId,
+                  position: index.toString(),
+                );
+        },
+        childCount: postList.length,
       ),
     );
   }
 
   profileTabVideoScreen(List postList) {
     return Container(
-      padding: EdgeInsets.only(left: 24, right: 24),
+      padding: const EdgeInsets.only(left: 24, right: 24),
       child: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemCount: postList.length,
         itemBuilder: (context, index) {
           // (postList.length == 0)
@@ -760,10 +738,10 @@ class _atProfileScreen extends State<atProfileScreen>
 
   profileTabReelScreen(List postList) {
     return Container(
-      padding: EdgeInsets.only(left: 24, right: 24),
+      padding: const EdgeInsets.only(left: 24, right: 24),
       child: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemCount: postList.length,
         itemBuilder: (context, index) {
           // (postList.length == 0)

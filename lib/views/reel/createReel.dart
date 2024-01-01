@@ -22,15 +22,18 @@ import '../../constants/images.dart';
 import '../../models/userModel.dart';
 import '../dashboard/postVideo.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atCreateReelScreen extends StatefulWidget {
   String uid;
 
   atCreateReelScreen(required, {Key? key, required this.uid}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _atCreateReelScreen createState() => _atCreateReelScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atCreateReelScreen extends State<atCreateReelScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -55,25 +58,32 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
       type: FileType.video,
       allowCompression: false,
     );
+    // ignore: avoid_print
     print('result');
+    // ignore: avoid_print
     print(result);
     if (result != null) {
+      // ignore: unused_local_variable
       Uint8List? fileBytes = result.files.first.bytes;
       String fileName = result.files.first.name;
 
       // Upload file
+      // ignore: avoid_print
       print(result.files.first.name);
+      // ignore: avoid_print
       print(result.files.first.path);
       if (result.files.first.path != null) {
         FirebaseStorage storage = FirebaseStorage.instance;
         Reference ref = storage.ref('uploads/$fileName');
+        // ignore: unused_local_variable
         UploadTask uploadTask =
             ref.putFile(File(result.files.first.path.toString()));
         Reference ref_2 =
-            await FirebaseStorage.instance.ref().child('uploads/$fileName');
+            FirebaseStorage.instance.ref().child('uploads/$fileName');
 
         link = (await ref_2.getDownloadURL()).toString();
 
+        // ignore: avoid_print
         print(result.files.first.path.toString());
         if (result.files.first.name.contains('.mp4')) {
           setState(() {
@@ -95,7 +105,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
         context: context,
         builder: (context) {
           return SimpleDialog(
-            title: Text(
+            title: const Text(
               "Choose Resource",
               style: TextStyle(
                   fontFamily: 'Recoleta',
@@ -105,7 +115,8 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
             ),
             children: [
               SimpleDialogOption(
-                child: Text(
+                onPressed: handleTakePhoto,
+                child: const Text(
                   "Photo with Camera",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -113,10 +124,10 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                       fontWeight: FontWeight.w500,
                       color: black),
                 ),
-                onPressed: handleTakePhoto,
               ),
               SimpleDialogOption(
-                child: Text(
+                onPressed: handleTakeGallery,
+                child: const Text(
                   "Photo with Gallery",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -124,10 +135,9 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                       fontWeight: FontWeight.w500,
                       color: black),
                 ),
-                onPressed: handleTakeGallery,
               ),
               SimpleDialogOption(
-                child: Text(
+                child: const Text(
                   "Cancel",
                   style: TextStyle(
                       fontFamily: 'Recoleta',
@@ -165,6 +175,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
       });
     });
@@ -200,6 +211,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
     getUserDetail();
   }
 
+  @override
   void dispose() {
     super.dispose();
   }
@@ -207,14 +219,14 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
@@ -222,10 +234,10 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                  decoration: BoxDecoration(color: Colors.transparent),
+                  decoration: const BoxDecoration(color: Colors.transparent),
                   child: Container(
-                      margin:
-                          EdgeInsets.only(left: 24, right: 24, top: 20 + 20),
+                      margin: const EdgeInsets.only(
+                          left: 24, right: 24, top: 20 + 20),
                       child: Column(children: [
                         Row(
                           children: [
@@ -233,25 +245,22 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(Iconsax.back_square, size: 28),
+                              child: const Icon(Iconsax.back_square, size: 28),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             GestureDetector(
                               onTap: () {
                                 post();
                               },
-                              child: Icon(Iconsax.add_square, size: 28),
+                              child: const Icon(Iconsax.add_square, size: 28),
                             )
                           ],
                         ),
-                        SizedBox(height: 24),
-                        Container(
-                            // margin: EdgeInsets.only(
-                            //     left: 24, right: 24, top: 20 + 20),
-                            child: Column(children: [
+                        const SizedBox(height: 24),
+                        Column(children: [
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Create Reel',
                               style: TextStyle(
                                   fontFamily: 'Recoleta',
@@ -260,24 +269,24 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                   color: black),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 192,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 144,
                               height: 0.5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: gray,
                               ),
                             ),
@@ -287,17 +296,18 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                               (urlImage == '')
                                   ? ((urlVideo == '')
                                       ? Container(
-                                          padding: EdgeInsets.all(24),
+                                          padding: const EdgeInsets.all(24),
                                           alignment: Alignment.center,
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: gray, width: 1),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8)),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(8)),
                                                 color: Colors.transparent),
                                             child: IconButton(
-                                                icon: Icon(Iconsax.add,
+                                                icon: const Icon(Iconsax.add,
                                                     size: 30, color: gray),
                                                 onPressed: () =>
                                                     selectImage(context)),
@@ -307,8 +317,8 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                   : Container(
                                       width: 360,
                                       height: 340,
-                                      padding:
-                                          EdgeInsets.only(top: 24, bottom: 16),
+                                      padding: const EdgeInsets.only(
+                                          top: 24, bottom: 16),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
                                         child: Image.network(
@@ -319,10 +329,10 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                     )
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               'Caption: ',
                               style: TextStyle(
                                   fontFamily: 'Urbanist',
@@ -335,7 +345,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                             key: captionFormKey,
                             child: Container(
                               width: 327 + 24,
-                              margin: EdgeInsets.only(top: 8),
+                              margin: const EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
@@ -345,13 +355,15 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                               ),
                               alignment: Alignment.topCenter,
                               child: TextFormField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Urbanist',
                                       fontSize: 16,
                                       color: black,
                                       fontWeight: FontWeight.w400),
                                   //validator
                                   validator: (email) {
+                                    return null;
+
                                     // if (isEmailValid(email.toString())) {
                                     //   WidgetsBinding.instance!
                                     //       .addPostFrameCallback((_) {
@@ -373,8 +385,8 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                   controller: captionController,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 16, right: 16),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 16, right: 16),
                                     hintStyle: TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
@@ -387,7 +399,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                       color: Colors.transparent,
                                       fontSize: 0,
                                       height: 0,
@@ -395,7 +407,7 @@ class _atCreateReelScreen extends State<atCreateReelScreen>
                                   )),
                             ),
                           ),
-                        ]))
+                        ])
                       ]))))
         ])));
   }

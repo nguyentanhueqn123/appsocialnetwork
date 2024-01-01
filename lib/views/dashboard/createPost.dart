@@ -12,7 +12,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/images.dart';
 import '../../models/userModel.dart';
 import 'postVideo.dart';
 
@@ -250,7 +249,7 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
           body: SingleChildScrollView(
               // this is new
               reverse: true,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               child: Container(
                   decoration: const BoxDecoration(color: Colors.transparent),
@@ -385,6 +384,8 @@ class _atCreatePostScreen extends State<atCreatePostScreen>
                                       fontWeight: FontWeight.w400),
                                   //validator
                                   validator: (email) {
+                                    return null;
+
                                     // if (isEmailValid(email.toString())) {
                                     //   WidgetsBinding.instance!
                                     //       .addPostFrameCallback((_) {

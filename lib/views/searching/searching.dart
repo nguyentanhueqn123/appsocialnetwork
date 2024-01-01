@@ -1,18 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:social_network_app/views/searching/classifyImage.dart';
 
 import '../../constants/colors.dart';
@@ -212,7 +204,7 @@ class _atSearchScreen extends State<atSearchScreen>
                                   prefixIcon: Container(
                                       child: Stack(
                                           alignment: Alignment.center,
-                                          children: [
+                                          children: const [
                                         Icon(Iconsax.search_normal_1,
                                             size: 20, color: black)
                                       ])),
@@ -284,13 +276,11 @@ class _atSearchScreen extends State<atSearchScreen>
                                                     postId:
                                                         postList[index].id))));
                                   },
-                                  child: Container(
-                                    child: ImageWidget(
-                                      src: postList[index].urlImage,
-                                      postId: postList[index].id,
-                                      uid: uid,
-                                      position: index.toString(),
-                                    ),
+                                  child: ImageWidget(
+                                    src: postList[index].urlImage,
+                                    postId: postList[index].id,
+                                    uid: uid,
+                                    position: index.toString(),
                                   ),
                                 )
                               : GestureDetector(
@@ -304,20 +294,18 @@ class _atSearchScreen extends State<atSearchScreen>
                                                     postId:
                                                         postList[index].id))));
                                   },
-                                  child: Container(
-                                    child: VideoWidget(
-                                      src: postList[index].urlVideo,
-                                      postId: postList[index].id,
-                                      uid: uid,
-                                      position: index.toString(),
-                                    ),
+                                  child: VideoWidget(
+                                    src: postList[index].urlVideo,
+                                    postId: postList[index].id,
+                                    uid: uid,
+                                    position: index.toString(),
                                   ),
                                 );
                         },
                       )),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'User',
                       style: TextStyle(
                           fontFamily: 'Recoleta',
@@ -329,85 +317,84 @@ class _atSearchScreen extends State<atSearchScreen>
                   SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Container(
-                        decoration: BoxDecoration(color: Colors.transparent),
-                        child: Container(
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              padding: EdgeInsets.only(top: 8),
-                              shrinkWrap: true,
-                              itemCount: userList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    width: 327 + 24,
-                                    margin: EdgeInsets.only(top: 8),
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        border: Border.all(color: gray),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    atProfileScreen(
-                                                      ownerId:
-                                                          userList[index].id,
-                                                    ))));
-                                      },
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 44,
-                                            height: 44,
-                                            margin: const EdgeInsets.only(
-                                                left: 16, bottom: 16, top: 16),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  image: NetworkImage((userList[
-                                                                  index]
-                                                              .avatar !=
-                                                          '')
-                                                      ? userList[index].avatar
-                                                      : 'https://i.imgur.com/RUgPziD.jpg'),
-                                                  fit: BoxFit.cover),
-                                            ),
+                        decoration:
+                            const BoxDecoration(color: Colors.transparent),
+                        child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            padding: const EdgeInsets.only(top: 8),
+                            shrinkWrap: true,
+                            itemCount: userList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  width: 327 + 24,
+                                  margin: const EdgeInsets.only(top: 8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(color: gray),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8))),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  atProfileScreen(
+                                                    ownerId: userList[index].id,
+                                                  ))));
+                                    },
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 44,
+                                          height: 44,
+                                          margin: const EdgeInsets.only(
+                                              left: 16, bottom: 16, top: 16),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: NetworkImage((userList[
+                                                                index]
+                                                            .avatar !=
+                                                        '')
+                                                    ? userList[index].avatar
+                                                    : 'https://i.imgur.com/RUgPziD.jpg'),
+                                                fit: BoxFit.cover),
                                           ),
-                                          Container(
-                                            width: 183 + 24,
-                                            margin: EdgeInsets.only(left: 16),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  userList[index].userName,
-                                                  style: TextStyle(
-                                                    color: black,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                        ),
+                                        Container(
+                                          width: 183 + 24,
+                                          margin:
+                                              const EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                userList[index].userName,
+                                                style: const TextStyle(
+                                                  color: black,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
-                                                SizedBox(height: 8),
-                                                Text(
-                                                  userList[index].email,
-                                                  style: TextStyle(
-                                                    color: gray,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                userList[index].email,
+                                                style: const TextStyle(
+                                                  color: gray,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                              }),
-                        )),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ));
+                            })),
                   )
                 ],
               ),

@@ -1,23 +1,25 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:iconsax/iconsax.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/images.dart';
 import '../../models/userModel.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atEditProfileScreen extends StatefulWidget {
   String uid;
   atEditProfileScreen(required, {Key? key, required this.uid})
       : super(key: key);
 
   @override
-  _atEditProfileScreen createState() => _atEditProfileScreen(this.uid);
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _atEditProfileScreen createState() => _atEditProfileScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atEditProfileScreen extends State<atEditProfileScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -47,6 +49,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
         .listen((value) {
       setState(() {
         user = UserModel.fromDocument(value.docs.first.data());
+        // ignore: avoid_print
         print(user.userName);
         usernameController.text = user.userName;
       });
@@ -77,14 +80,14 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(profileBackground), fit: BoxFit.cover),
             ),
@@ -92,19 +95,16 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                  decoration: BoxDecoration(color: Colors.transparent),
+                  decoration: const BoxDecoration(color: Colors.transparent),
                   child: Container(
-                      margin:
-                          EdgeInsets.only(left: 24, right: 24, top: 20 + 20),
+                      margin: const EdgeInsets.only(
+                          left: 24, right: 24, top: 20 + 20),
                       child: Column(children: [
-                        Container(
-                            // margin: EdgeInsets.only(
-                            //     left: 24, right: 24, top: 20 + 20),
-                            child: Column(
+                        Column(
                           children: [
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'Editing Profile',
                                 style: TextStyle(
                                     fontFamily: 'Recoleta',
@@ -113,29 +113,29 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     color: black),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Container(
                               alignment: Alignment.topLeft,
                               child: Container(
                                 width: 192,
                                 height: 0.5,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: gray,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Container(
                               alignment: Alignment.topLeft,
                               child: Container(
                                 width: 144,
                                 height: 0.5,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: gray,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 32),
+                            const SizedBox(height: 32),
                             Container(
                               alignment: Alignment.topLeft,
                               child: Stack(
@@ -146,18 +146,18 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     decoration: BoxDecoration(
                                         border:
                                             Border.all(color: black, width: 1),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
                                   ),
                                   Container(
-                                    padding:
-                                        EdgeInsets.only(bottom: 4, left: 4),
+                                    padding: const EdgeInsets.only(
+                                        bottom: 4, left: 4),
                                     height: 56,
                                     width: 56,
                                     decoration: BoxDecoration(
                                         border:
                                             Border.all(color: gray, width: 0.5),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(8))),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
@@ -172,10 +172,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                 ],
                               ),
                             ),
-                            SizedBox(height: 32),
+                            const SizedBox(height: 32),
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'User Name',
                                 style: TextStyle(
                                     fontFamily: 'Urbanist',
@@ -184,7 +184,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Form(
                               key: usernameFormKey,
                               child: Container(
@@ -200,13 +200,15 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                 ),
                                 alignment: Alignment.topCenter,
                                 child: TextFormField(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
                                         color: black,
                                         fontWeight: FontWeight.w400),
                                     //validator
                                     validator: (email) {
+                                      return null;
+
                                       // if (isEmailValid(email.toString())) {
                                       //   WidgetsBinding.instance!
                                       //       .addPostFrameCallback((_) {
@@ -227,10 +229,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     },
                                     controller: usernameController,
                                     keyboardType: TextInputType.emailAddress,
-                                    autofillHints: [AutofillHints.email],
+                                    autofillHints: const [AutofillHints.email],
                                     decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.only(left: 16, right: 12),
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 16, right: 12),
                                       hintStyle: TextStyle(
                                           fontFamily: 'Urbanist',
                                           fontSize: 16,
@@ -244,7 +246,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorStyle: TextStyle(
+                                      errorStyle: const TextStyle(
                                         color: Colors.transparent,
                                         fontSize: 0,
                                         height: 0,
@@ -252,10 +254,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     )),
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'Website',
                                 style: TextStyle(
                                     fontFamily: 'Urbanist',
@@ -264,7 +266,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Form(
                               key: websiteFormKey,
                               child: Container(
@@ -279,13 +281,15 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                 ),
                                 alignment: Alignment.topCenter,
                                 child: TextFormField(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
                                         color: black,
                                         fontWeight: FontWeight.w400),
                                     //validator
                                     validator: (email) {
+                                      return null;
+
                                       // if (isEmailValid(email.toString())) {
                                       //   WidgetsBinding.instance!
                                       //       .addPostFrameCallback((_) {
@@ -306,10 +310,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     },
                                     controller: websiteController,
                                     keyboardType: TextInputType.emailAddress,
-                                    autofillHints: [AutofillHints.email],
+                                    autofillHints: const [AutofillHints.email],
                                     decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.only(left: 20, right: 12),
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 20, right: 12),
                                       hintStyle: TextStyle(
                                           fontFamily: 'Urbanist',
                                           fontSize: 16,
@@ -323,7 +327,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorStyle: TextStyle(
+                                      errorStyle: const TextStyle(
                                         color: Colors.transparent,
                                         fontSize: 0,
                                         height: 0,
@@ -331,10 +335,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     )),
                               ),
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'Biography',
                                 style: TextStyle(
                                     fontFamily: 'Urbanist',
@@ -343,7 +347,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Form(
                               key: bioFormKey,
                               child: Container(
@@ -358,13 +362,15 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                 ),
                                 alignment: Alignment.topCenter,
                                 child: TextFormField(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: 'Urbanist',
                                         fontSize: 16,
                                         color: black,
                                         fontWeight: FontWeight.w400),
                                     //validator
                                     validator: (email) {
+                                      return null;
+
                                       // if (isEmailValid(email.toString())) {
                                       //   WidgetsBinding.instance!
                                       //       .addPostFrameCallback((_) {
@@ -385,10 +391,10 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     },
                                     controller: bioController,
                                     keyboardType: TextInputType.emailAddress,
-                                    autofillHints: [AutofillHints.email],
+                                    autofillHints: const [AutofillHints.email],
                                     decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.only(left: 20, right: 12),
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 20, right: 12),
                                       hintStyle: TextStyle(
                                           fontFamily: 'Urbanist',
                                           fontSize: 16,
@@ -402,7 +408,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorStyle: TextStyle(
+                                      errorStyle: const TextStyle(
                                         color: Colors.transparent,
                                         fontSize: 0,
                                         height: 0,
@@ -413,8 +419,8 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                             Container(
                               width: 327 + 24,
                               height: 44,
-                              margin: EdgeInsets.only(top: 32),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.only(top: 32),
+                              decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8)),
                                 color: black,
@@ -444,46 +450,47 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                     //             required,
                                     //             uid: 'h')));
                                   });
-                                  await Future.delayed(Duration(seconds: 3));
-                                  if (this.mounted) {
+                                  await Future.delayed(
+                                      const Duration(seconds: 3));
+                                  if (mounted) {
                                     setState(() {
                                       isLoading = false;
                                     });
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                    primary: black,
-                                    onPrimary: Colors.white,
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: black,
                                     shadowColor: black.withOpacity(0.25),
                                     elevation: 15,
                                     animationDuration:
-                                        Duration(milliseconds: 300),
+                                        const Duration(milliseconds: 300),
                                     // maximumSize: Size.fromWidth(200),
-                                    minimumSize: Size(327 + 24, 44),
+                                    minimumSize: const Size(327 + 24, 44),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            new BorderRadius.circular(16.0)),
+                                            BorderRadius.circular(16.0)),
                                     // BorderRadius.all(Radius.circular(16)),
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         color: white,
                                         fontFamily: 'SFProText',
                                         fontWeight: FontWeight.w600,
                                         fontSize: 18)),
                                 child: isLoading
-                                    ? Container(
+                                    ? SizedBox(
                                         height: 48,
                                         width: 200,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [
+                                          children: const [
                                             SizedBox(
                                                 width: 24,
                                                 height: 24,
                                                 child:
                                                     CircularProgressIndicator(
                                                         color: white)),
-                                            const SizedBox(width: 16),
+                                            SizedBox(width: 16),
                                             Text(
                                               "Please Wait...",
                                               style: TextStyle(
@@ -498,7 +505,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                       )
                                     : Container(
                                         alignment: Alignment.center,
-                                        child: Text(
+                                        child: const Text(
                                           'Save',
                                           style: TextStyle(
                                             fontSize: 18,
@@ -510,11 +517,11 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                       ),
                               ),
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Container(
                               width: 327 + 24,
                               height: 44,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8)),
                                 color: Colors.transparent,
@@ -525,7 +532,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
-                                  child: Text(
+                                  child: const Text(
                                     'Cancel',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -538,7 +545,7 @@ class _atEditProfileScreen extends State<atEditProfileScreen>
                               ),
                             )
                           ],
-                        ))
+                        )
                       ]))))
         ])));
   }

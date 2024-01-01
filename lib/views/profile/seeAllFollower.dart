@@ -1,11 +1,10 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -14,13 +13,16 @@ import '../../constants/images.dart';
 import '../../models/userModel.dart';
 import 'profile.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class seeAll extends StatefulWidget {
   late List idUser;
   seeAll({Key? key, required this.idUser}) : super(key: key);
   @override
-  _seeAll createState() => _seeAll(this.idUser);
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _seeAll createState() => _seeAll(idUser);
 }
 
+// ignore: camel_case_types
 class _seeAll extends State<seeAll> {
   List<UserModel> userSearch = [];
   List<UserModel> userList = [];
@@ -32,16 +34,16 @@ class _seeAll extends State<seeAll> {
       setState(() {
         userSearch.clear();
         userList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           userSearch.add(UserModel.fromDocument(element.data()));
-        });
-        idUser.forEach((element1) {
-          userSearch.forEach((element2) {
+        }
+        for (var element1 in idUser) {
+          for (var element2 in userSearch) {
             if (element1 == element2.id) {
               userList.add(element2);
             }
-          });
-        });
+          }
+        }
       });
     });
   }
@@ -54,9 +56,8 @@ class _seeAll extends State<seeAll> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.light,
           statusBarColor: Colors.transparent),
@@ -65,33 +66,33 @@ class _seeAll extends State<seeAll> {
         body: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(profileBackground), fit: BoxFit.cover),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 24, right: 24),
+              margin: const EdgeInsets.only(left: 24, right: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(Iconsax.back_square, size: 28),
+                        child: const Icon(Iconsax.back_square, size: 28),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container()
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'All Followers',
                       style: TextStyle(
                           fontFamily: 'Recoleta',
@@ -103,87 +104,85 @@ class _seeAll extends State<seeAll> {
                   SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Container(
-                        decoration: BoxDecoration(color: Colors.transparent),
-                        child: Container(
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              padding: EdgeInsets.only(top: 8),
-                              shrinkWrap: true,
-                              itemCount: userList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    width: 327 + 24,
-                                    margin: EdgeInsets.only(top: 8),
-                                    decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        border: Border.all(color: gray),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    atProfileScreen(
-                                                      ownerId:
-                                                          userList[index].id,
-                                                    ))));
-                                      },
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 44,
-                                            height: 44,
-                                            margin: EdgeInsets.only(
-                                                left: 16, bottom: 16, top: 16),
-                                            decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      // userList[index]
-                                                      //     .avatar
-                                                      (userList[index].avatar !=
-                                                              '')
-                                                          ? userList[index]
-                                                              .avatar
-                                                          : 'https://i.imgur.com/RUgPziD.jpg'),
-                                                  fit: BoxFit.cover),
-                                            ),
+                        decoration:
+                            const BoxDecoration(color: Colors.transparent),
+                        child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            padding: const EdgeInsets.only(top: 8),
+                            shrinkWrap: true,
+                            itemCount: userList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  width: 327 + 24,
+                                  margin: const EdgeInsets.only(top: 8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(color: gray),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8))),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  atProfileScreen(
+                                                    ownerId: userList[index].id,
+                                                  ))));
+                                    },
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 44,
+                                          height: 44,
+                                          margin: const EdgeInsets.only(
+                                              left: 16, bottom: 16, top: 16),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    // userList[index]
+                                                    //     .avatar
+                                                    (userList[index].avatar !=
+                                                            '')
+                                                        ? userList[index].avatar
+                                                        : 'https://i.imgur.com/RUgPziD.jpg'),
+                                                fit: BoxFit.cover),
                                           ),
-                                          Container(
-                                            width: 183 + 24,
-                                            margin: EdgeInsets.only(left: 16),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  userList[index].userName,
-                                                  style: TextStyle(
-                                                    color: black,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                        ),
+                                        Container(
+                                          width: 183 + 24,
+                                          margin:
+                                              const EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                userList[index].userName,
+                                                style: const TextStyle(
+                                                  color: black,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
-                                                SizedBox(height: 8),
-                                                Text(
-                                                  userList[index].email,
-                                                  style: TextStyle(
-                                                    color: gray,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                userList[index].email,
+                                                style: const TextStyle(
+                                                  color: gray,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                              }),
-                        )),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ));
+                            })),
                   )
                 ],
               ),

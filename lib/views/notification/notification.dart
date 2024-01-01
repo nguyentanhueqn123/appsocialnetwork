@@ -11,15 +11,18 @@ import '../../constants/colors.dart';
 import '../../models/notifyModel.dart';
 import 'postNotification.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class atNotificationScreen extends StatefulWidget {
   String uid;
   atNotificationScreen(required, {Key? key, required this.uid})
       : super(key: key);
 
   @override
-  _atNotificationScreen createState() => _atNotificationScreen(this.uid);
+  // ignore: library_private_types_in_public_api, no_logic_in_create_state
+  _atNotificationScreen createState() => _atNotificationScreen(uid);
 }
 
+// ignore: camel_case_types
 class _atNotificationScreen extends State<atNotificationScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
@@ -28,6 +31,7 @@ class _atNotificationScreen extends State<atNotificationScreen>
 
   _atNotificationScreen(this.uid);
   Future getNotifiesList() async {
+    // ignore: avoid_print
     print(widget.uid);
     FirebaseFirestore.instance
         .collection("notifies")
@@ -36,12 +40,14 @@ class _atNotificationScreen extends State<atNotificationScreen>
         .listen((value) {
       setState(() {
         notifyList.clear();
-        value.docs.forEach((element) {
+        for (var element in value.docs) {
           if (element.data()['idReceiver'] == widget.uid) {
             notifyList.add(notifyModel.fromDocument(element.data()));
           }
-        });
+        }
+        // ignore: avoid_print
         print("notifyList.length");
+        // ignore: avoid_print
         print(notifyList.length);
       });
     });
@@ -61,25 +67,27 @@ class _atNotificationScreen extends State<atNotificationScreen>
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.dark,
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
             body: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
             ),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-                decoration: BoxDecoration(color: Colors.transparent),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: Container(
-                    margin: EdgeInsets.only(left: 24, right: 24, top: 20 + 20),
+                    margin: const EdgeInsets.only(
+                        left: 24, right: 24, top: 20 + 20),
                     child: Column(
                       children: [
+                        // ignore: avoid_unnecessary_containers
                         Container(
                             // margin: EdgeInsets.only(
                             //     left: 24, right: 24, top: 20 + 20),
@@ -87,7 +95,7 @@ class _atNotificationScreen extends State<atNotificationScreen>
                           children: [
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: const Text(
                                 'Notification',
                                 style: TextStyle(
                                     fontFamily: 'Recoleta',
@@ -96,34 +104,34 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                     color: black),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Container(
                               alignment: Alignment.topLeft,
                               child: Container(
                                 width: 192,
                                 height: 0.5,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: gray,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Container(
                               alignment: Alignment.topLeft,
                               child: Container(
                                 width: 144,
                                 height: 0.5,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: gray,
                                 ),
                               ),
                             ),
                           ],
                         )),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text(
+                          child: const Text(
                             'This month',
                             style: TextStyle(
                                 fontFamily: 'Urbanist',
@@ -132,18 +140,19 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
+                        // ignore: avoid_unnecessary_containers
                         Container(
                           child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.vertical,
-                              padding: EdgeInsets.only(top: 8),
+                              padding: const EdgeInsets.only(top: 8),
                               shrinkWrap: true,
                               itemCount: notifyList.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                     width: 327 + 24,
-                                    margin: EdgeInsets.only(top: 8),
-                                    decoration: BoxDecoration(
+                                    margin: const EdgeInsets.only(top: 8),
+                                    decoration: const BoxDecoration(
                                         color: white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
@@ -178,9 +187,9 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                           Container(
                                             width: 44,
                                             height: 44,
-                                            margin: EdgeInsets.only(
+                                            margin: const EdgeInsets.only(
                                                 left: 16, bottom: 16, top: 16),
-                                            decoration: new BoxDecoration(
+                                            decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
                                                   image: NetworkImage(
@@ -197,14 +206,15 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                           ),
                                           Container(
                                             width: 183 + 24,
-                                            margin: EdgeInsets.only(left: 16),
+                                            margin:
+                                                const EdgeInsets.only(left: 16),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 RichText(
                                                     text: TextSpan(
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontFamily:
                                                               'Urbanist',
                                                           fontSize: 16,
@@ -216,17 +226,16 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                                       TextSpan(
                                                         text: notifyList[index]
                                                             .nameSender,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: black,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text: " " +
-                                                            notifyList[index]
-                                                                .content,
-                                                        style: TextStyle(
+                                                        text:
+                                                            " ${notifyList[index].content}",
+                                                        style: const TextStyle(
                                                           color: gray,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -235,12 +244,13 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                                     ])),
                                                 Container(
                                                   padding:
-                                                      EdgeInsets.only(top: 8),
+                                                      const EdgeInsets.only(
+                                                          top: 8),
                                                   alignment: Alignment.topLeft,
                                                   child: Text(
                                                     notifyList[index]
                                                         .timeCreate,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontFamily: 'Urbanist',
                                                         fontSize: 12,
                                                         color: gray,
